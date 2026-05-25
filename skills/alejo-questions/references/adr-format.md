@@ -43,3 +43,5 @@ Create an ADR only when all three conditions hold:
 - The team chose between real alternatives with meaningful trade-offs.
 
 Good ADR subjects include architecture boundaries, cross-context integration patterns, lock-in technology choices, deliberate deviations from common practice, and constraints invisible in the code.
+
+When an ADR comes from Alejo Questions, create or update it only after every question that could change the decision has been answered, explicitly deferred, or marked unresolved. Keep the ADR short and point readers to the Q&A log when the trade-off history needs more detail.

@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Questions"
-  short_description: "Stress-test plans and publish Q&A"
-  default_prompt: "Use $alejo-questions to stress-test this plan against the codebase, update context, and publish Q&A plus CONTEXT.md to the Linear Project."
+  short_description: "Clarify product value and Q&A"
+  default_prompt: "/goal Use $alejo-questions to clarify the product experience and end-user value proposition until the product picture is clear; then ask whether to continue into technical decisions, update local context during the session, and publish Q&A plus CONTEXT.md to the Linear Project once at the end."

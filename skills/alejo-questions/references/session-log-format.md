@@ -18,11 +18,25 @@ docs/questions/YYYY-MM-DD-<topic-slug>.md
 - **Plan under review**: {short summary or link/path}
 - **Context docs touched**: {files or "None"}
 - **ADRs created or updated**: {files or "None"}
+- **Goal**: Clear product experience and end-user value proposition
+- **Goal status**: {achieved | stopped early | blocked}
+- **Technical decisions covered**: {yes | no}
 - **Status**: {complete | stopped early | blocked}
+- **Question coverage**: {all active branches answered | deferred branches named | stopped before queue was exhausted}
 
 ## Session Summary
 
 {Brief summary of what changed in the shared understanding.}
+
+## Product Snapshot
+
+- **Target user**: {who the experience is for}
+- **Pain/job**: {what problem, desire, or job is being addressed}
+- **Value proposition**: {the promised outcome for the end user}
+- **Core experience**: {short description of the main journey}
+- **Success signals**: {observable signs the experience works}
+- **Scope boundaries**: {main in/out of scope boundaries}
+- **Open risks**: {remaining product risks or "None"}
 
 ## Questions And Answers
 
@@ -50,6 +64,10 @@ docs/questions/YYYY-MM-DD-<topic-slug>.md
 
 - {Decision made, with ADR link if one was created}
 
+## Technical Decisions
+
+- {Technical decision, trade-off, or "Not covered"}
+
 ## Open Questions
 
 - {Question that remains unresolved, owner if known, and next step}
@@ -64,6 +82,10 @@ docs/questions/YYYY-MM-DD-<topic-slug>.md
 - Record every visible question asked during the session.
 - Preserve the recommendation that accompanied each question.
 - Capture the user's actual answer or correction.
+- Include the goal status and final product snapshot.
+- Mark whether the user chose to cover technical decisions.
+- Mark `Status: complete` only after every active question branch was answered, explicitly deferred, or marked unresolved.
+- If stopped early, name the next unanswered branch so the session can resume without the user needing to reconstruct it.
 - Link to files when evidence came from code or docs.
 - Mark unresolved contradictions directly instead of smoothing them over.
 - Do not include hidden reasoning or private deliberation.
