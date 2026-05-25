@@ -1,22 +1,41 @@
 ---
 name: setup-alejo-skills
-description: Use when a repo needs Alejo skill setup, when `/setup-alejo-skills` is requested, or when Alejo skills are missing Linear Project URL, tracker, triage, domain, or workflow docs.
+description: Use when a repo needs Alejo skill setup, when `/setup-alejo-skills` is requested, or when Alejo skills are missing Git repo setup, Linear Project URL, tracker, triage, domain, or workflow docs.
 ---
 
 # Setup Alejo Skills
 
-Configure a repo for the Alejo skill suite. Use Linear by default. Ask only for the Linear Project URL when it is missing.
+Configure a repo for the Alejo skill suite. Set up Git first, then Linear. Ask only for the Git repo choice and the Linear Project URL when needed.
 
 ## Workflow
 
 1. Explore the repo:
+   - `git status --short --branch`
    - `git remote -v` and `.git/config`
+   - `gh auth status` when GitHub setup is needed
    - `AGENTS.md` or `CLAUDE.md`
    - `docs/agents/`
    - `CONTEXT.md`, `CONTEXT-MAP.md`, and `docs/adr/`
    - existing Linear URLs or safe Linear tooling output
 
-2. Resolve the Linear Project URL.
+2. Resolve the Git repo.
+   - If a usable Git remote already exists, use it.
+   - If the repo has no usable remote, ask exactly:
+
+```text
+Should I use an existing Git repo or create a new one?
+```
+
+   - If using an existing repo, ask for the Git remote URL if it is not already discoverable.
+   - If creating a new repo, suggest a lowercase hyphenated name from the project/folder name and ask exactly:
+
+```text
+I suggest `<repo-name>`. Should I create this GitHub repo?
+```
+
+   - On confirmation, initialize Git if needed, create the remote repo with the active GitHub account, set `origin`, use `main`, and push after setup files are written.
+
+3. Resolve the Linear Project URL.
    - If it is already discoverable, use it.
    - If it is missing, ask exactly:
 
@@ -24,14 +43,14 @@ Configure a repo for the Alejo skill suite. Use Linear by default. Ask only for 
 What Linear Project URL should this repo use for Alejo artifacts and issues?
 ```
 
-3. Apply these defaults:
+4. Apply these defaults:
    - Linear Project Documents hold `PRD`, `SAD`/`SAT`, `Q&A`, `CONTEXT.md`, and `prototype.html`.
    - Linear issues hold only vertical slices and actionable follow-ups.
    - Readiness/execution use Linear workflow statuses: `Needs Triage`, `Needs Info`, `Ready for Human`, `Ready for Agent`, `Night Shift Queued`, `In Night Shift`, `Done`, `Won't Fix`.
    - Labels classify issues only: `vertical-slice`, `hitl`, `sad-follow-up`, `surface:*`, `secrets-required`.
    - Use one root `CONTEXT.md` unless the repo already has `CONTEXT-MAP.md`.
 
-4. Write the setup files directly:
+5. Write the setup files directly:
    - Update `AGENTS.md`; if absent, update `CLAUDE.md`; if both are absent, create `AGENTS.md`.
    - Update one existing `## Agent skills` block in place, or add it if missing.
    - Write `docs/agents/issue-tracker.md`.
@@ -62,7 +81,7 @@ Linear Project Documents for planning artifacts; Linear issues for slices. See `
 
 ## Finish
 
-Report the files written and the Linear Project URL used.
+Report the files written, Git remote used or created, and Linear Project URL used.
 
 End with this short onboarding:
 
