@@ -7,6 +7,10 @@ description: Use when a repo needs Alejo skill setup, when `/setup-alejo-skills`
 
 Configure a repo for the Alejo skill suite. Set up Git first, then Linear. Ask only for the Git repo choice and the Linear Project choice when needed.
 
+## When To Use
+
+Run this once at the start of a repo, or anytime Alejo skills cannot find Git, Linear Project, `docs/agents/*`, domain docs, or `WORKFLOW.md` setup.
+
 ## Workflow
 
 1. Explore the repo:
@@ -95,20 +99,41 @@ Linear Project Documents for planning artifacts; Linear issues for slices. See `
 
 Report the files written, Git remote used or created, and Linear Project used or created.
 
-End with this short onboarding:
+End with this onboarding:
 
 ```md
 ## Alejo Onboarding
 
-1. `$setup-alejo-skills` configures the repo.
-2. `$alejo-questions` resolves domain language and Q&A.
-3. `$alejo-prd` publishes `PRD` to the Linear Project.
-4. `$alejo-prototype` publishes `prototype.html` when UI evidence helps.
-5. `$alejo-sad` publishes `SAD`/`SAT`.
-6. `$alejo-issues` creates vertical-slice Linear issues.
-7. `$alejo-secrets` gives Doppler setup steps when needed.
-8. `$alejo-consistency-propagation` keeps artifacts and issues aligned.
-9. `$alejo-run` moves approved ready issues into the Symphony execution lane.
+Use Alejo in this order for new software work:
+
+1. `$setup-alejo-skills`
+   Run once per repo. It connects Git, creates or connects the Linear Project, writes `AGENTS.md`, `docs/agents/*`, and `WORKFLOW.md`.
+
+2. `$alejo-questions`
+   Use when the idea, domain language, scope, or decisions need sharpening. Output: `Q&A` and `CONTEXT.md` in the Linear Project.
+
+3. `$alejo-prd`
+   Use when product intent is clear enough to describe user value. Output: `PRD` in the Linear Project.
+
+4. `$alejo-prototype`
+   Use when UI references, screenshots, or a throwaway HTML prototype would reduce uncertainty. Output: `prototype.html` in the Linear Project.
+
+5. `$alejo-sad`
+   Use before non-trivial implementation. It turns PRD/prototype/context into architecture. Output: `SAD` or `SAT` in the Linear Project.
+
+6. `$alejo-issues`
+   Use after PRD/SAD to create behavior-first vertical-slice Linear issues. These issues are the implementation contracts.
+
+7. `$alejo-secrets`
+   Use when issues need API keys, credentials, tokens, or env vars. Output: Doppler setup steps in chat; never secret values in files.
+
+8. `$alejo-consistency-propagation`
+   Use after any PRD, SAD/SAT, Q&A, context, prototype, issue, secret-name, or `WORKFLOW.md` change. It keeps Linear Project Documents and issues aligned.
+
+9. `$alejo-run`
+   Use only when ready Linear issues should go to Symphony. It preflights issue contracts, asks for approval, and moves approved issues into the Symphony execution lane.
+
+If humans will implement manually, stop after `$alejo-issues` plus any needed `$alejo-secrets`. If Symphony should implement, continue to `$alejo-run`.
 ```
 
 ## Templates
