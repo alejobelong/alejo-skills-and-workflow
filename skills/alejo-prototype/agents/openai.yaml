@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo Prototype"
+  short_description: "Build HTML prototypes from URLs or images"
+  default_prompt: "Use $alejo-prototype to study these reference URLs/images, capture detailed look-and-feel notes, ask about design system, then build a disposable HTML prototype."

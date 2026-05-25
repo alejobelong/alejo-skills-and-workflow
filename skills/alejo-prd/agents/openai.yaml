@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo PRD"
+  short_description: "Create product PRDs in Linear Projects"
+  default_prompt: "Use $alejo-prd to turn the current conversation context into a short product-focused PRD and publish it to a Linear Project."

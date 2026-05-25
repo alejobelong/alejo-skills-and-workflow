@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo SAD"
+  short_description: "Create SADs with diagrams and slice-based code structure"
+  default_prompt: "Use $alejo-sad to create a compact solution architecture document with simple Mermaid diagrams and vertical-slice code organization."

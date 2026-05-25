@@ -1,0 +1,19 @@
+.DS_Store
+Thumbs.db
+
+# Local editor and OS metadata
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Dependency and generated caches
+node_modules/
+.cache/
+.turbo/
+dist/
+build/
+
+# Local environment files
+.env
+.env.*

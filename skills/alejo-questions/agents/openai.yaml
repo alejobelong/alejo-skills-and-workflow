@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo Questions"
+  short_description: "Stress-test plans and capture Q&A"
+  default_prompt: "Use $alejo-questions to stress-test this plan against the codebase and record the Q&A session."

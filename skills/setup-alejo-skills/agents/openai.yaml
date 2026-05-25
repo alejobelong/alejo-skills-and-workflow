@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo Setup"
+  short_description: "Configure repos for Alejo skills"
+  default_prompt: "Use $setup-alejo-skills to configure this repo for the Alejo skill suite."
