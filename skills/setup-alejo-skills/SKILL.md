@@ -1,11 +1,11 @@
 ---
 name: setup-alejo-skills
-description: Use when a repo needs Alejo skill setup, when `/setup-alejo-skills` is requested, or when Alejo skills are missing Git repo setup, Linear Project URL, tracker, triage, domain, or workflow docs.
+description: Use when a repo needs Alejo skill setup, when `/setup-alejo-skills` is requested, or when Alejo skills are missing Git repo setup, Linear Project setup, tracker, triage, domain, or workflow docs.
 ---
 
 # Setup Alejo Skills
 
-Configure a repo for the Alejo skill suite. Set up Git first, then Linear. Ask only for the Git repo choice and the Linear Project URL when needed.
+Configure a repo for the Alejo skill suite. Set up Git first, then Linear. Ask only for the Git repo choice and the Linear Project choice when needed.
 
 ## Workflow
 
@@ -16,6 +16,7 @@ Configure a repo for the Alejo skill suite. Set up Git first, then Linear. Ask o
    - `AGENTS.md` or `CLAUDE.md`
    - `docs/agents/`
    - `CONTEXT.md`, `CONTEXT-MAP.md`, and `docs/adr/`
+   - Linear connector/MCP, installed Linear CLI, or Linear API/SDK access
    - existing Linear URLs or safe Linear tooling output
 
 2. Resolve the Git repo.
@@ -35,13 +36,24 @@ I suggest `<repo-name>`. Should I create this GitHub repo?
 
    - On confirmation, initialize Git if needed, create the remote repo with the active GitHub account, set `origin`, use `main`, and push after setup files are written.
 
-3. Resolve the Linear Project URL.
-   - If it is already discoverable, use it.
-   - If it is missing, ask exactly:
+3. Resolve the Linear Project.
+   - If a Linear Project is already discoverable, use it.
+   - If no project is discoverable, ask exactly:
 
 ```text
-What Linear Project URL should this repo use for Alejo artifacts and issues?
+Should I use an existing Linear Project or create a new one?
 ```
+
+   - If using an existing project, ask for the Linear Project URL if it is not already discoverable.
+   - If creating a new project, suggest a clear project name from the Git repo/folder name and ask exactly:
+
+```text
+I suggest `<project-name>`. Should I create this Linear Project?
+```
+
+   - Use the discovered/default Linear team. If no team is discoverable, ask which Linear team should own the project.
+   - On confirmation, create the Linear Project from Codex. Prefer a Linear connector/MCP. Otherwise use an installed Linear CLI if it supports project creation. Otherwise use Linear's API/SDK.
+   - If Codex has no Linear write access, stop and say Linear access must be connected before setup can finish. Do not fall back to placeholders.
 
 4. Apply these defaults:
    - Linear Project Documents hold `PRD`, `SAD`/`SAT`, `Q&A`, `CONTEXT.md`, and `prototype.html`.
@@ -59,7 +71,7 @@ What Linear Project URL should this repo use for Alejo artifacts and issues?
    - Write `docs/agents/alejo-workflow.md`.
    - Write or update root `WORKFLOW.md` for Symphony.
 
-Use the templates in `references/`. The Linear Project URL is required; do not write Linear project placeholders.
+Use the templates in `references/`. A resolved Linear Project is required; do not write Linear project placeholders.
 
 ## Agent Skills Block
 
@@ -81,7 +93,7 @@ Linear Project Documents for planning artifacts; Linear issues for slices. See `
 
 ## Finish
 
-Report the files written, Git remote used or created, and Linear Project URL used.
+Report the files written, Git remote used or created, and Linear Project used or created.
 
 End with this short onboarding:
 

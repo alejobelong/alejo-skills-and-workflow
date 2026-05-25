@@ -4,9 +4,10 @@ Purpose: tell every Alejo skill where to publish planning artifacts, where to cr
 
 ## Required Setup
 
-- Linear Project URL
+- Linear Project URL or newly created Linear Project
 - Linear team or project context
-- Access method/tooling available in the repo
+- Linear connector/MCP, installed Linear CLI, or Linear API/SDK write access
+- Access method/tooling available to Codex
 
 ## Project Documents
 
@@ -17,6 +18,8 @@ Publish planning artifacts at the Linear Project level:
 - `Q&A`
 - `CONTEXT.md`
 - `prototype.html`
+
+Create these Project Documents during setup when Linear tooling supports document creation. Otherwise create or update each document when its Alejo skill runs.
 
 ## Linear Issues
 

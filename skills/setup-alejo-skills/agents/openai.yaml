@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Setup"
   short_description: "Configure Git, Linear, and Alejo docs"
-  default_prompt: "Use $setup-alejo-skills to configure Git, Linear Project URL, Alejo docs, and Symphony workflow for this repo."
+  default_prompt: "Use $setup-alejo-skills to configure Git, create or connect a Linear Project, write Alejo docs, and set up Symphony workflow for this repo."
