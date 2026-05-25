@@ -1,15 +1,15 @@
 ---
 name: setup-alejo-skills
-description: Use when a repo needs Alejo skill setup, when `/setup-alejo-skills` is requested, or when Alejo skills are missing Git repo setup, Linear Project setup, tracker, triage, domain, or workflow docs.
+description: Use when a repo needs Alejo skill setup, when `/setup-alejo-skills` is requested, or when Alejo skills are missing Git repo setup, Linear Project setup, AGENTS.md, docs/agents, or WORKFLOW.md.
 ---
 
 # Setup Alejo Skills
 
-Configure a repo for the Alejo skill suite. Set up Git first, then Linear. Ask only for the Git repo choice and the Linear Project choice when needed.
+Configure a repo for the Alejo skill suite. Set up Git first, then Linear. Ask only for the Git repo choice and the Linear Project choice when needed. Write a short, clear `AGENTS.md` that explains how to use the stack in this repo.
 
 ## When To Use
 
-Run this once at the start of a repo, or anytime Alejo skills cannot find Git, Linear Project, `docs/agents/*`, domain docs, or `WORKFLOW.md` setup.
+Run this once at the start of a repo, or anytime Alejo skills cannot find Git, Linear Project, `AGENTS.md`, `docs/agents/*`, domain docs, or `WORKFLOW.md` setup.
 
 ## Workflow
 
@@ -68,31 +68,67 @@ I suggest `<project-name>`. Should I create this Linear Project?
 
 5. Write the setup files directly:
    - Update `AGENTS.md`; if absent, update `CLAUDE.md`; if both are absent, create `AGENTS.md`.
-   - Update one existing `## Agent skills` block in place, or add it if missing.
+   - Replace any old setup block such as `## Agent skills`, `## Alejo Setup`, or `## Alejo Onboarding` with the current `AGENTS.md` shape.
+   - `AGENTS.md` must be the short repo onboarding and source-of-truth map, not just a list of doc links.
    - Write `docs/agents/issue-tracker.md`.
    - Write `docs/agents/triage-labels.md`.
    - Write `docs/agents/domain.md`.
    - Write `docs/agents/alejo-workflow.md`.
    - Write or update root `WORKFLOW.md` for Symphony.
 
-Use the templates in `references/`. A resolved Linear Project is required; do not write Linear project placeholders.
+Use the templates in `references/`. Insert resolved repo-specific values: GitHub remote, Linear Project name and URL, Linear team, access method, and Project Document URLs when available. A resolved Linear Project is required; do not write Linear project placeholders.
 
-## Agent Skills Block
+## AGENTS.md Shape
+
+Use [agents.md](./references/agents.md) as the shape for `AGENTS.md`. Replace every bracketed value before writing. If a non-required value is unknown, omit that line instead of writing a placeholder.
+
+Keep the generated `AGENTS.md` short. It should contain:
+
+- project title
+- resolved GitHub repo
+- resolved Linear Project and team
+- where each artifact lives
+- short skill flow
+- links to `docs/agents/*` and `WORKFLOW.md`
+
+Do not call `docs/agents/*` "Agent skills"; those are setup reference docs.
+
+Minimal generated shape:
 
 ```md
-## Agent skills
+# <Project Name>
 
-### Issue tracker
-Linear Project and issue setup. See `docs/agents/issue-tracker.md`.
+This repo uses the Alejo skill suite.
 
-### Triage labels
-Linear workflow statuses and issue labels. See `docs/agents/triage-labels.md`.
+## Alejo Setup
 
-### Domain docs
-Domain glossary setup. See `docs/agents/domain.md`.
+- GitHub: <repo URL>
+- Linear Project: <project name> - <project URL>
+- Linear team: <team name> (<team key>)
+- Planning artifacts live in Linear Project Documents: `Q&A`, `CONTEXT.md`, `PRD`, `prototype.html`, `SAD`/`SAT`.
+- Linear issues are only for vertical-slice implementation and actionable follow-ups.
+- `WORKFLOW.md` is the Symphony execution contract for approved issues.
+- Secret values belong in Doppler, never in repo files or Linear issue bodies.
 
-### Alejo workflow
-Linear Project Documents for planning artifacts; Linear issues for slices. See `docs/agents/alejo-workflow.md`.
+## Skill Flow
+
+1. `$setup-alejo-skills`: rerun only when Git, Linear, or setup docs are missing.
+2. `$alejo-questions`: clarify domain language, product questions, and trade-offs.
+3. `$alejo-prd`: publish product intent and user value to Linear.
+4. `$alejo-prototype`: publish UI evidence or a throwaway HTML prototype when useful.
+5. `$alejo-sad`: publish architecture for non-trivial implementation.
+6. `$alejo-issues`: create behavior-first vertical-slice Linear issues.
+7. `$alejo-secrets`: provide Doppler setup steps for required secrets.
+8. `$alejo-consistency-propagation`: reconcile changed artifacts and issue contracts.
+9. `$alejo-run`: preflight ready issues and hand approved work to Symphony.
+
+## Repo References
+
+- `docs/agents/issue-tracker.md`: Linear Project, Project Documents, issue contract, Symphony handoff.
+- `docs/agents/triage-labels.md`: Linear statuses and issue labels.
+- `docs/agents/domain.md`: glossary, context map, and ADR conventions.
+- `docs/agents/alejo-workflow.md`: planning-to-Symphony workflow.
+- `WORKFLOW.md`: Symphony execution workflow.
 ```
 
 ## Finish
@@ -143,3 +179,4 @@ If humans will implement manually, stop after `$alejo-issues` plus any needed `$
 - `references/domain.md`
 - `references/alejo-workflow.md`
 - `references/symphony-workflow.md`
+- `references/agents.md`
