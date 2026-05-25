@@ -2,10 +2,11 @@
 
 Linear Projects are the planning container. Linear Project Documents/Resources are the canonical home for Alejo planning artifacts. Vertical slices and actionable follow-ups live as Linear issues.
 
-Use the Linear workspace/team/project configured for this repo. If the workspace, team key, project, or access method is unclear, infer it from existing docs, issue/project links, branch names, remotes, or available Linear tooling. If it still cannot be inferred, write `TODO: fill Linear ...` placeholders in the setup docs and report them; do not ask before completing setup.
+Use the Linear workspace/team/project configured for this repo. The setup skill must anchor this file to a Linear Project URL so Alejo artifacts and issues have a complete destination. If the URL is not discoverable from existing docs, issue/project links, branch names, remotes, or available Linear tooling, ask the user for the Linear Project URL before writing setup files. Do not write `TODO: fill Linear ...` placeholders for workspace/team/project.
 
 ## Conventions
 
+- Required setup fields: Linear Project URL, workspace, team or project context, issue destination, Project Document destination, and access method/tooling.
 - Planning artifacts: create or update Linear Project Documents/Resources for `PRD`, `SAD`/`SAT`, `Q&A`, `CONTEXT.md`, and `prototype.html`. Do not create issues for these artifacts.
 - PRD: create or update a Linear Project and publish the PRD Markdown to the Project document named `PRD`. Use the project overview/detailed description only if Project Documents are unavailable in the active tooling.
 - SAD/SAT: publish the architecture document to the Project document named `SAD` by default, or `SAT` only when the repo/user already uses that term.

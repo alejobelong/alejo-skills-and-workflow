@@ -1,11 +1,11 @@
 ---
 name: setup-alejo-skills
-description: Use when a repo needs one-shot Linear-default configuration for Alejo skills, when `/setup-alejo-skills` is requested, or when Alejo PRD/Issues are missing issue tracker, triage label, domain doc, Linear Project document, or artifact-location context.
+description: Use when a repo needs one-shot Linear-default configuration for Alejo skills, when `/setup-alejo-skills` is requested, or when Alejo PRD/Issues are missing issue tracker, triage label, domain doc, Linear Project URL, Linear Project document, or artifact-location context.
 ---
 
 # Setup Alejo Skills
 
-Scaffold the per-repo configuration expected by the Alejo skill suite. This is an autopilot setup skill: explore, infer, apply the recommended Linear defaults, then write. Do not ask for confirmation before using the Linear defaults.
+Scaffold the per-repo configuration expected by the Alejo skill suite. This is an autopilot setup skill: explore, infer, ask for the Linear Project URL only when needed, apply the recommended Linear defaults, then write. Do not ask for confirmation before using the Linear defaults.
 
 ## Process
 
@@ -19,7 +19,17 @@ Read, do not assume:
 - `docs/agents/`, `docs/questions/`, `docs/prototypes/`, `docs/architecture/`, Doppler configuration hints, and `.scratch/prototypes/`.
 - Existing Linear workspace, team, project, Project Documents, workflow statuses, and issue labels if Linear tooling is available and safe to query.
 
-### 2. Apply Linear Defaults
+### 2. Resolve Linear Project URL
+
+Setup must produce a complete Linear configuration. If a Linear Project URL is not already present in repo docs, existing agent setup files, issue/project links, branch metadata, or safe Linear tooling output, ask exactly one direct question and wait:
+
+```text
+What Linear Project URL should this repo use for Alejo artifacts and issues?
+```
+
+Use the answer to derive the Linear workspace, team/project context, project identifier, project document destination, and issue destination. If the user provides a Linear issue, team, or workspace URL instead of a Project URL, inspect it if tooling allows; otherwise ask for the Linear Project URL. This is required input, not a confirmation prompt.
+
+### 3. Apply Linear Defaults
 
 Use Linear unless the user explicitly asks for another tracker or the repo already has unambiguous non-Linear Alejo instructions. Do not ask the user to choose the issue tracker, status mapping, label set, domain-doc mode, artifact paths, or Linear Project document policy.
 
@@ -32,10 +42,9 @@ Recommended Linear defaults:
 - Labels classify issue type/surface only: `vertical-slice`, `hitl`, `sad-follow-up`, `surface:*`, and `secrets-required`.
 - Domain docs use a single root `CONTEXT.md` unless a repo already has `CONTEXT-MAP.md` or obvious multiple bounded contexts.
 - Local docs and `.scratch/prototypes/` may be temporary working copies, but the Linear Project Documents are the published source of truth for Alejo artifacts.
+- The resolved Linear Project URL is the durable anchor for `docs/agents/issue-tracker.md` and all Project Document publishing.
 
-If Linear workspace/team/project details are not discoverable, still write the Alejo setup files with `TODO: fill Linear ...` placeholders and report those placeholders at the end. Do not block setup to ask for them.
-
-### 3. Write Directly
+### 4. Write Directly
 
 Do not show a draft before editing. Use templates from `references/` and write:
 
@@ -71,7 +80,7 @@ The block:
 {one-line summary of Linear Project document artifact storage, Linear issue slice storage, and skill flow}. See `docs/agents/alejo-workflow.md`.
 ```
 
-### 4. Done
+### 5. Done
 
 Report the files written and which Alejo skills now read them: `alejo-questions`, `alejo-prd`, `alejo-prototype`, `alejo-sad`, `alejo-issues`, `alejo-secrets`, `alejo-run`, and `alejo-consistency-propagation`.
 
