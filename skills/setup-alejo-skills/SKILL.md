@@ -1,116 +1,87 @@
 ---
 name: setup-alejo-skills
-description: Use when a repo needs one-shot Linear-default configuration for Alejo skills, when `/setup-alejo-skills` is requested, or when Alejo PRD/Issues are missing issue tracker, triage label, domain doc, Linear Project URL, Linear Project document, or artifact-location context.
+description: Use when a repo needs Alejo skill setup, when `/setup-alejo-skills` is requested, or when Alejo skills are missing Linear Project URL, tracker, triage, domain, or workflow docs.
 ---
 
 # Setup Alejo Skills
 
-Scaffold the per-repo configuration expected by the Alejo skill suite. This is an autopilot setup skill: explore, infer, ask for the Linear Project URL only when needed, apply the recommended Linear defaults, then write. Do not ask for confirmation before using the Linear defaults.
+Configure a repo for the Alejo skill suite. Use Linear by default. Ask only for the Linear Project URL when it is missing.
 
-## Process
+## Workflow
 
-### 1. Explore
+1. Explore the repo:
+   - `git remote -v` and `.git/config`
+   - `AGENTS.md` or `CLAUDE.md`
+   - `docs/agents/`
+   - `CONTEXT.md`, `CONTEXT-MAP.md`, and `docs/adr/`
+   - existing Linear URLs or safe Linear tooling output
 
-Read, do not assume:
-
-- `git remote -v` and `.git/config` for GitHub/GitLab/other remotes, plus any Linear workspace/team/project hints in docs or environment.
-- Root `AGENTS.md` and `CLAUDE.md`, especially any existing `## Agent skills` block.
-- Root `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/`, and context-local `docs/adr/`.
-- `docs/agents/`, `docs/questions/`, `docs/prototypes/`, `docs/architecture/`, Doppler configuration hints, and `.scratch/prototypes/`.
-- Existing Linear workspace, team, project, Project Documents, workflow statuses, and issue labels if Linear tooling is available and safe to query.
-
-### 2. Resolve Linear Project URL
-
-Setup must produce a complete Linear configuration. If a Linear Project URL is not already present in repo docs, existing agent setup files, issue/project links, branch metadata, or safe Linear tooling output, ask exactly one direct question and wait:
+2. Resolve the Linear Project URL.
+   - If it is already discoverable, use it.
+   - If it is missing, ask exactly:
 
 ```text
 What Linear Project URL should this repo use for Alejo artifacts and issues?
 ```
 
-Use the answer to derive the Linear workspace, team/project context, project identifier, project document destination, and issue destination. If the user provides a Linear issue, team, or workspace URL instead of a Project URL, inspect it if tooling allows; otherwise ask for the Linear Project URL. This is required input, not a confirmation prompt.
+3. Apply these defaults:
+   - Linear Project Documents hold `PRD`, `SAD`/`SAT`, `Q&A`, `CONTEXT.md`, and `prototype.html`.
+   - Linear issues hold only vertical slices and actionable follow-ups.
+   - Readiness/execution use Linear workflow statuses: `Needs Triage`, `Needs Info`, `Ready for Human`, `Ready for Agent`, `Night Shift Queued`, `In Night Shift`, `Done`, `Won't Fix`.
+   - Labels classify issues only: `vertical-slice`, `hitl`, `sad-follow-up`, `surface:*`, `secrets-required`.
+   - Use one root `CONTEXT.md` unless the repo already has `CONTEXT-MAP.md`.
 
-### 3. Apply Linear Defaults
+4. Write the setup files directly:
+   - Update `AGENTS.md`; if absent, update `CLAUDE.md`; if both are absent, create `AGENTS.md`.
+   - Update one existing `## Agent skills` block in place, or add it if missing.
+   - Write `docs/agents/issue-tracker.md`.
+   - Write `docs/agents/triage-labels.md`.
+   - Write `docs/agents/domain.md`.
+   - Write `docs/agents/alejo-workflow.md`.
 
-Use Linear unless the user explicitly asks for another tracker or the repo already has unambiguous non-Linear Alejo instructions. Do not ask the user to choose the issue tracker, status mapping, label set, domain-doc mode, artifact paths, or Linear Project document policy.
+Use the templates in `references/`. The Linear Project URL is required; do not write Linear project placeholders.
 
-Recommended Linear defaults:
-
-- Linear Projects are the planning container for product work.
-- Linear Project Documents/Resources are the canonical home for Alejo planning artifacts: `PRD`, `SAD`/`SAT`, `Q&A`, `CONTEXT.md`, and `prototype.html`.
-- Linear issues are only for vertical-slice implementation work and actionable follow-ups. Do not create PRD, SAD/SAT, Q&A, context, or prototype issues.
-- Workflow statuses carry readiness/execution: `Needs Triage`, `Needs Info`, `Ready for Human`, `Ready for Agent`, `Night Shift Queued`, `In Night Shift`, `Done`, `Won't Fix`.
-- Labels classify issue type/surface only: `vertical-slice`, `hitl`, `sad-follow-up`, `surface:*`, and `secrets-required`.
-- Domain docs use a single root `CONTEXT.md` unless a repo already has `CONTEXT-MAP.md` or obvious multiple bounded contexts.
-- Local docs and `.scratch/prototypes/` may be temporary working copies, but the Linear Project Documents are the published source of truth for Alejo artifacts.
-- The resolved Linear Project URL is the durable anchor for `docs/agents/issue-tracker.md` and all Project Document publishing.
-
-### 4. Write Directly
-
-Do not show a draft before editing. Use templates from `references/` and write:
-
-- The `## Agent skills` block for `AGENTS.md` or `CLAUDE.md`.
-- `docs/agents/issue-tracker.md`.
-- `docs/agents/triage-labels.md`.
-- `docs/agents/domain.md`.
-- `docs/agents/alejo-workflow.md`.
-
-Pick the file to edit:
-
-- If `AGENTS.md` exists, edit it.
-- Else if `CLAUDE.md` exists, edit it.
-- If neither exists, create `AGENTS.md`.
-
-Update an existing `## Agent skills` block in place. Do not duplicate it or overwrite surrounding user edits.
-
-The block:
+## Agent Skills Block
 
 ```md
 ## Agent skills
 
 ### Issue tracker
-{one-line summary}. See `docs/agents/issue-tracker.md`.
+Linear Project and issue setup. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
-{one-line summary}. See `docs/agents/triage-labels.md`.
+Linear workflow statuses and issue labels. See `docs/agents/triage-labels.md`.
 
 ### Domain docs
-{single-context or multi-context summary}. See `docs/agents/domain.md`.
+Domain glossary setup. See `docs/agents/domain.md`.
 
 ### Alejo workflow
-{one-line summary of Linear Project document artifact storage, Linear issue slice storage, and skill flow}. See `docs/agents/alejo-workflow.md`.
+Linear Project Documents for planning artifacts; Linear issues for slices. See `docs/agents/alejo-workflow.md`.
 ```
 
-### 5. Done
+## Finish
 
-Report the files written and which Alejo skills now read them: `alejo-questions`, `alejo-prd`, `alejo-prototype`, `alejo-sad`, `alejo-issues`, `alejo-secrets`, `alejo-run`, and `alejo-consistency-propagation`.
+Report the files written and the Linear Project URL used.
 
-End with a short Alejo onboarding for building software. Derive it from the actual installed Alejo skills, not only from `docs/agents/alejo-workflow.md`, because the repo workflow doc may be stale.
-
-Use this shape:
+End with this short onboarding:
 
 ```md
 ## Alejo Onboarding
 
-Expected path for new software work:
-1. Required once per repo: `$setup-alejo-skills`.
-2. Usually required for new product work: `$alejo-questions` to resolve domain language, decisions, ADRs, and Q&A, then publish `Q&A` and `CONTEXT.md` to the Linear Project.
-3. Required for agent-ready product work: `$alejo-prd` to publish product intent as the Linear Project `PRD` document.
-4. Optional after PRD, before SAD: `$alejo-prototype` when reference-driven UI evidence or a small disposable experiment can reduce uncertainty; publish the resulting `prototype.html` to the Linear Project.
-5. Required for non-trivial implementation: `$alejo-sad` to turn requirements and prototype evidence into architecture, then publish `SAD`/`SAT` to the Linear Project.
-6. Required before implementation agents: `$alejo-issues` to create behavior-first vertical slices.
-7. Conditional: `$alejo-secrets` when slices need credentials, APIs, tokens, or env vars; it outputs a Doppler-only terminal guide and never writes secret values. If confirmed secret names change after issues exist, propagate the name-only change back to Linear issues before `$alejo-run`.
-8. Anytime during day shift: `$alejo-consistency-propagation` after any artifact changes, contradictions, removals, secret-name changes, or scope drift. This is a day-shift skill only.
-9. Optional autonomous execution path: `$alejo-run` after ready Linear issues; it preflights issue contracts, asks for approval, then moves approved issues into Symphony's execution lane.
-
-If the user will implement manually, stop after approved issues plus any needed Doppler setup. If the user wants autonomous execution, continue through Alejo Run. Do not create a separate plan artifact. Night-shift skills for Symphony coding/testing threads are not defined yet and will be designed later.
+1. `$setup-alejo-skills` configures the repo.
+2. `$alejo-questions` resolves domain language and Q&A.
+3. `$alejo-prd` publishes `PRD` to the Linear Project.
+4. `$alejo-prototype` publishes `prototype.html` when UI evidence helps.
+5. `$alejo-sad` publishes `SAD`/`SAT`.
+6. `$alejo-issues` creates vertical-slice Linear issues.
+7. `$alejo-secrets` gives Doppler setup steps when needed.
+8. `$alejo-consistency-propagation` keeps artifacts and issues aligned.
+9. `$alejo-run` moves approved ready issues into the Symphony execution lane.
 ```
 
 ## Templates
 
-- `references/issue-tracker-github.md`
-- `references/issue-tracker-gitlab.md`
 - `references/issue-tracker-linear.md`
-- `references/issue-tracker-local.md`
 - `references/triage-labels.md`
 - `references/domain.md`
 - `references/alejo-workflow.md`

@@ -2,7 +2,7 @@
 
 Linear Projects are the planning container. Linear Project Documents/Resources are the canonical home for Alejo planning artifacts. Vertical slices and actionable follow-ups live as Linear issues.
 
-Use the Linear workspace/team/project configured for this repo. The setup skill must anchor this file to a Linear Project URL so Alejo artifacts and issues have a complete destination. If the URL is not discoverable from existing docs, issue/project links, branch names, remotes, or available Linear tooling, ask the user for the Linear Project URL before writing setup files. Do not write `TODO: fill Linear ...` placeholders for workspace/team/project.
+Use the Linear Project URL configured for this repo. If it is missing, `setup-alejo-skills` asks for it before writing setup files. Do not write Linear project placeholders.
 
 ## Conventions
 

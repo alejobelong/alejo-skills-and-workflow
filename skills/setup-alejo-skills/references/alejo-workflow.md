@@ -43,7 +43,7 @@ For new software work, use this path:
 8. Anytime during day shift: `alejo-consistency-propagation` after any artifact changes, contradictions, removals, secret-name changes, or scope drift.
 9. Optional autonomous execution path: `alejo-run` after ready Linear issues; it preflights issue contracts, asks for approval, then moves approved issues into Symphony's execution lane.
 
-If `alejo-secrets` confirms, renames, adds, or removes required Doppler secret names after issues exist, run `alejo-consistency-propagation` or update the affected Linear issues before `alejo-run`.
+If required Doppler secret names change after issues exist, run `alejo-consistency-propagation` or update the affected Linear issues before `alejo-run`.
 
 If the user will implement manually, stop after approved issues plus any needed Doppler setup. If the user wants autonomous execution, continue through Alejo Run. Do not create a separate plan artifact.
 
