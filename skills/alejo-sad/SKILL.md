@@ -9,12 +9,12 @@ Create a compact Solution Architecture Document. Optimize the architecture for t
 
 ## Process
 
-1. Use the current context window first. Then inspect relevant PRDs, latest `docs/questions/` logs, prototype reports in `docs/prototypes/`, `CONTEXT.md`/`CONTEXT-MAP.md`, ADRs, plans, code, and other prior Alejo-skill outputs.
+1. Use the current context window first. Then inspect relevant Linear Project Documents (`PRD`, `Q&A`, `CONTEXT.md`, `prototype.html`), local mirrors such as latest `docs/questions/` logs, prototype reports in `docs/prototypes/`, `CONTEXT.md`/`CONTEXT-MAP.md`, ADRs, plans, code, and other prior Alejo-skill outputs.
 2. If unclear, ask exactly these initial quality-attribute questions one at a time as multiple choice. For each, put the recommended option first with a short rationale, then let the user confirm/correct:
    - Which 3 quality attributes should drive the architecture?
    - What measurable targets or constraints define success for them?
    - Which trade-offs are acceptable to improve them?
-3. Draft one Markdown SAD. Default path: `docs/architecture/YYYY-MM-DD-<topic>-sad.md`.
+3. Draft one Markdown SAD. In Linear-configured repos, publish it to the Linear Project document named `SAD` by default, or `SAT` only when the repo/user already uses that title. A local `docs/architecture/YYYY-MM-DD-<topic>-sad.md` file may be used as a working copy or mirror, but it is not the canonical published artifact.
 4. Use Mermaid for every diagram. Keep diagrams simple, high-level, complete, and truthful to the architecture that should be implemented. Do not use image files or prose-only diagrams.
 5. Use prototype evidence to inform architecture and trade-offs, but do not treat prototype code as production design unless the user explicitly approved promoting it.
 6. Require vertical-slice code organization in the SAD so later `alejo-issues` slices can map each user-facing capability to one feature folder.

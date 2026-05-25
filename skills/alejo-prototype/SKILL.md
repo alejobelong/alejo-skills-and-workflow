@@ -13,7 +13,7 @@ When running inside the Alejo flow, also read relevant context if available:
 
 - Latest Alejo Questions log in `docs/questions/`.
 - Root `CONTEXT.md` and relevant ADRs in `docs/adr/`.
-- Relevant PRD Linear Project content.
+- Relevant Linear Project Documents: `PRD`, `Q&A`, `CONTEXT.md`, and prior `prototype.html`.
 
 Do not block on missing Alejo docs. For quick visual prototypes, the required inputs are reference URLs or images, plus the user's build description.
 
@@ -110,5 +110,7 @@ Report:
 - Prototype file and screenshots.
 - What design decisions were borrowed from the references.
 - What the prototype proves, what it does not prove, and any open UX/SAD/issues notes.
+
+In Linear-configured repos, publish the final prototype to the Linear Project document named `prototype.html` without asking for confirmation. Include the full HTML in a fenced `html` code block plus a short report summary, screenshot/reference links where available, and any open UX/SAD/issues notes. Local `.scratch/prototypes/` and `docs/prototypes/` files are disposable working copies or mirrors; the Linear Project document is the canonical published artifact.
 
 The next Alejo step is `alejo-sad`, which should read the prototype report when architecture or slicing depends on the prototype.

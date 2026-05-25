@@ -6,10 +6,10 @@ This repo is configured for the Alejo skill suite.
 
 Day shift skills are human-facing planning, clarification, documentation, and approval skills. They run before or around implementation work; they are not injected into coding or testing agents inside Sand Castle.
 
-1. `alejo-questions` stress-tests plans, updates domain language/ADRs, and writes session logs.
-2. `alejo-prd` turns conversation and repo context into a product-focused PRD and publishes it to a Linear Project, not an issue.
-3. `alejo-prototype` optionally studies reference URLs/images, writes detailed design analysis, and builds a disposable HTML prototype when evidence is needed before architecture.
-4. `alejo-sad` creates a compact Solution Architecture Document with Mermaid diagrams, using prototype evidence when available.
+1. `alejo-questions` stress-tests plans, updates domain language/ADRs, and publishes `Q&A` plus `CONTEXT.md` to the Linear Project.
+2. `alejo-prd` turns conversation and repo context into a product-focused PRD and publishes it to the Linear Project document named `PRD`, not an issue.
+3. `alejo-prototype` optionally studies reference URLs/images, writes detailed design analysis, builds a disposable HTML prototype, and publishes `prototype.html` to the Linear Project.
+4. `alejo-sad` creates a compact Solution Architecture Document with Mermaid diagrams, using prototype evidence when available, and publishes it to the Linear Project document named `SAD` by default.
 5. `alejo-issues` turns PRD + prototype + SAD context into the thinnest possible vertical-slice issues.
 6. `alejo-secrets` guides the user through required Doppler secrets when slices need credentials, APIs, tokens, or env vars.
 7. `alejo-run` preflights ready Linear issues, asks for human approval, and moves approved issues into the Symphony execution lane.
@@ -34,10 +34,10 @@ Do not treat day-shift skills, including `alejo-consistency-propagation`, as nig
 For new software work, use this path:
 
 1. Required once per repo: `setup-alejo-skills`.
-2. Usually required for new product work: `alejo-questions` to resolve domain language, decisions, ADRs, and Q&A.
-3. Required for agent-ready product work: `alejo-prd` to publish product intent to a Linear Project.
-4. Optional after PRD, before SAD: `alejo-prototype` when reference-driven UI evidence or a small disposable experiment can reduce uncertainty.
-5. Required for non-trivial implementation: `alejo-sad` to turn requirements and prototype evidence into architecture.
+2. Usually required for new product work: `alejo-questions` to resolve domain language, decisions, ADRs, and Q&A, then publish `Q&A` and `CONTEXT.md` to the Linear Project.
+3. Required for agent-ready product work: `alejo-prd` to publish product intent to the Linear Project document named `PRD`.
+4. Optional after PRD, before SAD: `alejo-prototype` when reference-driven UI evidence or a small disposable experiment can reduce uncertainty, then publish `prototype.html` to the Linear Project.
+5. Required for non-trivial implementation: `alejo-sad` to turn requirements and prototype evidence into architecture, then publish the Linear Project document named `SAD` or `SAT` if the repo already uses that term.
 6. Required before implementation agents: `alejo-issues` to create behavior-first vertical slices.
 7. Conditional: `alejo-secrets` when slices need credentials, APIs, tokens, or env vars; it outputs a Doppler-only terminal guide and never writes secret values.
 8. Anytime during day shift: `alejo-consistency-propagation` after any artifact changes, contradictions, removals, secret-name changes, or scope drift.
@@ -49,16 +49,16 @@ If the user will implement manually, stop after approved issues plus any needed 
 
 ## Artifact Locations
 
-- Domain glossary: `CONTEXT.md` or paths in `CONTEXT-MAP.md`.
+- Canonical planning artifacts: Linear Project Documents/Resources for `PRD`, `SAD`/`SAT`, `Q&A`, `CONTEXT.md`, and `prototype.html`.
+- Domain glossary: `CONTEXT.md` or paths in `CONTEXT-MAP.md` as working copies, synced to the Linear Project document named `CONTEXT.md`.
 - ADRs: `docs/adr/` and context-local `docs/adr/`.
-- Alejo Questions logs: `docs/questions/YYYY-MM-DD-<topic-slug>.md`.
-- Prototype reports: `docs/prototypes/YYYY-MM-DD-<topic>-prototype.md`.
-- Disposable prototype code: `.scratch/prototypes/YYYY-MM-DD-<topic>/`.
-- SADs: `docs/architecture/YYYY-MM-DD-<topic>-sad.md`.
+- Alejo Questions logs: Linear Project document `Q&A`; local `docs/questions/YYYY-MM-DD-<topic-slug>.md` may be used as a working copy only when useful.
+- Prototype reports and HTML: Linear Project document `prototype.html`, with local `.scratch/prototypes/YYYY-MM-DD-<topic>/` used for disposable browser verification.
+- SADs: Linear Project document `SAD` by default, or `SAT` only when the repo already uses that title.
 - Secrets: Doppler only. Secret names live in issue run contracts; `alejo-secrets` outputs setup commands in conversation and does not write secret values.
 - Symphony workflow: `WORKFLOW.md`.
 - Autonomous run state and reports: Linear/Symphony, as configured by `WORKFLOW.md`.
-- PRDs: Linear Projects configured in `docs/agents/issue-tracker.md`.
+- PRDs: Linear Project document `PRD` configured in `docs/agents/issue-tracker.md`.
 - Implementation slices: Linear issues configured in `docs/agents/issue-tracker.md`.
 
 ## Vertical Slice Rule

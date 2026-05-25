@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Setup"
-  short_description: "Configure repos for Alejo skills"
-  default_prompt: "Use $setup-alejo-skills to configure this repo for the Alejo skill suite."
+  short_description: "Auto-configure Linear-first Alejo repos"
+  default_prompt: "Use $setup-alejo-skills to configure this repo for the Alejo skill suite with Linear Project Documents as the default artifact home."

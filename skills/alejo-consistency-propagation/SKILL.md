@@ -11,10 +11,10 @@ Keep Alejo artifacts consistent by finding differences, asking the human what to
 
 Check artifacts in this order:
 
-1. Foundation: current conversation, root `CONTEXT.md`, ADRs in `docs/adr/`, and resolved Q&A from `docs/questions/`.
-2. Product: PRD Linear Projects from the configured tracker/workspace.
-3. Prototype: prototype reports in `docs/prototypes/`.
-4. Architecture: SAD files in `docs/architecture/` and SAD issues if used.
+1. Foundation: current conversation, Linear Project Documents `CONTEXT.md` and `Q&A`, local `CONTEXT.md`, ADRs in `docs/adr/`, and local resolved Q&A from `docs/questions/`.
+2. Product: Linear Project document `PRD` from the configured tracker/workspace.
+3. Prototype: Linear Project document `prototype.html` plus local prototype reports in `docs/prototypes/` when present.
+4. Architecture: Linear Project document `SAD`/`SAT` plus local SAD mirrors in `docs/architecture/` when present.
 5. Delivery: vertical-slice issues from the configured issue tracker.
 6. Execution: repo `WORKFLOW.md`, `alejo-run` preflight expectations, and Symphony lane/readiness mappings.
 
@@ -26,7 +26,7 @@ Use repo instructions from `AGENTS.md` and `docs/agents/`. If they are missing o
 
 Start from the changed artifact named by the user. If none is named, infer likely changes from the conversation, `git status`, modified Alejo docs, and relevant issue updates.
 
-Read only the artifacts needed to compare the affected chain from Context/Q&A through PRD, prototype, SAD, delivery issues, and `WORKFLOW.md`.
+Read only the artifacts needed to compare the affected chain from Context/Q&A through PRD, prototype, SAD/SAT, delivery issues, and `WORKFLOW.md`.
 
 ### 2. Extract claims
 
@@ -74,9 +74,11 @@ After each user answer, immediately update the affected artifact(s), then contin
 
 Keep edits minimal and artifact-appropriate:
 
-- `CONTEXT.md`: stable domain terms and relationships only.
-- PRD Linear Projects: product behavior, user stories, experience notes, scope, and acceptance signals.
-- SADs: architecture decisions, quality attributes, security, operations, and ADR links.
+- Linear Project document `CONTEXT.md` and local `CONTEXT.md`: stable domain terms and relationships only.
+- Linear Project document `Q&A`: resolved questions, recommendations, answers, evidence, and unresolved contradictions.
+- Linear Project document `PRD`: product behavior, user stories, experience notes, scope, and acceptance signals.
+- Linear Project document `prototype.html`: prototype HTML, UX evidence, reference notes, screenshots/links, and open UX/SAD/issues notes.
+- Linear Project document `SAD`/`SAT`: architecture decisions, quality attributes, security, operations, and ADR links.
 - Vertical-slice issues: behavior-first coverage, necessary context, acceptance criteria, surface, preconditions, dependencies/blockers, Doppler secret refs, quality attributes, BDD budget, readiness label/status, code organization, and source references.
 - `WORKFLOW.md`: Symphony entry rules, issue contract, Doppler/name-only secret rules, lane mappings, and thread contract.
 

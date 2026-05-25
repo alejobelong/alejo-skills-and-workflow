@@ -1,6 +1,6 @@
 ---
 name: alejo-prd
-description: Turn the current conversation context and codebase understanding into a short but complete product-focused PRD, then create or update a Linear Project with that PRD. Use when the user wants to create a PRD or product requirements document from the current context.
+description: Turn the current conversation context and codebase understanding into a short but complete product-focused PRD, then create or update a Linear Project and its PRD Project Document. Use when the user wants to create a PRD or product requirements document from the current context.
 ---
 
 # Alejo PRD
@@ -11,7 +11,7 @@ The Linear workspace/team/project conventions should have been provided in `AGEN
 
 ## Process
 
-1. Read the Alejo repo instructions if available: `AGENTS.md`, `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md`, `docs/agents/domain.md`, `docs/agents/alejo-workflow.md`, and the latest Alejo Questions logs in `docs/questions/`.
+1. Read the Alejo repo instructions if available: `AGENTS.md`, `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md`, `docs/agents/domain.md`, `docs/agents/alejo-workflow.md`, existing Linear Project Documents, and the latest Alejo Questions logs in `docs/questions/` or the Linear Project document named `Q&A`.
 
 2. Explore the repo only enough to understand current product behavior, domain language, and user-facing constraints. Use the project's domain glossary vocabulary throughout the PRD, carry forward the resolved Alejo Questions Q&A summary, and respect product-relevant ADR constraints.
 
@@ -19,9 +19,9 @@ The Linear workspace/team/project conventions should have been provided in `AGEN
 
 Do not define modules, architecture, implementation strategy, file paths, APIs, schemas, tests, or code organization. Those belong in SAD and Alejo Issues.
 
-4. Write the PRD using the template below, then create or update a Linear Project for this product effort and add the PRD to the project description/overview/document area available in the repo's Linear tooling. Do not create a PRD issue. Do not apply `ready-for-agent` to PRDs.
+4. Write the PRD using the template below, then create or update a Linear Project for this product effort and publish the PRD to the Linear Project document named `PRD`. Prefer Project Documents/Resources; use the project overview/detailed description only if Project Documents are unavailable in the active tooling. Do not create a PRD issue. Do not apply `ready-for-agent` to PRDs.
 
-If the available Linear tooling cannot create or update projects, stop and ask before falling back to any other artifact shape.
+If Linear Project or Project Document details are missing, infer them from repo instructions and existing Linear links. Do not ask for confirmation before publishing to the inferred Linear destination. If Linear publishing is impossible with the available tools, report the blocker and provide the PRD in the conversation without creating a local substitute as the canonical artifact.
 
 ## Prioritized List Rule
 

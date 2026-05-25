@@ -28,6 +28,7 @@ During codebase exploration, also look for existing documentation and repository
 - root or context-local `CONTEXT.md`
 - root or context-local `docs/adr/`
 - `docs/agents/` workflow notes, when present
+- Linear Project Documents named `Q&A` and `CONTEXT.md`, when configured
 - nearby source files that implement the concepts under discussion
 
 ### File structure
@@ -59,7 +60,7 @@ If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The ma
         `-- docs/adr/
 ```
 
-Create files lazily, only when there is something to write. If no `CONTEXT.md` exists, create one when the first project-specific term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed. Always create the final Alejo Questions session log at the end, even if no glossary or ADR changed.
+Create files lazily, only when there is something to write. If no `CONTEXT.md` exists, create one when the first project-specific term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed. Always create the final Alejo Questions session log at the end, even if no glossary or ADR changed. In Linear-configured repos, publish or update the Linear Project Documents named `Q&A` and `CONTEXT.md` without asking for confirmation; local files are working copies or mirrors, not the canonical published artifact.
 
 ## During the session
 
@@ -91,6 +92,8 @@ When a project-specific term or relationship is resolved, update the relevant `C
 
 `CONTEXT.md` must stay devoid of implementation details. Do not treat it as a spec, scratch pad, or repository for implementation decisions. It is a glossary and relationship map.
 
+If the repo is configured for Linear Project Documents, sync the updated glossary content to the Project document named `CONTEXT.md` after each meaningful glossary update or at session close if immediate sync is not practical.
+
 ### Offer ADRs sparingly
 
 Only offer to create an ADR when all three are true:
@@ -118,5 +121,7 @@ docs/questions/YYYY-MM-DD-<topic-slug>.md
 If the repository has a different Alejo documentation convention, follow it while keeping the file easy to find. If the session stops early, create the log with the Q&A collected so far and mark unresolved items clearly.
 
 Include the original plan or summary, every question asked, every recommended answer, the user's answers or corrections, evidence from code or docs, resolved terminology and relationships, ADRs created or updated, open questions, follow-ups, and unresolved contradictions.
+
+In Linear-configured repos, publish the final log to the Linear Project document named `Q&A`. If the Project already has a `Q&A` document, update it in place with the latest session rather than creating a Linear issue.
 
 </supporting-info>

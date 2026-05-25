@@ -13,7 +13,7 @@ The issue tracker and triage label vocabulary should have been provided in `AGEN
 
 ### 1. Gather context
 
-Work from whatever is already in the conversation context. Then inspect the Alejo repo instructions, relevant PRD, prototype reports in `docs/prototypes/`, SAD, latest Alejo Questions log, `CONTEXT.md`, ADRs, and prior Alejo-skill outputs when they exist.
+Work from whatever is already in the conversation context. Then inspect the Alejo repo instructions; relevant Linear Project Documents (`PRD`, `SAD`/`SAT`, `Q&A`, `CONTEXT.md`, `prototype.html`); local mirrors such as prototype reports in `docs/prototypes/`, latest Alejo Questions logs, `CONTEXT.md`, ADRs; and prior Alejo-skill outputs when they exist.
 
 If the user passes an issue reference, such as an issue number, URL, or path, fetch it from the issue tracker and read its full body and comments.
 
@@ -92,6 +92,8 @@ Iterate until the user approves the breakdown.
 For each approved slice, publish a new issue to the issue tracker. Use the issue body template below. Publish `AFK` slices with the `ready-for-agent` triage label. Publish `HITL` slices with `ready-for-human` and `hitl` when those labels exist; do not mark them `ready-for-agent` until the human decision is resolved.
 
 Publish issues in dependency order, blockers first, so you can reference real issue identifiers in the "Blocked by" field.
+
+Do not create Linear issues for PRDs, SAD/SATs, Q&A logs, `CONTEXT.md`, prototype HTML, or prototype reports. Those planning artifacts belong in Linear Project Documents; issues are only vertical slices or actionable follow-ups.
 
 <issue-template>
 

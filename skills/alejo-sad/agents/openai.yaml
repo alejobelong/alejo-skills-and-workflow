@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo SAD"
-  short_description: "Create SADs with diagrams and slice-based code structure"
-  default_prompt: "Use $alejo-sad to create a compact solution architecture document with simple Mermaid diagrams and vertical-slice code organization."
+  short_description: "Create SAD Project Documents"
+  default_prompt: "Use $alejo-sad to create a compact solution architecture document with Mermaid diagrams and vertical-slice code organization, then publish it to the Linear Project."

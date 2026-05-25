@@ -29,7 +29,7 @@ Recommended Linear issue labels:
 | `surface:mcp` | MCP surface slice |
 | `secrets-required` | Issue references required runtime secrets by name |
 
-Do not use `prd` or `sad` as issue labels when PRDs/SADs live as Linear Projects, project docs, or repo docs. PRDs and SADs are artifacts; Linear issues are vertical slices or actionable follow-ups.
+Do not use `prd`, `sad`, `sat`, `qa`, `context`, or `prototype` as issue labels when those planning outputs live as Linear Project Documents. Planning documents are artifacts; Linear issues are vertical slices or actionable follow-ups.
 
 ## Non-Linear Default
 

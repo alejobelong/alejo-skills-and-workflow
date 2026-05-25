@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Consistency Propagation"
-  short_description: "Keep Alejo artifacts consistent"
-  default_prompt: "Use $alejo-consistency-propagation to reconcile Context, Q&A, PRD projects, prototypes, SADs, WORKFLOW.md, secrets, and Linear issue contracts after something changes."
+  short_description: "Keep Linear Project artifacts consistent"
+  default_prompt: "Use $alejo-consistency-propagation to reconcile Linear Project Documents, WORKFLOW.md, secrets, and Linear issue contracts after something changes."
