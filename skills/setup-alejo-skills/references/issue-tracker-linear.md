@@ -1,36 +1,48 @@
-# Issue Tracker: Linear
+# Linear Setup
 
-Linear Projects are the planning container. Linear Project Documents/Resources are the canonical home for Alejo planning artifacts. Vertical slices and actionable follow-ups live as Linear issues.
+Purpose: tell every Alejo skill where to publish planning artifacts, where to create implementation issues, and how `alejo-run` hands ready issues to Symphony.
 
-Use the Linear Project URL configured for this repo. If it is missing, `setup-alejo-skills` asks for it before writing setup files. Do not write Linear project placeholders.
+## Required Setup
 
-## Conventions
+- Linear Project URL
+- Linear team or project context
+- Access method/tooling available in the repo
 
-- Required setup fields: Linear Project URL, workspace, team or project context, issue destination, Project Document destination, and access method/tooling.
-- Planning artifacts: create or update Linear Project Documents/Resources for `PRD`, `SAD`/`SAT`, `Q&A`, `CONTEXT.md`, and `prototype.html`. Do not create issues for these artifacts.
-- PRD: create or update a Linear Project and publish the PRD Markdown to the Project document named `PRD`. Use the project overview/detailed description only if Project Documents are unavailable in the active tooling.
-- SAD/SAT: publish the architecture document to the Project document named `SAD` by default, or `SAT` only when the repo/user already uses that term.
-- Q&A: publish the final Alejo Questions log to the Project document named `Q&A`.
-- Context: keep the repo `CONTEXT.md` or `CONTEXT-MAP.md` as the working glossary source when needed, and sync the relevant glossary content to the Project document named `CONTEXT.md`.
-- Prototype: keep disposable local files under `.scratch/prototypes/` for browser verification, then publish the final HTML prototype to the Project document named `prototype.html` as a fenced `html` code block. If the prototype report is materially different from the HTML, include its summary in the same document or a nearby Project document named `Prototype report`.
-- Create issue: create a Linear issue in the configured team, with the Alejo Markdown body as the description.
-- Read: read the Linear issue title, description, comments/activity, labels, workflow status, relations, and URL.
-- List: list open Linear issues using the configured team/project plus the mapped `ready-for-agent` label/status.
-- Comment: add a Linear comment to the issue.
-- Label/status: use the canonical mappings in `docs/agents/triage-labels.md`; workflow statuses track readiness/execution and labels categorize issue type/surface. Do not use `prd`, `sad`, `sat`, `qa`, `context`, or `prototype` as issue labels for planning artifacts.
-- Dependencies: use Linear issue relations when available, and keep the `## Blocked by` section in the issue body.
-- Close: comment with the final result, then move the issue to the team's Done/Completed workflow status.
-- Symphony lane: `alejo-run` moves approved issues into the configured Symphony execution workflow status after explicit human approval.
+## Project Documents
 
-When a planning skill says "publish", create or update the appropriate Linear Project Document. When implementation skills say "publish to the issue tracker", create a Linear issue. When a skill says "fetch the relevant ticket", read the Linear issue description, comments/activity, labels, workflow status, relations, and URL.
+Publish planning artifacts at the Linear Project level:
 
-Linear issue state is authoritative for day-shift readiness and Symphony handoff. Do not use GitHub issue commands for Linear issues.
+- `PRD`
+- `SAD` or `SAT`
+- `Q&A`
+- `CONTEXT.md`
+- `prototype.html`
 
-## Linear References
+## Linear Issues
 
-- Project overview/resources/documents: https://linear.app/docs/project-overview
-- Project documents: https://linear.app/docs/project-documents
-- Create issues: https://linear.app/docs/creating-issues
-- Labels: https://linear.app/docs/labels/
-- Issue status/workflows: https://linear.app/docs/configuring-workflows
-- Comments: https://linear.app/docs/comment-on-issues
+Use Linear issues for vertical-slice implementation work and actionable follow-ups.
+
+Each agent-ready issue needs:
+
+- user-facing behavior
+- compact context from the Project Documents
+- acceptance criteria
+- surface: `api`, `ui`, `cli`, or `mcp`
+- preconditions and dependencies
+- Doppler secret names only, if needed
+- quality attributes and BDD budget
+- slice-owned code organization
+- readiness status
+
+## Symphony Handoff
+
+`alejo-run` reads ready Linear issues, preflights their run contract, asks for human approval, then moves approved issues into the Symphony lane.
+
+Default status mapping:
+
+- `ready-for-agent` -> `Ready for Agent`
+- `symphony-execution` -> `Night Shift Queued`
+- `in-symphony` -> `In Night Shift`
+- done -> `Done`
+
+Linear issue state is the source of truth for implementation readiness and Symphony handoff.

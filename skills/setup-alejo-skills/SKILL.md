@@ -38,6 +38,7 @@ What Linear Project URL should this repo use for Alejo artifacts and issues?
    - Write `docs/agents/triage-labels.md`.
    - Write `docs/agents/domain.md`.
    - Write `docs/agents/alejo-workflow.md`.
+   - Write or update root `WORKFLOW.md` for Symphony.
 
 Use the templates in `references/`. The Linear Project URL is required; do not write Linear project placeholders.
 
@@ -85,3 +86,4 @@ End with this short onboarding:
 - `references/triage-labels.md`
 - `references/domain.md`
 - `references/alejo-workflow.md`
+- `references/symphony-workflow.md`

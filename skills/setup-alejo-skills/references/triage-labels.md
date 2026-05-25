@@ -1,45 +1,29 @@
-# Triage Labels
+# Linear Statuses And Labels
 
-Alejo skills speak in canonical roles. Map those roles to the exact tracker labels, workflow statuses, or local status values used by this repo.
+Purpose: give Alejo skills one shared vocabulary for issue readiness and Symphony handoff.
 
-## Linear Default
+## Workflow Statuses
 
-For Linear, prefer workflow statuses for readiness and execution lanes. Use labels only for stable issue classification.
+| Alejo role | Linear status |
+|---|---|
+| `needs-triage` | `Needs Triage` |
+| `needs-info` | `Needs Info` |
+| `ready-for-human` | `Ready for Human` |
+| `ready-for-agent` | `Ready for Agent` |
+| `symphony-execution` | `Night Shift Queued` |
+| `in-symphony` | `In Night Shift` |
+| `done` | `Done` |
+| `wontfix` | `Won't Fix` |
 
-| Canonical role | Tracker label/status | Meaning |
-|---|---|---|
-| `needs-triage` | `Needs Triage` workflow status | Maintainer needs to evaluate |
-| `needs-info` | `Needs Info` workflow status | Waiting on the reporter or product owner |
-| `ready-for-human` | `Ready for Human` workflow status | Needs human implementation or judgment |
-| `ready-for-agent` | `Ready for Agent` workflow status | Fully specified and AFK-ready |
-| `symphony-execution` | `Night Shift Queued` workflow status | Approved for Symphony autonomous execution |
-| `in-symphony` | `In Night Shift` workflow status | Currently running through autonomous execution |
-| `wontfix` | `Won't Fix` or `Canceled` workflow status | Will not be actioned |
+## Issue Labels
 
-Recommended Linear issue labels:
+- `vertical-slice`
+- `hitl`
+- `sad-follow-up`
+- `surface:cli`
+- `surface:api`
+- `surface:ui`
+- `surface:mcp`
+- `secrets-required`
 
-| Label | Meaning |
-|---|---|---|
-| `vertical-slice` | Thin end-to-end implementation issue |
-| `hitl` | Human-in-the-loop issue |
-| `sad-follow-up` | Actionable architecture follow-up issue, not the SAD itself |
-| `surface:cli` | CLI surface slice |
-| `surface:api` | API surface slice |
-| `surface:ui` | UI surface slice |
-| `surface:mcp` | MCP surface slice |
-| `secrets-required` | Issue references required runtime secrets by name |
-
-Do not use `prd`, `sad`, `sat`, `qa`, `context`, or `prototype` as issue labels when those planning outputs live as Linear Project Documents. Planning documents are artifacts; Linear issues are vertical slices or actionable follow-ups.
-
-## Non-Linear Default
-
-If the tracker cannot model workflow statuses, use labels or local status values with the same canonical roles:
-
-- `needs-triage`
-- `needs-info`
-- `ready-for-human`
-- `ready-for-agent`
-- `symphony-execution`
-- `wontfix`
-
-When a skill mentions a canonical role, use the mapped tracker value.
+Planning artifacts live in Linear Project Documents. Labels are only for issues.
