@@ -4,7 +4,7 @@ This repo is configured for the Alejo skill suite.
 
 ## Day Shift Skill Flow
 
-Day shift skills are human-facing planning, clarification, documentation, and approval skills. They run before or around implementation work; they are not injected into coding or testing agents inside Sand Castle.
+Day shift skills are human-facing planning, clarification, documentation, and approval skills. They run before or around implementation work; they are not injected into Symphony coding or testing agents.
 
 1. `alejo-questions` stress-tests plans, updates domain language/ADRs, and publishes `Q&A` plus `CONTEXT.md` to the Linear Project.
 2. `alejo-prd` turns conversation and repo context into a product-focused PRD and publishes it to the Linear Project document named `PRD`, not an issue.
