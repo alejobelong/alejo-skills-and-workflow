@@ -36,8 +36,6 @@ _Avoid_: {near-synonyms or ambiguous aliases}
 - Include only domain-specific concepts, not general programming concepts.
 - Group terms with subheadings only when natural clusters emerge.
 - Keep stale ambiguity notes only when they help future readers avoid repeating the confusion.
-- Write only settled language. Unanswered branches belong in the Q&A log, not as implied facts in `CONTEXT.md`.
-- During Alejo Questions, update the local file as terms settle, but sync Linear's `CONTEXT.md` Project document only once at session close.
 
 ## Context Maps
 
