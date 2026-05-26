@@ -61,7 +61,8 @@ docs/questions/YYYY-MM-DD-<topic-slug>.md
 
 ## Rules
 
-- Record every visible question asked during the session.
+- Record every visible question asked during the session with its sequential question number.
+- Preserve the same question number used in the live Alejo Questions prompt.
 - Preserve the recommendation that accompanied each question.
 - Capture the user's actual answer or correction.
 - Link to files when evidence came from code or docs.

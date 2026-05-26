@@ -5,9 +5,9 @@ description: Alejo Questions session that challenges a plan, design, architectur
 
 <what-to-do>
 
-Interview the user relentlessly about every aspect of the plan until there is a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one by one. For each question, provide multiple-choice options, mark your recommended answer, and briefly explain why each option is viable.
+Interview the user relentlessly about every aspect of the plan until there is a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one by one. For each question, provide multiple-choice options, mark your recommended answer, and briefly explain why each option is viable. Number questions sequentially starting at 1.
 
-Ask one multiple-choice question at a time and wait for feedback before continuing.
+Ask one numbered multiple-choice question at a time and wait for feedback before continuing.
 
 If the user has not supplied a plan, proposal, or design, request it before starting the Alejo Questions session.
 
@@ -60,11 +60,34 @@ If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The ma
         `-- docs/adr/
 ```
 
-Create files lazily, only when there is something to write. If no `CONTEXT.md` exists, create one when the first project-specific term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed. Always create the final Alejo Questions session log at the end, even if no glossary or ADR changed. In Linear-configured repos, publish or update the Linear Project Documents named `Q&A` and `CONTEXT.md` without asking for confirmation; local files are working copies or mirrors, not the canonical published artifact.
+Create files lazily, only when there is something to write. If no `CONTEXT.md` exists, create one when the first project-specific term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed. Always create the final Alejo Questions session log at the end, even if no glossary or ADR changed. In Linear-configured repos, publish `Q&A`, `CONTEXT.md`, and any ADR documents only once, in a final session-close batch.
 
 ## During the session
 
-Every Alejo Questions prompt must be multiple choice. Keep options short, mark the recommended option, explain why it is recommended, explain why the other options are interesting or viable, and include an "Other / correction" option when the listed choices may not cover the user's intent.
+Every Alejo Questions prompt must be numbered and multiple choice. Keep options short, mark the recommended option, explain why it is recommended, explain why the other options are interesting or viable, and include an "Other / correction" option when the listed choices may not cover the user's intent.
+
+### Clear question shape
+
+Ask questions in plain language before naming the abstract decision. If the topic is technical, domain-specific, or policy-like, first explain what is really being decided, why it matters, and 2-4 concrete examples of moments where the choice would apply.
+
+Use this compact shape:
+
+```md
+## Question {N}: {short plain-English title}
+
+The real question is: {plain-English decision}.
+This matters because {one concrete consequence}.
+Examples: {2-4 short scenarios}.
+My recommendation: {simple policy or choice}.
+
+A. {Option} (Recommended)
+{One clear sentence about what this means.}
+B. {Option}
+{One clear sentence about when this is viable.}
+C. Other / correction
+```
+
+Avoid unexplained jargon in the question title. If a useful analogy would make the trade-off obvious, include one short analogy before the options.
 
 ### Challenge against the glossary
 
@@ -92,7 +115,7 @@ When a project-specific term or relationship is resolved, update the relevant `C
 
 `CONTEXT.md` must stay devoid of implementation details. Do not treat it as a spec, scratch pad, or repository for implementation decisions. It is a glossary and relationship map.
 
-If the repo is configured for Linear Project Documents, sync the updated glossary content to the Project document named `CONTEXT.md` after each meaningful glossary update or at session close if immediate sync is not practical.
+If the repo is configured for Linear Project Documents, do not sync `CONTEXT.md` during the session. Add it to the final Linear publish batch with `Q&A` and any ADR documents.
 
 ### Offer ADRs sparingly
 
@@ -102,11 +125,11 @@ Only offer to create an ADR when all three are true:
 2. Surprising without context: a future reader would wonder why this path was chosen.
 3. Real trade-off: there were meaningful alternatives and one was selected for specific reasons.
 
-If any of the three is missing, skip the ADR. When the decision qualifies and is settled, create or update the ADR immediately using [adr-format.md](./references/adr-format.md).
+If any of the three is missing, skip the ADR. When the decision qualifies and is settled, create or update the ADR locally using [adr-format.md](./references/adr-format.md); publish ADR documents to Linear only in the final session-close batch.
 
 ### Keep the Q&A record
 
-For every question, record the issue being tested, options given, recommended answer, rationale for the recommendation, why other options were viable, user answer, evidence checked, resolution, and docs changed. Record only visible questions, recommendations, answers, evidence, and outcomes. Do not include hidden reasoning.
+For every question, record the question number, issue being tested, options given, recommended answer, rationale for the recommendation, why other options were viable, user answer, evidence checked, resolution, and docs changed. Keep the same question number in the visible prompt, running Q&A record, final session log, and Linear `Q&A` document. Record only visible questions, recommendations, answers, evidence, and outcomes. Do not include hidden reasoning.
 
 ### Write the final session log
 
@@ -122,6 +145,6 @@ If the repository has a different Alejo documentation convention, follow it whil
 
 Include the original plan or summary, every question asked, every recommended answer, the user's answers or corrections, evidence from code or docs, resolved terminology and relationships, ADRs created or updated, open questions, follow-ups, and unresolved contradictions.
 
-In Linear-configured repos, publish the final log to the Linear Project document named `Q&A`. If the Project already has a `Q&A` document, update it in place with the latest session rather than creating a Linear issue.
+In Linear-configured repos, publish the final log to the Linear Project document named `Q&A`, publish the final `CONTEXT.md`, and publish any ADR documents in one closing batch. If the Project already has a `Q&A` document, update it in place with the latest session rather than creating a Linear issue.
 
 </supporting-info>
