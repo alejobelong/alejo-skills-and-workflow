@@ -1,42 +1,41 @@
-# Symphony Workflow
+# Symphony Workflow XML Shape
 
-Purpose: define how Symphony runs approved Linear issues with fresh Codex threads.
+Use this XML shape for root `WORKFLOW.md`.
 
-## Entry
-
-- Source: Linear vertical-slice issues from `docs/agents/issue-tracker.md`.
-- Ready status: `Ready for Agent`.
-- Execution lane: `Night Shift Queued`.
-- Launcher: `alejo-run`.
-- Coding agent: Codex only.
-
-## Issue Contract
-
-Each issue must include:
-
-- user-facing behavior
-- compact context from Linear Project Documents
-- acceptance criteria
-- surface: `api`, `ui`, `cli`, or `mcp`
-- preconditions and dependencies
-- Doppler secret names only, if needed
-- quality attributes and BDD budget
-- slice-owned code organization
-
-## Thread Flow
-
-Symphony starts fresh Codex threads per issue:
-
-1. BDD generator writes `scenario.json`.
-2. Test writer writes the failing test.
-3. Implementer writes the implementation.
-4. Refactor cleans up after green tests.
-5. Synthetic tester exercises the real surface and reports pass/fail.
-
-## Boundaries
-
-- Linear owns issue state.
-- Linear Project Documents own planning artifacts.
-- Issues own implementation context.
-- Doppler owns secret values.
-- `alejo-run` moves approved issues into the Symphony lane.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<symphony_workflow>
+  <purpose>Define how Symphony runs approved Linear issues with fresh Codex threads.</purpose>
+  <entry>
+    <source>Linear vertical-slice issues from docs/agents/issue-tracker.md.</source>
+    <ready_status>Ready for Agent</ready_status>
+    <execution_lane>Night Shift Queued</execution_lane>
+    <launcher>alejo-run</launcher>
+    <coding_agent>Codex only</coding_agent>
+  </entry>
+  <issue_contract format="XML">
+    <field>user-facing behavior</field>
+    <field>compact context from XML Linear Project Documents</field>
+    <field>acceptance criteria</field>
+    <field>surface: api, ui, cli, or mcp</field>
+    <field>preconditions and dependencies</field>
+    <field>Doppler secret names only, if needed</field>
+    <field>quality attributes and BDD budget</field>
+    <field>slice-owned code organization</field>
+  </issue_contract>
+  <thread_flow>
+    <step order="1" role="bdd_generator">Read issue only; write scenario.json.</step>
+    <step order="2" role="test_writer">Read issue, scenario.json, and code; write failing test only.</step>
+    <step order="3" role="implementer">Read issue, scenario.json, code, and failing test; write implementation only.</step>
+    <step order="4" role="refactor">Read issue, scenario.json, code, and green tests; write cleanup only.</step>
+    <step order="5" role="synthetic_tester">Read issue, scenario.json, and code; exercise the real surface and report pass/fail.</step>
+  </thread_flow>
+  <boundaries>
+    <boundary>Linear owns issue state.</boundary>
+    <boundary>Linear Project Documents own planning artifacts.</boundary>
+    <boundary>Issues own implementation context.</boundary>
+    <boundary>Doppler owns secret values.</boundary>
+    <boundary>alejo-run moves approved issues into the Symphony lane.</boundary>
+  </boundaries>
+</symphony_workflow>
+```

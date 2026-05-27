@@ -1,62 +1,57 @@
-# Alejo Questions Session Log Format
+# Alejo Questions Session Log XML Format
 
-Create one Markdown file at the end of each Alejo Questions session.
+Create one XML file at the end of each Alejo Questions session.
 
 Default path:
 
 ```text
-docs/questions/YYYY-MM-DD-<topic-slug>.md
+docs/questions/YYYY-MM-DD-<topic-slug>.xml
 ```
 
 ## Template
 
-```md
-# Alejo Questions: {Topic}
-
-- **Date**: {YYYY-MM-DD}
-- **Repository**: {repo name or path}
-- **Plan under review**: {short summary or link/path}
-- **Context docs touched**: {files or "None"}
-- **ADRs created or updated**: {files or "None"}
-- **Status**: {complete | stopped early | blocked}
-
-## Session Summary
-
-{Brief summary of what changed in the shared understanding.}
-
-## Questions And Answers
-
-### 1. {Question}
-
-- **Recommended answer**: {recommendation given before asking}
-- **User answer**: {user's answer, correction, or confirmation}
-- **Evidence checked**: {code/docs inspected, or "None"}
-- **Resolution**: {settled answer, contradiction, or open point}
-- **Docs updated**: {files changed, or "None"}
-
-### 2. {Question}
-
-- **Recommended answer**: {recommendation}
-- **User answer**: {answer}
-- **Evidence checked**: {evidence}
-- **Resolution**: {resolution}
-- **Docs updated**: {files}
-
-## Resolved Language
-
-- **{Term}**: {definition or relationship resolved during the session}
-
-## Decisions
-
-- {Decision made, with ADR link if one was created}
-
-## Open Questions
-
-- {Question that remains unresolved, owner if known, and next step}
-
-## Follow-Ups
-
-- {Documentation, code, test, or planning action to take next}
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<alejo_questions topic="{Topic}" status="{complete|stopped_early|blocked}">
+  <metadata>
+    <date>{YYYY-MM-DD}</date>
+    <repository>{repo name or path}</repository>
+    <plan_under_review><![CDATA[{short summary or link/path}]]></plan_under_review>
+    <context_docs_touched>{files or None}</context_docs_touched>
+    <adrs_created_or_updated>{files or None}</adrs_created_or_updated>
+  </metadata>
+  <session_summary><![CDATA[{Brief summary of what changed in the shared understanding.}]]></session_summary>
+  <questions_and_answers>
+    <qa number="1">
+      <question><![CDATA[{Question}]]></question>
+      <recommended_answer><![CDATA[{recommendation given before asking}]]></recommended_answer>
+      <user_answer><![CDATA[{user's answer, correction, or confirmation}]]></user_answer>
+      <evidence_checked><![CDATA[{code/docs inspected, or None}]]></evidence_checked>
+      <resolution><![CDATA[{settled answer, contradiction, or open point}]]></resolution>
+      <docs_updated>{files changed, or None}</docs_updated>
+    </qa>
+    <qa number="2">
+      <question><![CDATA[{Question}]]></question>
+      <recommended_answer><![CDATA[{recommendation}]]></recommended_answer>
+      <user_answer><![CDATA[{answer}]]></user_answer>
+      <evidence_checked><![CDATA[{evidence}]]></evidence_checked>
+      <resolution><![CDATA[{resolution}]]></resolution>
+      <docs_updated>{files}</docs_updated>
+    </qa>
+  </questions_and_answers>
+  <resolved_language>
+    <term name="{Term}"><![CDATA[{definition or relationship resolved during the session}]]></term>
+  </resolved_language>
+  <decisions>
+    <decision adr="{ADR link if one was created}"><![CDATA[{Decision made}]]></decision>
+  </decisions>
+  <open_questions>
+    <open_question owner="{owner if known}"><![CDATA[{Question that remains unresolved and next step}]]></open_question>
+  </open_questions>
+  <follow_ups>
+    <follow_up><![CDATA[{Documentation, code, test, or planning action to take next}]]></follow_up>
+  </follow_ups>
+</alejo_questions>
 ```
 
 ## Rules
@@ -68,3 +63,4 @@ docs/questions/YYYY-MM-DD-<topic-slug>.md
 - Link to files when evidence came from code or docs.
 - Mark unresolved contradictions directly instead of smoothing them over.
 - Do not include hidden reasoning or private deliberation.
+- Use CDATA for user-supplied prose, quotes, code-like text, and evidence snippets.

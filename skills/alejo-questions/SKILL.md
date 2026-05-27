@@ -1,6 +1,6 @@
 ---
 name: alejo-questions
-description: Alejo Questions session that challenges a plan, design, architecture, feature idea, or implementation approach against the existing codebase, domain model, CONTEXT.md glossary, ADRs, and Alejo documentation workflow. Use when the user wants to run Alejo Questions, stress-test, interrogate, refine, or sharpen a proposal through structured multiple-choice questions against the project's language and documented decisions.
+description: Alejo Questions session that challenges a plan, design, architecture, feature idea, or implementation approach against the existing codebase, domain model, CONTEXT.xml glossary, ADRs, and Alejo documentation workflow. Use when the user wants to run Alejo Questions, stress-test, interrogate, refine, or sharpen a proposal through structured multiple-choice questions against the project's language and documented decisions.
 ---
 
 <what-to-do>
@@ -24,11 +24,11 @@ Start a running Q&A record immediately. Use it to create the final Alejo Questio
 During codebase exploration, also look for existing documentation and repository instructions:
 
 - `AGENTS.md`
-- `CONTEXT-MAP.md`
-- root or context-local `CONTEXT.md`
+- `CONTEXT-MAP.xml`
+- root or context-local `CONTEXT.xml`
 - root or context-local `docs/adr/`
 - `docs/agents/` workflow notes, when present
-- Linear Project Documents named `Q&A` and `CONTEXT.md`, when configured
+- Linear Project Documents named `Q&A.xml` and `CONTEXT.xml`, when configured
 - nearby source files that implement the concepts under discussion
 
 ### File structure
@@ -37,30 +37,32 @@ Most Alejo repos have a single context:
 
 ```text
 /
-|-- CONTEXT.md
+|-- CONTEXT.xml
 |-- docs/
 |   |-- adr/
 |   `-- agents/
 `-- src/
 ```
 
-If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The map points to where each one lives:
+If a `CONTEXT-MAP.xml` exists at the root, the repo has multiple contexts. The map points to where each one lives:
 
 ```text
 /
-|-- CONTEXT-MAP.md
+|-- CONTEXT-MAP.xml
 |-- docs/
 |   `-- adr/              # system-wide decisions
 `-- src/
     |-- ordering/
-    |   |-- CONTEXT.md
+    |   |-- CONTEXT.xml
     |   `-- docs/adr/     # context-specific decisions
     `-- billing/
-        |-- CONTEXT.md
+        |-- CONTEXT.xml
         `-- docs/adr/
 ```
 
-Create files lazily, only when there is something to write. If no `CONTEXT.md` exists, create one when the first project-specific term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed. Always create the final Alejo Questions session log at the end, even if no glossary or ADR changed. In Linear-configured repos, publish `Q&A`, `CONTEXT.md`, and any ADR documents only once, in a final session-close batch.
+Create files lazily, only when there is something to write. If no `CONTEXT.xml` exists, create one when the first project-specific term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed. Always create the final Alejo Questions session log at the end, even if no glossary or ADR changed. In Linear-configured repos, publish `Q&A.xml`, `CONTEXT.xml`, and any ADR documents only once, in a final session-close batch.
+
+All generated planning artifacts from this skill must be XML. Put user-supplied prose, code snippets, quotes, and copied evidence inside CDATA sections or escape XML special characters.
 
 ## During the session
 
@@ -91,7 +93,7 @@ Avoid unexplained jargon in the question title. If a useful analogy would make t
 
 ### Challenge against the glossary
 
-When the user uses a term that conflicts with the existing language in `CONTEXT.md`, call it out immediately. Example: "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which should we use? A) Existing glossary meaning (recommended, keeps language stable), B) New meaning from this plan (viable if the domain language has changed), C) Other / correction."
+When the user uses a term that conflicts with the existing language in `CONTEXT.xml`, call it out immediately. Example: "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which should we use? A) Existing glossary meaning (recommended, keeps language stable), B) New meaning from this plan (viable if the domain language has changed), C) Other / correction."
 
 ### Sharpen fuzzy language
 
@@ -109,13 +111,13 @@ When the user states how something works, check whether the code agrees. If you 
 
 When docs contradict code, present the likely resolutions as options: documentation is stale, implementation is wrong, or the plan should be adjusted.
 
-### Update CONTEXT.md inline
+### Update CONTEXT.xml inline
 
-When a project-specific term or relationship is resolved, update the relevant `CONTEXT.md` right there. Do not batch these up. Use the format in [context-format.md](./references/context-format.md).
+When a project-specific term or relationship is resolved, update the relevant `CONTEXT.xml` right there. Do not batch these up. Use the format in [context-format.md](./references/context-format.md).
 
-`CONTEXT.md` must stay devoid of implementation details. Do not treat it as a spec, scratch pad, or repository for implementation decisions. It is a glossary and relationship map.
+`CONTEXT.xml` must stay devoid of implementation details. Do not treat it as a spec, scratch pad, or repository for implementation decisions. It is a glossary and relationship map.
 
-If the repo is configured for Linear Project Documents, do not sync `CONTEXT.md` during the session. Add it to the final Linear publish batch with `Q&A` and any ADR documents.
+If the repo is configured for Linear Project Documents, do not sync `CONTEXT.xml` during the session. Add it to the final Linear publish batch with `Q&A.xml` and any ADR documents.
 
 ### Offer ADRs sparingly
 
@@ -129,22 +131,22 @@ If any of the three is missing, skip the ADR. When the decision qualifies and is
 
 ### Keep the Q&A record
 
-For every question, record the question number, issue being tested, options given, recommended answer, rationale for the recommendation, why other options were viable, user answer, evidence checked, resolution, and docs changed. Keep the same question number in the visible prompt, running Q&A record, final session log, and Linear `Q&A` document. Record only visible questions, recommendations, answers, evidence, and outcomes. Do not include hidden reasoning.
+For every question, record the question number, issue being tested, options given, recommended answer, rationale for the recommendation, why other options were viable, user answer, evidence checked, resolution, and docs changed. Keep the same question number in the visible prompt, running Q&A record, final session log, and Linear `Q&A.xml` document. Record only visible questions, recommendations, answers, evidence, and outcomes. Do not include hidden reasoning.
 
 ### Write the final session log
 
-At the end of every Alejo Questions session, create a Markdown log using [session-log-format.md](./references/session-log-format.md).
+At the end of every Alejo Questions session, create an XML log using [session-log-format.md](./references/session-log-format.md).
 
 Default path:
 
 ```text
-docs/questions/YYYY-MM-DD-<topic-slug>.md
+docs/questions/YYYY-MM-DD-<topic-slug>.xml
 ```
 
 If the repository has a different Alejo documentation convention, follow it while keeping the file easy to find. If the session stops early, create the log with the Q&A collected so far and mark unresolved items clearly.
 
 Include the original plan or summary, every question asked, every recommended answer, the user's answers or corrections, evidence from code or docs, resolved terminology and relationships, ADRs created or updated, open questions, follow-ups, and unresolved contradictions.
 
-In Linear-configured repos, publish the final log to the Linear Project document named `Q&A`, publish the final `CONTEXT.md`, and publish any ADR documents in one closing batch. If the Project already has a `Q&A` document, update it in place with the latest session rather than creating a Linear issue.
+In Linear-configured repos, publish the final log to the Linear Project document named `Q&A.xml`, publish the final `CONTEXT.xml`, and publish any ADR documents in one closing batch. If the Project already has a `Q&A.xml` document, update it in place with the latest session rather than creating a Linear issue.
 
 </supporting-info>

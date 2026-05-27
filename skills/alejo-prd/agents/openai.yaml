@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo PRD"
-  short_description: "Create PRD Project Documents in Linear"
-  default_prompt: "Use $alejo-prd to turn the current conversation context into a short product-focused PRD and publish it to the Linear Project document named PRD."
+  short_description: "Create PRD.xml Project Documents in Linear"
+  default_prompt: "Use $alejo-prd to turn the current conversation context into a short product-focused XML PRD and publish it to the Linear Project document named PRD.xml."

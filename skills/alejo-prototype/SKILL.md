@@ -5,15 +5,15 @@ description: Build an Alejo UI prototype from reference URLs or images. Use when
 
 # Alejo Prototype
 
-Create a disposable HTML prototype from reference websites or images. The main job is to study references, write detailed look-and-feel notes, ask what to build, ask which design system to use, then produce a single HTML prototype that uses those references.
+Create a disposable HTML prototype from reference websites or images. The main job is to study references, write detailed XML look-and-feel notes, ask what to build, ask which design system to use, then produce a single HTML prototype that uses those references.
 
 ## Inputs
 
 When running inside the Alejo flow, also read relevant context if available:
 
 - Latest Alejo Questions log in `docs/questions/`.
-- Root `CONTEXT.md` and relevant ADRs in `docs/adr/`.
-- Relevant Linear Project Documents: `PRD`, `Q&A`, `CONTEXT.md`, and prior `prototype.html`.
+- Root `CONTEXT.xml` and relevant ADRs in `docs/adr/`.
+- Relevant Linear Project Documents: `PRD.xml`, `Q&A.xml`, `CONTEXT.xml`, and prior `prototype.xml`.
 
 Do not block on missing Alejo docs. For quick visual prototypes, the required inputs are reference URLs or images, plus the user's build description.
 
@@ -32,7 +32,22 @@ For uploaded images, inspect the image directly. If the user gives a local image
 For each reference page or image, create a detailed temporary look-and-feel file:
 
 ```text
-.scratch/prototypes/YYYY-MM-DD-<topic>/references/<reference-slug>-look-and-feel.md
+.scratch/prototypes/YYYY-MM-DD-<topic>/references/<reference-slug>-look-and-feel.xml
+```
+
+Use XML content in that file:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<look_and_feel reference="{reference URL or image path}">
+  <layout><![CDATA[{Layout structure, density, spacing, rhythm, and viewport behavior.}]]></layout>
+  <typography><![CDATA[{Typography scale, weight, casing, line length, and hierarchy.}]]></typography>
+  <color_and_surfaces><![CDATA[{Color palette, contrast, backgrounds, borders, shadows, and surface treatments.}]]></color_and_surfaces>
+  <patterns><![CDATA[{Navigation, calls to action, forms, cards, tables, lists, and repeated UI patterns.}]]></patterns>
+  <states_and_motion><![CDATA[{Motion, hover states, affordances, empty/loading/error states if visible.}]]></states_and_motion>
+  <imagery_and_tone><![CDATA[{Imagery, icons, illustration style, product/brand signals, and content tone.}]]></imagery_and_tone>
+  <ux_takeaways><![CDATA[{Takeaways to reuse and things to avoid copying too literally.}]]></ux_takeaways>
+</look_and_feel>
 ```
 
 Save screenshots beside the notes when possible:
@@ -97,20 +112,33 @@ Make the prototype feel complete enough to evaluate: include realistic layout, c
 
 Open the HTML prototype in a browser, take a screenshot, and fix obvious layout or responsiveness issues.
 
-Write a concise report:
+Write a concise XML report:
 
 ```text
-docs/prototypes/YYYY-MM-DD-<topic>-prototype.md
+docs/prototypes/YYYY-MM-DD-<topic>-prototype.xml
 ```
 
-Report:
+Report with this structure:
 
-- Reference URLs and look-and-feel note files.
-- Chosen design system or design-system decision.
-- Prototype file and screenshots.
-- What design decisions were borrowed from the references.
-- What the prototype proves, what it does not prove, and any open UX/SAD/issues notes.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<prototype_report topic="{topic}">
+  <references>
+    <reference url="{reference URL or image path}" notes="{look-and-feel note file}" />
+  </references>
+  <design_system><![CDATA[{Chosen design system or design-system decision.}]]></design_system>
+  <prototype_file>{prototype file path}</prototype_file>
+  <screenshots>
+    <screenshot path="{screenshot path}" viewport="{desktop|mobile|other}" />
+  </screenshots>
+  <borrowed_decisions><![CDATA[{What design decisions were borrowed from the references.}]]></borrowed_decisions>
+  <proves><![CDATA[{What the prototype proves.}]]></proves>
+  <does_not_prove><![CDATA[{What the prototype does not prove.}]]></does_not_prove>
+  <open_notes><![CDATA[{Open UX/SAD/issues notes.}]]></open_notes>
+  <prototype_html><![CDATA[{Full HTML when publishing to Linear; optional in local mirrors if too large.}]]></prototype_html>
+</prototype_report>
+```
 
-In Linear-configured repos, publish the final prototype to the Linear Project document named `prototype.html` without asking for confirmation. Include the full HTML in a fenced `html` code block plus a short report summary, screenshot/reference links where available, and any open UX/SAD/issues notes. Local `.scratch/prototypes/` and `docs/prototypes/` files are disposable working copies or mirrors; the Linear Project document is the canonical published artifact.
+In Linear-configured repos, publish the final prototype package to the Linear Project document named `prototype.xml` without asking for confirmation. Include the report fields plus the full prototype HTML inside an `<prototype_html><![CDATA[...]]></prototype_html>` element. Local `.scratch/prototypes/` and `docs/prototypes/` files are disposable working copies or mirrors; the Linear Project document is the canonical published artifact.
 
 The next Alejo step is `alejo-sad`, which should read the prototype report when architecture or slicing depends on the prototype.

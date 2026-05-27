@@ -13,7 +13,7 @@ Do not create or update secret artifact files. Output the guide in the conversat
 
 ### 1. Gather Context
 
-Use the current context window, then inspect PRD, SAD, issues, latest Alejo Questions log, `CONTEXT.md`, ADRs, code, deployment config, CI, and env examples. If issue refs are provided, fetch bodies/comments.
+Use the current context window, then inspect PRD XML, SAD XML, issues, latest Alejo Questions XML log, `CONTEXT.xml`, ADR XML docs, code, deployment config, CI, and env examples. If issue refs are provided, fetch bodies/comments.
 
 ### 2. Use Doppler
 

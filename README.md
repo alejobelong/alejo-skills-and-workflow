@@ -7,12 +7,12 @@ Alejo owns the day-shift planning flow: questions, PRDs, prototypes, SADs, issue
 ## Contents
 
 - `skills/`: Alejo-related Codex skills copied from `~/.codex/skills`.
-- `WORKFLOW.md`: Symphony workflow guide for autonomous execution from Linear issue contracts.
+- `WORKFLOW.md`: XML Symphony workflow guide for autonomous execution from Linear issue contracts.
 
 ## How The Workflow Fits Together
 
 1. `setup-alejo-skills` configures a repo for Linear-first Alejo usage.
-2. Alejo planning skills publish canonical artifacts to Linear Project Documents: `PRD`, `SAD`/`SAT`, `Q&A`, `CONTEXT.md`, and `prototype.html`.
+2. Alejo planning skills publish canonical XML artifacts to Linear Project Documents: `PRD.xml`, `SAD.xml`/`SAT.xml`, `Q&A.xml`, `CONTEXT.xml`, and `prototype.xml`.
 3. `alejo-issues` turns those artifacts into self-contained Linear vertical-slice issues.
 4. `alejo-run` preflights approved issues and moves them into the Symphony execution lane.
 5. Symphony reads `WORKFLOW.md` plus each Linear issue contract to run autonomous Codex implementation, testing, repair, merge, and reporting.

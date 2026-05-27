@@ -13,7 +13,7 @@ The issue tracker and triage label vocabulary should have been provided in `AGEN
 
 ### 1. Gather context
 
-Work from whatever is already in the conversation context. Then inspect the Alejo repo instructions; relevant Linear Project Documents (`PRD`, `SAD`/`SAT`, `Q&A`, `CONTEXT.md`, `prototype.html`); local mirrors such as prototype reports in `docs/prototypes/`, latest Alejo Questions logs, `CONTEXT.md`, ADRs; and prior Alejo-skill outputs when they exist.
+Work from whatever is already in the conversation context. Then inspect the Alejo repo instructions; relevant Linear Project Documents (`PRD.xml`, `SAD.xml`/`SAT.xml`, `Q&A.xml`, `CONTEXT.xml`, `prototype.xml`); local mirrors such as prototype reports in `docs/prototypes/`, latest Alejo Questions logs, `CONTEXT.xml`, ADRs; and prior Alejo-skill outputs when they exist.
 
 If the user passes an issue reference, such as an issue number, URL, or path, fetch it from the issue tracker and read its full body and comments.
 
@@ -31,7 +31,7 @@ Slices may be `HITL` or `AFK`. `HITL` slices require human interaction, such as 
 
 Honor the SAD's code-organization rule. Each implementation issue should identify one owning feature/slice folder for the user-facing capability and keep slice-owned UI, API/route, data access, tests, and contracts together there. If the framework requires route/app files elsewhere, describe them as thin adapters into the slice-owned feature code. Do not create issues that imply catch-all `controllers/`, `services/`, or `repositories/` files mixing multiple capabilities.
 
-For each slice, build a short self-contained context pack from only the relevant PRD, SAD, Q&A, `CONTEXT.md`, ADR, and prototype details. Include enough for a coding agent to implement the issue with normal codebase inspection, but not enough to re-read the whole planning stack. Source links prove provenance; they do not replace needed context. If a slice cannot be made self-contained, ask the user or mark it `HITL`.
+For each slice, build a short self-contained XML context pack from only the relevant PRD, SAD, Q&A, `CONTEXT.xml`, ADR, and prototype details. Include enough for a coding agent to implement the issue with normal codebase inspection, but not enough to re-read the whole planning stack. Source links prove provenance; they do not replace needed context. If a slice cannot be made self-contained, ask the user or mark it `HITL`.
 
 Each `AFK` issue is also the compact run contract for `alejo-run` and Symphony. It must include acceptance criteria, verification surface, preconditions, dependencies, secret refs, quality attributes, BDD budget, readiness label/status, and code organization.
 
@@ -59,7 +59,7 @@ Before showing the user any proposed slice, run this gate:
 - **Narrow completeness**: Is it one complete scenario, or a bundle of related capabilities?
 - **No horizontal smell**: If the slice mainly says `before X`, `without Y`, `still does not run`, `only adds`, `prepares`, or `enables later`, fold it into the first behavior that uses it or defer it.
 - **Code ownership**: Does the slice keep its UI/API/data/tests/contracts in one feature folder, with only thin framework adapters or justified shared code outside it?
-- **Context sufficiency**: Could a coding agent implement this issue from the issue body plus codebase inspection, without opening PRD/SAD/Q&A/prototype docs to discover requirements?
+- **Context sufficiency**: Could a coding agent implement this issue from the XML issue body plus codebase inspection, without opening PRD/SAD/Q&A/prototype XML docs to discover requirements?
 - **Run contract**: Does the issue state surface, preconditions, dependencies, secret refs, quality attributes, BDD budget, and readiness label/status explicitly?
 - **Dependency discipline**: Block only on prior observable behaviors or required human decisions, not on plumbing-only tickets.
 
@@ -71,7 +71,7 @@ Present the proposed breakdown as a numbered list. For each slice, show:
 - **Type**: `HITL` / `AFK`
 - **Blocked by**: which other slices, if any, must complete first
 - **User stories covered**: which user stories this addresses, if the source material has them
-- **PRD/SAD/prototype references**: the source sections or prototype evidence that justify the slice, when available
+- **PRD/SAD/prototype references**: the source XML sections or prototype evidence that justify the slice, when available
 - **Necessary context**: the minimal product, architecture, domain, and prototype facts the coding agent needs
 - **Observable outcome**: the concrete behavior, artifact, state change, or verdict produced by the slice
 - **Run contract**: surface, preconditions, dependencies, secrets refs, quality attributes, BDD budget, and readiness label/status
@@ -89,62 +89,51 @@ Iterate until the user approves the breakdown.
 
 ### 5. Publish the issues to the issue tracker
 
-For each approved slice, publish a new issue to the issue tracker. Use the issue body template below. Publish `AFK` slices with the `ready-for-agent` triage label. Publish `HITL` slices with `ready-for-human` and `hitl` when those labels exist; do not mark them `ready-for-agent` until the human decision is resolved.
+For each approved slice, publish a new issue to the issue tracker. Use the XML issue body template below. Publish `AFK` slices with the `ready-for-agent` triage label. Publish `HITL` slices with `ready-for-human` and `hitl` when those labels exist; do not mark them `ready-for-agent` until the human decision is resolved.
 
 Publish issues in dependency order, blockers first, so you can reference real issue identifiers in the "Blocked by" field.
 
-Do not create Linear issues for PRDs, SAD/SATs, Q&A logs, `CONTEXT.md`, prototype HTML, or prototype reports. Those planning artifacts belong in Linear Project Documents; issues are only vertical slices or actionable follow-ups.
+Do not create Linear issues for PRDs, SAD/SATs, Q&A logs, `CONTEXT.xml`, prototype XML, or prototype reports. Those planning artifacts belong in Linear Project Documents; issues are only vertical slices or actionable follow-ups.
 
 <issue-template>
 
-## Parent
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<vertical_slice_issue type="{AFK|HITL}" readiness="{ready-for-agent|ready-for-human}">
+  <parent>{parent issue ref, or omit this element}</parent>
+  <what_to_build><![CDATA[{A concise description of this vertical slice. Describe the end-to-end behavior, not layer-by-layer implementation.}]]></what_to_build>
+  <necessary_context>
+    <product_intent><![CDATA[{slice-specific PRD.xml requirement or user story}]]></product_intent>
+    <architecture_constraints><![CDATA[{relevant SAD.xml decisions, quality attributes, security, data, or ops constraints}]]></architecture_constraints>
+    <domain_language><![CDATA[{required CONTEXT.xml/Q&A.xml terms or decisions}]]></domain_language>
+    <prototype_evidence><![CDATA[{relevant UI/state/interaction evidence, or None relevant}]]></prototype_evidence>
+    <source_refs><![CDATA[{short PRD.xml/SAD.xml/Q&A.xml/context/prototype section links for provenance}]]></source_refs>
+  </necessary_context>
+  <code_organization>
+    <slice_owned_folder>features/{capability-slug}/</slice_owned_folder>
+    <rule><![CDATA[Keep UI, API/route handling, data access, tests, and shared contracts for this behavior colocated in that slice.]]></rule>
+    <framework_mapping><![CDATA[{Thin route/app adapters if the framework requires files elsewhere, or None.}]]></framework_mapping>
+    <avoid><![CDATA[Do not add mixed-capability controllers, services, or repositories ownership for this behavior.]]></avoid>
+  </code_organization>
+  <run_contract>
+    <surface>{api|ui|cli|mcp}</surface>
+    <preconditions><![CDATA[{required state, data, config, user role, or None}]]></preconditions>
+    <dependencies><![CDATA[{issue refs, or None}]]></dependencies>
+    <secrets_refs><![CDATA[{Doppler secret names only, or None}]]></secrets_refs>
+    <quality_attributes><![CDATA[{slice-relevant targets from the SAD.xml, or None beyond acceptance criteria}]]></quality_attributes>
+    <bdd_budget>{default 3 outer repair iterations unless the SAD says otherwise}</bdd_budget>
+    <readiness_label_status>ready-for-agent when published; symphony-execution only after alejo-run approval</readiness_label_status>
+  </run_contract>
+  <acceptance_criteria>
+    <criterion status="todo"><![CDATA[Externally verifiable behavior]]></criterion>
+    <criterion status="todo"><![CDATA[Data or storage effect, if relevant]]></criterion>
+    <criterion status="todo"><![CDATA[Security, quality, or test expectation from the PRD.xml/SAD.xml, if relevant]]></criterion>
+  </acceptance_criteria>
+  <blocked_by><![CDATA[{blocking ticket refs, or None - can start immediately}]]></blocked_by>
+</vertical_slice_issue>
+```
 
-A reference to the parent issue on the issue tracker, if the source was an existing issue. Otherwise omit this section.
-
-## What to build
-
-A concise description of this vertical slice. Describe the end-to-end behavior, not layer-by-layer implementation.
-
-Avoid detailed internal file paths or code snippets. They go stale fast. Exception: name the owning feature folder required by the SAD, and name thin framework adapter files only when the framework requires them. If a prototype produced a snippet that encodes a decision more precisely than prose can, such as a state machine, reducer, schema, or type shape, inline it here and briefly note that it came from a prototype. Trim it to the decision-rich parts. Do not include a working demo.
-
-## Necessary context
-
-- Product intent: {slice-specific PRD requirement or user story}
-- Architecture constraints: {relevant SAD decisions, quality attributes, security, data, or ops constraints}
-- Domain language: {required `CONTEXT.md`/Q&A terms or decisions}
-- Prototype evidence: {relevant UI/state/interaction evidence, or "None relevant"}
-- Source refs: {short PRD/SAD/Q&A/context/prototype section links for provenance}
-
-Keep this section just sufficient. Do not paste whole planning docs, unrelated user stories, broad background, or context the coding agent can learn by inspecting the codebase.
-
-## Code organization
-
-- Slice-owned code lives under one feature folder: `features/<capability-slug>/` or the repo's equivalent feature area.
-- Keep UI, API/route handling, data access, tests, and shared contracts for this behavior colocated in that slice.
-- If route/app files must live elsewhere for framework reasons, keep them as thin adapters into the slice folder.
-- Do not add mixed-capability `controllers`, `services`, or `repositories` ownership for this behavior.
-
-## Run contract
-
-- Surface: `api` / `ui` / `cli` / `mcp`
-- Preconditions: {required state, data, config, user role, or "None"}
-- Dependencies: {issue refs, or "None"}
-- Secrets refs: {Doppler secret names only, or "None"}
-- Quality attributes: {slice-relevant targets from the SAD, or "None beyond acceptance criteria"}
-- BDD budget: {default 3 outer repair iterations unless the SAD says otherwise}
-- Readiness label/status: `ready-for-agent` when published; `symphony-execution` only after `alejo-run` approval
-
-## Acceptance criteria
-
-- [ ] Externally verifiable behavior
-- [ ] Data or storage effect, if relevant
-- [ ] Security, quality, or test expectation from the PRD/SAD, if relevant
-
-## Blocked by
-
-- A reference to the blocking ticket, if any
-
-Or "None - can start immediately" if no blockers.
+Keep this XML just sufficient. Do not paste whole planning docs, unrelated user stories, broad background, or context the coding agent can learn by inspecting the codebase. Avoid detailed internal file paths or code snippets. They go stale fast. Exception: name the owning feature folder required by the SAD, and name thin framework adapter files only when the framework requires them. If a prototype produced a snippet that encodes a decision more precisely than prose can, such as a state machine, reducer, schema, or type shape, inline it in CDATA and briefly note that it came from a prototype. Trim it to the decision-rich parts. Do not include a working demo.
 
 </issue-template>
 

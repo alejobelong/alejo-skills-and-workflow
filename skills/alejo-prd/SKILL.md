@@ -1,17 +1,17 @@
 ---
 name: alejo-prd
-description: Turn the current conversation context and codebase understanding into a short but complete product-focused PRD, then create or update a Linear Project and its PRD Project Document. Use when the user wants to create a PRD or product requirements document from the current context.
+description: Turn the current conversation context and codebase understanding into a short but complete product-focused PRD XML document, then create or update a Linear Project and its PRD.xml Project Document. Use when the user wants to create a PRD or product requirements document from the current context.
 ---
 
 # Alejo PRD
 
-This skill takes the current conversation context and codebase understanding and produces a short but complete product-focused PRD. Do NOT interview the user; synthesize what you already know.
+This skill takes the current conversation context and codebase understanding and produces a short but complete product-focused PRD in XML. Do NOT interview the user; synthesize what you already know.
 
 The Linear workspace/team/project conventions should have been provided in `AGENTS.md` and `docs/agents/`. Run `/setup-alejo-skills` if not.
 
 ## Process
 
-1. Read the Alejo repo instructions if available: `AGENTS.md`, `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md`, `docs/agents/domain.md`, `docs/agents/alejo-workflow.md`, existing Linear Project Documents, and the latest Alejo Questions logs in `docs/questions/` or the Linear Project document named `Q&A`.
+1. Read the Alejo repo instructions if available: `AGENTS.md`, `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md`, `docs/agents/domain.md`, `docs/agents/alejo-workflow.md`, existing Linear Project Documents, and the latest Alejo Questions logs in `docs/questions/` or the Linear Project document named `Q&A.xml`.
 
 2. Explore the repo only enough to understand current product behavior, domain language, and user-facing constraints. Use the project's domain glossary vocabulary throughout the PRD, carry forward the resolved Alejo Questions Q&A summary, and respect product-relevant ADR constraints.
 
@@ -19,7 +19,7 @@ The Linear workspace/team/project conventions should have been provided in `AGEN
 
 Do not define modules, architecture, implementation strategy, file paths, APIs, schemas, tests, or code organization. Those belong in SAD and Alejo Issues.
 
-4. Write the PRD using the template below, then create or update a Linear Project for this product effort and publish the PRD to the Linear Project document named `PRD`. Prefer Project Documents/Resources; use the project overview/detailed description only if Project Documents are unavailable in the active tooling. Do not create a PRD issue. Do not apply `ready-for-agent` to PRDs.
+4. Write the PRD using the XML template below, then create or update a Linear Project for this product effort and publish the PRD to the Linear Project document named `PRD.xml`. Prefer Project Documents/Resources; use the project overview/detailed description only if Project Documents are unavailable in the active tooling. Do not create a PRD issue. Do not apply `ready-for-agent` to PRDs.
 
 If Linear Project or Project Document details are missing, infer them from repo instructions and existing Linear links. Do not ask for confirmation before publishing to the inferred Linear destination. If Linear publishing is impossible with the available tools, report the blocker and provide the PRD in the conversation without creating a local substitute as the canonical artifact.
 
@@ -32,43 +32,45 @@ For every PRD section that contains a list, keep the list short but complete:
 - Prefer 3 primary items; use 4 or 5 only when the source material clearly has more core concerns.
 - Order primary items by user value, risk reduction, dependency importance, or product confidence, depending on the section.
 - Do not bury the main user stories, experience details, acceptance signals, risks, or out-of-scope boundaries in a long undifferentiated list.
+- Use XML elements for structure and CDATA for natural language, user-supplied text, and anything that might contain XML special characters.
 
 <prd-template>
 
-## Problem Statement
-
-The problem the user is facing, from the user's perspective.
-
-## Desired Experience
-
-The intended experience and outcome from the user's perspective. Keep this product-facing, not technical.
-
-## User Stories
-
-A prioritized numbered list of user stories. Put the top 3-5 primary user stories first, then include additional user stories needed for completeness. Each user story should use this format:
-
-1. As a <actor>, I want a <feature>, so that <benefit>.
-
-<user-story-example>
-1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending.
-</user-story-example>
-
-This list should be complete enough to cover the feature while staying concise. Avoid exhaustive permutations when one story can cover the behavior.
-
-## Experience Notes
-
-A prioritized list of product experience details: key moments, user-visible states, content tone, permissions or roles from the user's perspective, and constraints the user must feel in the product.
-
-## Acceptance Signals
-
-A prioritized list of user-visible signals that the experience works. Describe observable outcomes, not implementation tests or internal modules.
-
-## Out of Scope
-
-A concise prioritized list of the things that are out of scope for this PRD. Put the most important 3-5 boundaries first.
-
-## Further Notes
-
-Any further notes about the feature. Keep this short and prioritize the most important notes first when there is more than one.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<prd title="{Title}">
+  <problem_statement><![CDATA[{The problem the user is facing, from the user's perspective.}]]></problem_statement>
+  <desired_experience><![CDATA[{The intended experience and outcome from the user's perspective. Keep this product-facing, not technical.}]]></desired_experience>
+  <user_stories>
+    <story priority="primary" order="1">
+      <actor><![CDATA[{actor}]]></actor>
+      <want><![CDATA[{feature}]]></want>
+      <benefit><![CDATA[{benefit}]]></benefit>
+      <sentence><![CDATA[As a {actor}, I want {feature}, so that {benefit}.]]></sentence>
+    </story>
+    <story priority="additional" order="{N}">
+      <actor><![CDATA[{actor}]]></actor>
+      <want><![CDATA[{feature}]]></want>
+      <benefit><![CDATA[{benefit}]]></benefit>
+      <sentence><![CDATA[As a {actor}, I want {feature}, so that {benefit}.]]></sentence>
+    </story>
+  </user_stories>
+  <experience_notes>
+    <note priority="primary" order="1"><![CDATA[{Key moment, user-visible state, tone, permission, role, or product constraint.}]]></note>
+    <note priority="additional" order="{N}"><![CDATA[{Additional experience detail.}]]></note>
+  </experience_notes>
+  <acceptance_signals>
+    <signal priority="primary" order="1"><![CDATA[{User-visible signal that the experience works.}]]></signal>
+    <signal priority="additional" order="{N}"><![CDATA[{Additional observable outcome.}]]></signal>
+  </acceptance_signals>
+  <out_of_scope>
+    <boundary priority="primary" order="1"><![CDATA[{Important out-of-scope boundary.}]]></boundary>
+    <boundary priority="additional" order="{N}"><![CDATA[{Additional out-of-scope boundary.}]]></boundary>
+  </out_of_scope>
+  <further_notes>
+    <note order="1"><![CDATA[{Any further note about the feature.}]]></note>
+  </further_notes>
+</prd>
+```
 
 </prd-template>

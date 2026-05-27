@@ -14,7 +14,7 @@ Approve and hand ready Linear issues to Symphony. Linear owns issue state. Symph
 3. Preflight each issue:
    - Open Linear issue with mapped `ready-for-agent` state/label and an issue-body readiness field that agrees with the current Linear state.
    - Not `needs-info`, `needs-triage`, `ready-for-human`, `hitl`, blocked, or contradictory.
-   - Issue body is the compact slice contract: title, user-facing behavior, necessary context, acceptance criteria, surface, preconditions, dependencies/blockers, secrets refs, quality attributes, BDD budget, architectural constraints, readiness label/status, and code organization.
+   - Issue body is the compact XML slice contract: title, user-facing behavior, necessary context, acceptance criteria, surface, preconditions, dependencies/blockers, secrets refs, quality attributes, BDD budget, architectural constraints, readiness label/status, and code organization.
    - Preconditions are explicit and satisfiable, or clearly `None`.
    - Dependencies are done or included in the same approved run.
    - Secret names are present without values; verify with safe Doppler name-only checks when possible, and stop if confirmed secret names changed without being propagated back to the issue.
