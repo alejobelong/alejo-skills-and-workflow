@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo Review"
+  short_description: "Contrarian Alejo readiness review"
+  default_prompt: "Use $alejo-review to run a strict contrarian production-readiness audit against the PRD, SAD, prototype, Q&A decisions, context, ADRs, and Linear issues, then report every evidenced gap before calling the system ready."
