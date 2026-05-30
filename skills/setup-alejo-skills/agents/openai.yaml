@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Setup"
-  short_description: "Configure Git, Linear, AGENTS.md, and Alejo docs"
-  default_prompt: "Use $setup-alejo-skills to configure Git, create or connect a Linear Project, write a clear AGENTS.md plus docs/agents, and set up XML Alejo planning artifacts plus the Symphony workflow for this repo."
+  short_description: "Configure Git and Linear Project Documents"
+  default_prompt: "Use $setup-alejo-skills to configure Git, create or connect a Linear Project, publish AGENTS.md, issue-tracker.md, triage-labels.md, alejo-workflow.md, and WORKFLOW.md as Linear Project Documents, and remove generated local setup-doc copies so Linear stays the source of truth."

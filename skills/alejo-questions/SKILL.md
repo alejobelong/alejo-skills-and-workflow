@@ -23,11 +23,11 @@ Start a running Q&A record immediately. Use it to create the final Alejo Questio
 
 During codebase exploration, also look for existing documentation and repository instructions:
 
-- `AGENTS.md`
+- Linear Project Documents `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, and `WORKFLOW.md`, when configured
 - `CONTEXT-MAP.xml`
 - root or context-local `CONTEXT.xml`
 - root or context-local `docs/adr/`
-- `docs/agents/` workflow notes, when present
+- old local `AGENTS.md`, `docs/agents/`, or `WORKFLOW.md` files only as legacy mirrors, not canonical sources
 - Linear Project Documents named `Q&A.xml` and `CONTEXT.xml`, when configured
 - nearby source files that implement the concepts under discussion
 
@@ -39,8 +39,7 @@ Most Alejo repos have a single context:
 /
 |-- CONTEXT.xml
 |-- docs/
-|   |-- adr/
-|   `-- agents/
+|   `-- adr/
 `-- src/
 ```
 

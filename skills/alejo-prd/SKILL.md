@@ -7,11 +7,11 @@ description: Turn the current conversation context and codebase understanding in
 
 This skill takes the current conversation context and codebase understanding and produces a short but complete product-focused PRD in XML. Do NOT interview the user; synthesize what you already know.
 
-The Linear workspace/team/project conventions should have been provided in `AGENTS.md` and `docs/agents/`. Run `/setup-alejo-skills` if not.
+The Linear workspace/team/project conventions should have been provided in Linear Project Documents `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, and `alejo-workflow.md`. Run `/setup-alejo-skills` if not.
 
 ## Process
 
-1. Read the Alejo repo instructions if available: `AGENTS.md`, `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md`, `docs/agents/domain.md`, `docs/agents/alejo-workflow.md`, existing Linear Project Documents, and the latest Alejo Questions logs in `docs/questions/` or the Linear Project document named `Q&A.xml`.
+1. Read the Alejo setup docs from Linear Project Documents when available: `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, `WORKFLOW.md`, existing planning documents, and the latest Alejo Questions log named `Q&A.xml`. Treat old local `AGENTS.md`, `docs/agents/*`, or `WORKFLOW.md` files only as legacy mirrors, not canonical sources.
 
 2. Explore the repo only enough to understand current product behavior, domain language, and user-facing constraints. Use the project's domain glossary vocabulary throughout the PRD, carry forward the resolved Alejo Questions Q&A summary, and respect product-relevant ADR constraints.
 

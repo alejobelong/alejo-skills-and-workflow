@@ -1,13 +1,13 @@
-# Symphony Workflow XML Shape
+# Symphony Workflow Linear Project Document Shape
 
-Use this XML shape for root `WORKFLOW.md`.
+Use this XML shape for the Linear Project Document `WORKFLOW.md`.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <symphony_workflow>
   <purpose>Define how Symphony runs approved Linear issues with fresh Codex threads.</purpose>
   <entry>
-    <source>Linear vertical-slice issues from docs/agents/issue-tracker.md.</source>
+    <source>Linear vertical-slice issues and the Linear Project Document issue-tracker.md.</source>
     <ready_status>Ready for Agent</ready_status>
     <execution_lane>Night Shift Queued</execution_lane>
     <launcher>alejo-run</launcher>
@@ -32,10 +32,11 @@ Use this XML shape for root `WORKFLOW.md`.
   </thread_flow>
   <boundaries>
     <boundary>Linear owns issue state.</boundary>
-    <boundary>Linear Project Documents own planning artifacts.</boundary>
+    <boundary>Linear Project Documents own setup docs, workflow docs, and planning artifacts.</boundary>
     <boundary>Issues own implementation context.</boundary>
     <boundary>Doppler owns secret values.</boundary>
     <boundary>alejo-run moves approved issues into the Symphony lane.</boundary>
+    <boundary>Do not maintain a repo-local WORKFLOW.md copy.</boundary>
   </boundaries>
 </symphony_workflow>
 ```

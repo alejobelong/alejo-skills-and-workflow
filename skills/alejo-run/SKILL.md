@@ -5,7 +5,7 @@ description: Relentless Symphony launcher for Alejo Linear implementation issues
 
 # Alejo Run
 
-Run approved Linear implementation issues through Symphony until they are genuinely production-grade. Linear owns issue state. Symphony owns orchestration from repo `WORKFLOW.md`. Codex is the only coding agent.
+Run approved Linear implementation issues through Symphony until they are genuinely production-grade. Linear owns issue state. Symphony owns orchestration from the Linear Project Document `WORKFLOW.md`. Codex is the only coding agent.
 
 ## Goal
 
@@ -27,9 +27,9 @@ If verification fails, keep the repair loop going within the issue's BDD budget.
 
 ### 1. Read Operating Context
 
-Read `AGENTS.md`, `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md`, `docs/agents/alejo-workflow.md`, and repo `WORKFLOW.md`.
+Read Linear Project Documents `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, and `WORKFLOW.md`.
 
-Stop and ask if Linear workspace/team/project, execution lane mapping, issue tracker docs, or `WORKFLOW.md` are missing.
+Stop and ask if Linear workspace/team/project, execution lane mapping, issue tracker docs, or the Linear Project Document `WORKFLOW.md` are missing.
 
 ### 2. Select Issues
 
@@ -43,11 +43,11 @@ For each candidate issue, verify:
 
 - Linear state/label matches `ready-for-agent`.
 - Issue body readiness agrees with Linear state.
-- It is not `needs-info`, `needs-triage`, `ready-for-human`, `hitl`, blocked, or contradictory.
+- It is not `needs-info`, `needs-triage`, blocked, or contradictory.
 - Body is a compact XML slice contract with title, behavior, necessary context, acceptance criteria, surface, preconditions, dependencies, providers, secrets refs, quality attributes, BDD budget, architectural constraints, readiness status, production constraints, and code organization.
 - Preconditions are explicit and satisfiable, or clearly `None`.
 - Dependencies are done or included in the same approved run.
-- `WORKFLOW.md` defines the Symphony execution flow and lane mapping is known.
+- Linear Project Document `WORKFLOW.md` defines the Symphony execution flow and lane mapping is known.
 
 ### 4. Recover Missing Secrets Safely
 

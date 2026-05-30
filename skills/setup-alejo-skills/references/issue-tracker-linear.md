@@ -1,6 +1,6 @@
-# Linear Setup XML Shape
+# Issue Tracker Linear Project Document Shape
 
-Use this XML shape for `docs/agents/issue-tracker.md`.
+Use this XML shape for the Linear Project Document `issue-tracker.md`.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -10,6 +10,13 @@ Use this XML shape for `docs/agents/issue-tracker.md`.
     <team name="{Linear team name}" key="{Linear team key}" />
     <access_method>{Codex Linear MCP connector | Linear CLI | Linear API/SDK}</access_method>
   </configured_project>
+  <setup_documents>
+    <document name="AGENTS.md" />
+    <document name="issue-tracker.md" />
+    <document name="triage-labels.md" />
+    <document name="alejo-workflow.md" />
+    <document name="WORKFLOW.md" />
+  </setup_documents>
   <project_documents>
     <document name="PRD.xml" />
     <document name="SAD.xml" alternate="SAT.xml" />
@@ -39,6 +46,7 @@ Use this XML shape for `docs/agents/issue-tracker.md`.
     <status_map alejo_role="in-symphony" linear_status="In Night Shift" />
     <status_map alejo_role="done" linear_status="Done" />
   </symphony_handoff>
-  <source_of_truth>Linear issue state is the source of truth for implementation readiness and Symphony handoff.</source_of_truth>
+  <source_of_truth>Linear Project Documents own setup, workflow, and planning docs. Linear issue state owns implementation readiness and Symphony handoff.</source_of_truth>
+  <no_local_copies>Do not maintain repo-local AGENTS.md, docs/agents/*, or WORKFLOW.md copies.</no_local_copies>
 </linear_setup>
 ```

@@ -7,7 +7,7 @@ description: Convert a PRD, prototype report, SAD, plan, spec, review gap, or ex
 
 Create only production-ready Linear implementation issues. A fresh coding agent must be able to execute each issue from the Linear body plus normal codebase inspection.
 
-Issues are for observable product behavior, not planning artifacts or horizontal setup. PRD.xml, SAD.xml/SAT.xml, Q&A.xml, CONTEXT.xml, prototype.xml, and prototype reports belong in Linear Project Documents. Run `/setup-alejo-skills` if `AGENTS.md` or `docs/agents/` are missing.
+Issues are for observable product behavior, not planning artifacts or horizontal setup. PRD.xml, SAD.xml/SAT.xml, Q&A.xml, CONTEXT.xml, prototype.xml, setup docs, and workflow docs belong in Linear Project Documents. Run `/setup-alejo-skills` if Linear Project Documents `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, or `WORKFLOW.md` are missing.
 
 ## Rules
 
