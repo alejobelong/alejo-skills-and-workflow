@@ -1,6 +1,6 @@
 ---
 name: alejo-secrets
-description: Use when a user wants a Doppler-only, step-by-step terminal guide for creating required secrets, API keys, credentials, tokens, or environment variables for PRD/SAD vertical slices or implementation issues, deduplicating reused secrets across slices/issues, with online provider research for where to obtain each key. Always use Doppler. Do not write secret artifact files.
+description: Use when a user wants a Doppler-only, step-by-step terminal guide for creating required secrets, API keys, credentials, tokens, or environment variables for PRD/SAD vertical slices or implementation issues, or when Alejo Run needs safe recovery of missing Doppler secrets. Deduplicate reused secrets and research provider key sources online. Always use Doppler. Do not write secret artifact files.
 ---
 
 # Alejo Secrets
@@ -19,7 +19,14 @@ Use the current context window, then inspect PRD XML, SAD XML, issues, latest Al
 
 Always use Doppler. Do not ask the user to choose a provider.
 
-Verify Doppler CLI access with safe commands only, such as `command -v doppler`, `doppler --version`, or `doppler secrets --only-names`. Do not run commands that print secret values. Do not run `doppler secrets set` yourself unless the user explicitly asks and confirms the correct secret value is already on the clipboard.
+Verify Doppler CLI access with safe commands only, such as `command -v doppler`, `doppler --version`, or `doppler secrets --only-names`. Do not run commands that print secret values.
+
+Do not run `doppler secrets set` yourself unless one of these is true:
+
+- The user explicitly asks and confirms the correct secret value is already on the clipboard.
+- Alejo Run invoked this skill for safe automatic recovery of a missing generated application secret, current-process environment value, or verified non-secret public config value.
+
+Safe automatic recovery must use non-printing commands only. Never print, log, paste, summarize, or echo secret values.
 
 Prefer the repo's existing Doppler scope from `doppler setup`. If the project/config is known and should be explicit, use `-p "$DOPPLER_PROJECT" -c "$DOPPLER_CONFIG"`.
 
@@ -124,6 +131,8 @@ doppler run -- sh -c 'test -n "$SECRET_NAME" && echo "SECRET_NAME is available"'
 - Do not use key-value `doppler secrets set SECRET=value` for real secrets.
 - Do not rely on stale memory for where provider keys live; search online and prefer official provider sources.
 - Do not provide generic "go to dashboard" guidance when an official URL or specific navigation path can be found.
+- Do not automatically set provider API keys, OAuth client secrets, database passwords, cloud credentials, service account JSON, webhook signing secrets from a real provider dashboard, billing-gated keys, account-owned tokens, or any credential that must be guessed, retrieved from a private dashboard, read from files, or pasted into chat.
+- Do allow Alejo Run to auto-set generated application secrets, exact-name current-process environment values, and verified non-secret public config values through non-printing Doppler commands.
 - Do include one copy-paste command pair per secret.
 - Do deduplicate reused secrets and include only one command pair per unique Doppler secret.
 - Do list every slice, issue, or slide that consumes a reused secret under `Used by`.

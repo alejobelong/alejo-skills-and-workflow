@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Secrets"
-  short_description: "Research and dedupe Doppler setup"
-  default_prompt: "Use $alejo-secrets to research where to get each required provider key, dedupe reused secrets across slices/issues, then guide me through creating each Doppler secret with pbpaste commands that clear the clipboard."
+  short_description: "Research, dedupe, and safely recover Doppler secrets"
+  default_prompt: "Use $alejo-secrets to research where to get each required provider key, dedupe reused secrets across slices/issues, safely recover generated or already-available Doppler secrets when allowed, then guide me through any remaining manual secret setup with pbpaste commands that clear the clipboard."

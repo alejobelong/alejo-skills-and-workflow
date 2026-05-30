@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Run"
-  short_description: "Approve and hand ready issues to Symphony"
-  default_prompt: "Use $alejo-run to preflight ready Linear implementation issues, including preconditions and readiness fields, ask for approval, and move approved issues into the Symphony execution lane."
+  short_description: "Preflight and hand ready issues to Symphony"
+  default_prompt: "Use $alejo-run to preflight ready Linear implementation issues, recover safe missing Doppler secrets via Alejo Secrets, ask for approval, and move approved issues into the Symphony execution lane."
