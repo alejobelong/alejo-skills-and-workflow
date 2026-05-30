@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Issues"
-  short_description: "Create self-contained vertical-slice issues"
-  default_prompt: "Use $alejo-issues to turn the XML PRD, prototype evidence, SAD, Q&A, and context into behavior-first Linear issues with XML run contracts and slice-owned code organization."
+  short_description: "Create production-ready vertical-slice issues"
+  default_prompt: "Use $alejo-issues to turn the XML PRD, prototype evidence, SAD, Q&A, and context into self-contained production-ready Linear issues with provider definitions, Doppler secret refs, XML run contracts, and slice-owned code organization."
