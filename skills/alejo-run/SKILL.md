@@ -1,11 +1,26 @@
 ---
 name: alejo-run
-description: Human approval and preflight launcher for autonomous implementation from ready Linear issues through Symphony, including safe Doppler secret recovery via Alejo Secrets. Use when the user asks to run approved Alejo issues, start the autonomous build, hand issues to Symphony, or launch AFK execution. Does not create plan files, choose agents/models, or schedule slices.
+description: Relentless Symphony launcher for Alejo Linear implementation issues, including safe Doppler secret recovery via Alejo Secrets. Use when the user asks to run, build, execute, orchestrate, or keep working through ready Alejo issues until they are production-grade, verified on real surfaces, and free of mocks, fakes, stubs, skipped tests, placeholders, or half-working behavior. Does not create plan files, choose agents/models, or schedule slices.
 ---
 
 # Alejo Run
 
-Approve and hand ready Linear issues to Symphony. Linear owns issue state. Symphony owns orchestration from repo `WORKFLOW.md`. Codex is the only coding agent.
+Run approved Linear implementation issues through Symphony until they are genuinely production-grade. Linear owns issue state. Symphony owns orchestration from repo `WORKFLOW.md`. Codex is the only coding agent.
+
+## Goal
+
+The goal is not to move issues to another lane. The goal is to keep working relentlessly until every selected issue is completely working, production-grade, and verified through its real `api`, `ui`, `cli`, or `mcp` surface.
+
+Done means:
+
+- Acceptance criteria are satisfied by real behavior.
+- Tests pass without skipped, disabled, fake, or placeholder paths.
+- Provider integrations use real production code paths, official sandbox/test accounts, or configured local production services.
+- Storage, routes, UI, CLI, MCP, jobs, and provider adapters are wired end to end.
+- Synthetic verification exercises the real surface and returns a pass verdict.
+- No mocks, fake providers, stubbed SDK responses, placeholder code, skipped tests, disabled branches, `NotImplemented`, TODO-only paths, unwired UI, or half-working behavior remain.
+
+If verification fails, keep the repair loop going within the issue's BDD budget. If the budget is exhausted or an unsafe blocker appears, leave the issue out of the done lane and report the exact blocker instead of calling it complete.
 
 ## Process
 
@@ -77,6 +92,18 @@ On approval, move or label the selected Linear issues into the configured Sympho
 
 Do not create `plan.md`, choose agents/models, schedule slices, launch non-Codex providers, or run Symphony unless the repo documents an explicit launch command and the user separately confirms launch.
 
+### 7. Drive The Production Loop
+
+When launch is explicitly confirmed and the repo documents how to run Symphony, keep working until the selected issues are done or truly blocked:
+
+- Start or resume the documented Symphony run.
+- Watch issue progress, test output, implementation results, and synthetic tester verdicts.
+- Feed failed verification back into the next BDD repair iteration.
+- Keep the issue in the execution lane while repairs are still available.
+- Move or report an issue as complete only after real-surface verification passes.
+- Stop only for missing unsafe secrets, missing human decisions, exhausted BDD budget, unavailable required external systems, or a repo/workflow configuration gap.
+- Report blockers with the issue id, failed surface, exact failing acceptance criterion, attempted repairs, and next human action.
+
 ## Thread Contract
 
 Symphony should hydrate fresh Codex threads with artifacts, not transcript history:
@@ -93,4 +120,6 @@ Symphony should hydrate fresh Codex threads with artifacts, not transcript histo
 - Do not choose models, agents, branches, concurrency, or slice order.
 - Do not expose secret values.
 - Do not advance issues with missing unsafe secrets.
+- Do not mark issues complete because code was written; mark them complete only after production-grade real-surface verification passes.
+- Do not accept mocks, fake providers, stubbed SDK responses, placeholder code, skipped tests, disabled branches, `NotImplemented`, TODO-only paths, unwired UI, or half-working behavior.
 - Do not run Symphony unless the repo documents an explicit launch command and the user separately confirms launch.
