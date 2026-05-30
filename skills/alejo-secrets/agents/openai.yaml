@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Secrets"
-  short_description: "Auto-recover safe provider secrets into Doppler"
-  default_prompt: "Use $alejo-secrets to inventory required secrets, dedupe them, automatically recover anything safe from existing authenticated providers or generated app values into Doppler, then give me a short official-link setup guide only for values that truly require human action."
+  short_description: "Find or create provider resources for Doppler"
+  default_prompt: "Use $alejo-secrets to inventory required secrets, dedupe them, inspect authenticated provider accounts for existing usable resources, propose reuse-or-create plans when resources are missing, recover safe values into Doppler, and give me manual setup steps only for values that truly require human action."
