@@ -18,7 +18,7 @@ Done means:
 - Provider integrations use real production code paths, official sandbox/test accounts, or configured local production services.
 - Storage, routes, UI, CLI, MCP, jobs, and provider adapters are wired end to end.
 - Synthetic verification exercises the real surface and returns a pass verdict.
-- `alejo-review` reports the selected issue scope as ready, with no P0/P1/P2 gaps tied to the implemented behavior.
+- A fresh review subagent running `alejo-review` reports the selected issue scope as ready, with no P0/P1/P2 gaps tied to the implemented behavior.
 - No mocks, fake providers, stubbed SDK responses, placeholder code, skipped tests, disabled branches, `NotImplemented`, TODO-only paths, unwired UI, or half-working behavior remain.
 
 If verification fails, keep the repair loop going within the issue's BDD budget. If the budget is exhausted or an unsafe blocker appears, leave the issue out of the done lane and report the exact blocker instead of calling it complete.
@@ -100,7 +100,8 @@ When launch is explicitly confirmed and the repo documents how to run Symphony, 
 - Start or resume the documented Symphony run.
 - Watch issue progress, test output, implementation results, and synthetic tester verdicts.
 - Feed failed verification back into the next BDD repair iteration.
-- At the end of each cycle, run `alejo-review` against the repo, planning artifacts, and selected Linear issues.
+- At the end of each cycle, spawn a fresh subagent whose only job is to run `alejo-review` against the repo, planning artifacts, and selected Linear issues.
+- Do not run the review inline in the same agent that drove the implementation cycle. If subagents are unavailable, stop and report that the review gate cannot run.
 - Read the Alejo Review report as the final production gate for that cycle.
 - Feed every relevant P0/P1/P2 review gap back into the next repair iteration until the report is clean for the selected issue scope.
 - Keep the issue in the execution lane while repairs are still available.
@@ -118,6 +119,7 @@ Symphony should hydrate fresh Codex threads with artifacts, not transcript histo
 - Implementer reads issue + `scenario.json` + code + failing test; writes implementation only.
 - Refactor reads issue + `scenario.json` + code + green tests; writes cleanup only.
 - Synthetic tester reads issue + `scenario.json` + code; exercises the real surface; writes `recommendation.json` or pass verdict.
+- Review subagent reads planning artifacts + selected issues + code + verification results; runs `alejo-review`; writes the final readiness report only.
 
 ## Output Rules
 
@@ -126,6 +128,7 @@ Symphony should hydrate fresh Codex threads with artifacts, not transcript histo
 - Do not expose secret values.
 - Do not advance issues with missing unsafe secrets.
 - Do not mark issues complete because code was written; mark them complete only after production-grade real-surface verification and Alejo Review both pass.
+- Do not run Alejo Review inline; always run it in its own fresh subagent.
 - Do not ignore Alejo Review findings; iterate on relevant P0/P1/P2 gaps until the report is clean or a real blocker is reached.
 - Do not accept mocks, fake providers, stubbed SDK responses, placeholder code, skipped tests, disabled branches, `NotImplemented`, TODO-only paths, unwired UI, or half-working behavior.
 - Do not run Symphony unless the repo documents an explicit launch command and the user separately confirms launch.
