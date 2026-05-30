@@ -1,93 +1,105 @@
 ---
 name: alejo-secrets
-description: Use when a user wants a Doppler-only, step-by-step terminal guide for creating required secrets, API keys, credentials, tokens, or environment variables for PRD/SAD vertical slices or implementation issues, or when Alejo Run needs safe recovery of missing Doppler secrets. Deduplicate reused secrets and research provider key sources online. Always use Doppler. Do not write secret artifact files.
+description: Use when a user wants required API keys, credentials, tokens, provider config, or environment variables set up in Doppler for Alejo PRD/SAD slices, Linear issues, implementations, or Alejo Run. Automatically recover secrets from existing authenticated providers when safe; otherwise produce a short Doppler-only human setup guide with official provider links. Never write secret artifact files.
 ---
 
 # Alejo Secrets
 
-Guide the user through creating required secrets in Doppler, secret by secret, with official provider links and copy-paste terminal commands. Never ask the user to paste secret values into Codex, chat, files, logs, or code.
+Set up required runtime secrets in Doppler. Prefer safe automatic recovery from existing authenticated tools and providers. Ask the human only when a credential truly cannot be obtained safely by Codex.
 
-Do not create or update secret artifact files. Output the guide in the conversation only.
+Never ask the user to paste secret values into Codex, chat, files, logs, or code. Never write `.env`, secret inventories, or other secret artifact files.
 
 ## Process
 
-### 1. Gather Context
+### 1. Gather Inputs
 
-Use the current context window, then inspect PRD XML, SAD XML, issues, latest Alejo Questions XML log, `CONTEXT.xml`, ADR XML docs, code, deployment config, CI, and env examples. If issue refs are provided, fetch bodies/comments.
+Inspect the current request, Alejo XML docs, Linear issues/comments, `CONTEXT.xml`, ADRs, code, deployment config, CI, and env examples. If issue refs are provided, fetch them.
 
-### 2. Use Doppler
+Identify every required secret or config value, including provider API keys, OAuth credentials, database URLs, webhook signing secrets, signing/encryption keys, service accounts, cloud resources, deploy tokens, observability sinks, and public provider config required at runtime.
 
-Always use Doppler. Do not ask the user to choose a provider.
+Normalize names to Doppler-style env vars: uppercase letters, numbers, underscores, and not starting with a number. Deduplicate by normalized name, provider credential, environment, owner, scope, and rotation boundary. Reused secrets get one Doppler entry and a complete `Used by` list.
 
-Verify Doppler CLI access with safe commands only, such as `command -v doppler`, `doppler --version`, or `doppler secrets --only-names`. Do not run commands that print secret values.
+### 2. Use Doppler Only
 
-Do not run `doppler secrets set` yourself unless one of these is true:
+Always use Doppler. Prefer the repo's configured Doppler scope from `doppler setup`; use explicit `-p "$DOPPLER_PROJECT" -c "$DOPPLER_CONFIG"` only when the project/config is known.
 
-- The user explicitly asks and confirms the correct secret value is already on the clipboard.
-- Alejo Run invoked this skill for safe automatic recovery of a missing generated application secret, current-process environment value, or verified non-secret public config value.
-
-Safe automatic recovery must use non-printing commands only. Never print, log, paste, summarize, or echo secret values.
-
-Prefer the repo's existing Doppler scope from `doppler setup`. If the project/config is known and should be explicit, use `-p "$DOPPLER_PROJECT" -c "$DOPPLER_CONFIG"`.
-
-### 3. Inventory Secrets
-
-Identify the required Doppler secret names for each slice or feature: API keys, external APIs, OAuth/client credentials, DB URLs, webhooks, signing/encryption keys, service accounts, cloud resources, CI/deploy tokens, and observability/audit sinks.
-
-Normalize names to Doppler-compatible env vars: uppercase letters, numbers, and underscores; do not start with a number.
-
-Deduplicate by normalized secret name, provider credential, environment/config, and required scope. If the same secret is needed by multiple slices, issues, or slides, ask for it once, create one Doppler entry, and list every consumer under "Used by". Create separate secrets only when scope, owner, environment, rotation policy, or credential type must differ.
-
-### 4. Research Provider Key Sources
-
-Use a research sub-agent for a deep online search when sub-agents are available and delegation is allowed in the current request. Give the sub-agent only the provider names, product names, required capabilities, and candidate secret names; do not give it secret values.
-
-Ask the sub-agent to return:
-
-- Provider/product name.
-- Exact credential type needed, such as API key, personal access token, OAuth client secret, webhook signing secret, service account JSON, or cloud access key.
-- Recommended Doppler secret name.
-- Official provider URL where the user can create or view the credential.
-- Short steps for what the user should click or copy.
-- Notes about scopes, permissions, billing, expiration, or rotation that affect setup.
-
-Require official provider docs or dashboard/account URLs when possible. Avoid blog posts unless official docs are unavailable. If the right credential type is ambiguous, surface a short open question instead of guessing.
-
-### 5. Produce The Terminal Guide
-
-Keep the guide short, complete, and copy-pasteable. Group by config only when needed.
-
-Start with setup:
+Safe Doppler checks:
 
 ```sh
-doppler login
-doppler setup
+command -v doppler
+doppler --version
+doppler secrets --only-names
 ```
 
-If explicit project/config variables are needed:
+Do not run commands that print secret values. Never include real secret values in chat output.
+
+### 3. Classify Each Missing Value
+
+For every missing value, choose the first safe matching class:
+
+1. **Already in Doppler**: name-only check confirms it exists. Report it as present; do not read it.
+2. **Generate locally**: create app-owned random values such as signing keys, session secrets, encryption salts, test-only local passwords, or generated webhook development secrets when the app owns the secret and no provider dashboard is involved.
+3. **Current environment**: if the exact env var is already present in the current process or `doppler run` environment, pipe it directly into Doppler without printing it.
+4. **Authenticated provider recovery**: if an official CLI, MCP connector, API, or local auth session is already authenticated and can retrieve the exact value or non-secret public config for the exact project/environment, pipe it directly into Doppler without showing or saving it.
+5. **Human-required**: if the credential must be created, viewed, rotated, copied from a dashboard, approved through MFA, billed, guessed, disambiguated, or retrieved by a command that would expose or persist it, give the user a short setup guide.
+
+Human-required examples usually include provider API keys, OAuth client secrets, database passwords, cloud private keys, service account JSON, webhook signing secrets, billing-gated keys, account-owned tokens, and dashboard-only one-time secrets.
+
+### 4. Automatic Recovery Rules
+
+Automatic recovery is allowed only when all are true:
+
+- Doppler CLI works and the target Doppler project/config is clear.
+- The provider account, project, environment, and credential name are unambiguous from repo config, docs, issue contract, or authenticated provider metadata.
+- The command uses official provider tooling or an authenticated provider API.
+- The value is sent directly to `doppler secrets set ... --silent` through a pipe or stdin.
+- The value is not printed, echoed, logged, written to a file, committed, summarized, or passed as a shell argument.
+- The command does not create billable resources, rotate credentials, broaden permissions, or change provider-side state unless the user explicitly asked for that.
+
+Use non-printing patterns:
 
 ```sh
-export DOPPLER_PROJECT="{project}"
-export DOPPLER_CONFIG="{config}"
+provider-cli get-secret --name SECRET_NAME --project "$PROVIDER_PROJECT" 2>/dev/null \
+  | doppler secrets set SECRET_NAME --silent
 ```
 
-Then list one step per unique secret. For each secret, include:
+```sh
+printenv SECRET_NAME \
+  | doppler secrets set SECRET_NAME --silent
+```
 
-- What credential to create or copy.
-- The official provider link.
-- Any required scope/permission.
-- Which slices, issues, or slides use it.
-- The exact terminal command pair.
+For generated app secrets:
 
-Use this shape:
+```sh
+openssl rand -base64 48 \
+  | doppler secrets set SECRET_NAME --silent
+```
+
+If the provider command can only print a broad list, write a file, show a dashboard page, or expose the value in terminal output, do not run it. Move that secret to the human guide.
+
+### 5. Research Human-Required Secrets
+
+For each human-required secret, use official provider docs or dashboard/account URLs. Search online when the exact source or credential type is not obvious; prefer official sources. If subagents are available and delegation is allowed, a research subagent may look up provider URLs and setup steps, but must never receive secret values.
+
+For ambiguous product decisions or credential scopes, ask a concise multiple-choice question with a recommended option. Do not invent provider scopes or credential types.
+
+### 6. Output
+
+Start with a short status:
+
+- `Present in Doppler`: names only.
+- `Recovered automatically`: names only and source type, never values.
+- `Needs human setup`: names only.
+
+Then provide one copy-pasteable step per human-required secret:
 
 ````md
 ### SECRET_NAME
 
 Get it: {official provider link}
-Copy: {exact credential/value the provider UI labels, such as "API key" or "Client secret"}
-Used by: {slice/issue/slide names or IDs that need this same Doppler secret}
-Notes: {scope, environment, owner, expiration, or rotation note if relevant}
+Copy: {exact provider UI label, such as "API key" or "Client secret"}
+Used by: {slice/issue/feature names}
+Notes: {scope, environment, owner, expiration, or rotation note}
 
 ```sh
 pbpaste | doppler secrets set SECRET_NAME --silent
@@ -95,14 +107,7 @@ printf '' | pbcopy
 ```
 ````
 
-For command snippets, use:
-
-```sh
-pbpaste | doppler secrets set SECRET_NAME --silent
-printf '' | pbcopy
-```
-
-When using explicit project/config variables:
+When explicit Doppler scope is required:
 
 ```sh
 pbpaste | doppler secrets set SECRET_NAME -p "$DOPPLER_PROJECT" -c "$DOPPLER_CONFIG" --silent
@@ -121,22 +126,18 @@ Optionally include runtime verification when a project command is known:
 doppler run -- sh -c 'test -n "$SECRET_NAME" && echo "SECRET_NAME is available"'
 ```
 
-## Output Rules
+## Rules
 
 - Do not write files.
-- Do not create a secret artifact file.
+- Do not create or update secret artifact files.
 - Do not include actual secret values.
 - Do not ask the user to paste secret values into Codex.
-- Do not suggest 1Password or another provider.
-- Do not use key-value `doppler secrets set SECRET=value` for real secrets.
-- Do not rely on stale memory for where provider keys live; search online and prefer official provider sources.
-- Do not provide generic "go to dashboard" guidance when an official URL or specific navigation path can be found.
-- Do not automatically set provider API keys, OAuth client secrets, database passwords, cloud credentials, service account JSON, webhook signing secrets from a real provider dashboard, billing-gated keys, account-owned tokens, or any credential that must be guessed, retrieved from a private dashboard, read from files, or pasted into chat.
-- Do allow Alejo Run to auto-set generated application secrets, exact-name current-process environment values, and verified non-secret public config values through non-printing Doppler commands.
-- Do include one copy-paste command pair per secret.
-- Do deduplicate reused secrets and include only one command pair per unique Doppler secret.
-- Do list every slice, issue, or slide that consumes a reused secret under `Used by`.
-- Do include the official provider link for each secret.
-- Do include what exact provider UI value the user should copy.
-- Do include `printf '' | pbcopy` immediately after every `pbpaste | doppler secrets set ... --silent` command.
-- Do include open questions only when a required secret name, source, project, config, owner, or environment cannot be inferred.
+- Do not suggest 1Password or another secret manager.
+- Do not use `doppler secrets set SECRET=value` for real secrets.
+- Do not read Doppler secret values; use `doppler secrets --only-names`.
+- Do not rely on memory for provider key locations; use official current docs or dashboards.
+- Do automatically recover values when they satisfy the automatic recovery rules.
+- Do stop and ask only when the value is genuinely human-required or unsafe to retrieve automatically.
+- Do include one command pair per unique human-required Doppler secret.
+- Do list every slice, issue, or feature that consumes a reused secret under `Used by`.
+- Do clear the clipboard immediately after every `pbpaste | doppler secrets set ... --silent` command.
