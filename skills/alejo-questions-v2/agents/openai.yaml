@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo Questions v2"
+  short_description: "Compact evidence-first product questioning"
+  default_prompt: "Use $alejo-questions-v2 to sharpen this proposal with one numbered multiple-choice question at a time, checking code/docs first, clarifying the end-user experience and value proposition before optional technical decisions, then publishing Q&A.xml, CONTEXT.xml, and any ADR XML to Linear Project Documents."
