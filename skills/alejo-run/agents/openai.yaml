@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Run"
-  short_description: "Run issues to production-grade done"
-  default_prompt: "Use $alejo-run to preflight ready Linear implementation issues, recover safe missing Doppler secrets via Alejo Secrets, launch the documented Symphony flow after approval, and keep iterating until real-surface verification plus a fresh Alejo Review subagent both pass cleanly with no mocks, fakes, stubs, placeholders, skipped tests, or half-working paths."
+  short_description: "Autonomously run issues to production-grade done"
+  default_prompt: "Use $alejo-run to autonomously preflight ready Linear implementation issues, recover safe missing Doppler secrets via Alejo Secrets, move passing issues into the Symphony lane, launch the documented Symphony flow without approval prompts, and keep iterating until real-surface verification plus a fresh Alejo Review subagent both pass cleanly with no mocks, fakes, stubs, placeholders, skipped tests, or half-working paths."

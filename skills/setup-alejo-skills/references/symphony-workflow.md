@@ -5,7 +5,7 @@ Use this XML shape for the Linear Project Document `WORKFLOW.md`.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <symphony_workflow>
-  <purpose>Define how Symphony runs approved Linear issues with fresh Codex threads.</purpose>
+  <purpose>Define how Symphony runs ready Linear issues with fresh Codex threads.</purpose>
   <entry>
     <source>Linear vertical-slice issues and the Linear Project Document issue-tracker.md.</source>
     <ready_status>Ready for Agent</ready_status>
@@ -35,7 +35,7 @@ Use this XML shape for the Linear Project Document `WORKFLOW.md`.
     <boundary>Linear Project Documents own setup docs, workflow docs, and planning artifacts.</boundary>
     <boundary>Issues own implementation context.</boundary>
     <boundary>Doppler owns secret values.</boundary>
-    <boundary>alejo-run moves approved issues into the Symphony lane.</boundary>
+    <boundary>alejo-run moves passing ready issues into the Symphony lane without approval prompts.</boundary>
     <boundary>Do not maintain a repo-local WORKFLOW.md copy.</boundary>
   </boundaries>
 </symphony_workflow>

@@ -138,7 +138,7 @@ Use Alejo in this order for new software work:
    Use after any Linear Project Document, issue, secret-name, or workflow change. It keeps Linear Project Documents and issues aligned.
 
 9. `$alejo-run`
-   Use only when ready Linear issues should go to Symphony. It preflights issue contracts, asks for approval, and moves approved issues into the Symphony execution lane.
+   Use only when ready Linear issues should go to Symphony. It preflights issue contracts, moves passing issues into the Symphony execution lane, launches the documented workflow, and iterates without approval prompts.
 
 10. `$alejo-review`
    Use after implementation to compare the built codebase against Linear Project Documents and issues. Output: a prioritized gap list for a fully running system.
