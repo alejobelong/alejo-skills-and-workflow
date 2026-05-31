@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo PRD v2"
   short_description: "Create PRD.xml from Q&A-first product context"
-  default_prompt: "Use $alejo-prd-v2 to read the latest Q&A.xml as the primary source, synthesize a compact product-facing PRD.xml, and publish it only as a Linear Project Document with no issue, project-overview, or local-file fallback."
+  default_prompt: "Use $alejo-prd-v2 to read the latest Q&A.xml as the primary source, synthesize a compact product-facing PRD.xml, and publish it as a Linear Project Document."
