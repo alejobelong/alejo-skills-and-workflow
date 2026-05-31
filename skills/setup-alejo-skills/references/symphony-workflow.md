@@ -5,7 +5,7 @@ Use this XML shape for the Linear Project Document `WORKFLOW.md`.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <symphony_workflow>
-  <purpose>Define how Symphony runs ready Linear issues with fresh Codex threads.</purpose>
+  <purpose>Define how Symphony runs approved Linear issues with fresh Codex threads.</purpose>
   <entry>
     <source>Linear vertical-slice issues and the Linear Project Document issue-tracker.md.</source>
     <ready_status>Ready for Agent</ready_status>

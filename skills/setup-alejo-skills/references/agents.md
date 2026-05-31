@@ -35,7 +35,7 @@ Use this XML shape for the Linear Project Document `AGENTS.md`. Replace every br
     <skill order="6" name="$alejo-issues">Create behavior-first vertical-slice Linear issues.</skill>
     <skill order="7" name="$alejo-secrets">Recover or set up Doppler secrets and provider resources.</skill>
     <skill order="8" name="$alejo-consistency-propagation">Reconcile changed artifacts and issue contracts.</skill>
-    <skill order="9" name="$alejo-run">Autonomously preflight, queue, launch, and drive ready issues through Symphony.</skill>
+    <skill order="9" name="$alejo-run">Preflight ready issues and hand passing work to Symphony without approval prompts.</skill>
     <skill order="10" name="$alejo-review">Audit built code against Alejo documents and issues.</skill>
   </skill_flow>
 </alejo_repo>

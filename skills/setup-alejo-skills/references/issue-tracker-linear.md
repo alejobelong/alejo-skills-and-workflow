@@ -40,7 +40,7 @@ Use this XML shape for the Linear Project Document `issue-tracker.md`.
     </required_fields>
   </linear_issues>
   <symphony_handoff>
-    <description>alejo-run reads ready Linear issues, preflights their XML run contract, moves passing issues into the Symphony lane without approval prompts, and launches the documented Symphony flow.</description>
+    <description>alejo-run reads ready Linear issues, preflights their XML run contract, then moves passing issues into the Symphony lane without approval prompts.</description>
     <status_map alejo_role="ready-for-agent" linear_status="Ready for Agent" />
     <status_map alejo_role="symphony-execution" linear_status="Night Shift Queued" />
     <status_map alejo_role="in-symphony" linear_status="In Night Shift" />

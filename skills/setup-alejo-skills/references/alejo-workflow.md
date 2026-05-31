@@ -18,8 +18,8 @@ Use this XML shape for the Linear Project Document `alejo-workflow.md`.
   <implementation_bridge skill="alejo-run">
     <step order="1">Read the Linear Project Document WORKFLOW.md, setup documents, and ready Linear issues.</step>
     <step order="2">Preflight each issue's XML run contract.</step>
-    <step order="3">Move every passing issue to the Symphony execution lane without approval prompts.</step>
-    <step order="4">Launch the documented Symphony flow and keep iterating until done or truly blocked.</step>
+    <step order="3">Move passing issues to the Symphony execution lane without approval prompts.</step>
+    <step order="4">Launch the documented Symphony workflow without separate confirmation.</step>
   </implementation_bridge>
   <symphony>Symphony runs fresh Codex threads from the issue contract and Linear Project Document WORKFLOW.md.</symphony>
   <review skill="alejo-review">After implementation, compare the built codebase against Linear Project Documents, ADRs, and issues to produce a prioritized gap list.</review>

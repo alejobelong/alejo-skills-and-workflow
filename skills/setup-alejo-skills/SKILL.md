@@ -79,8 +79,8 @@ I suggest `<project-name>`. Should I create this Linear Project?
 5. Apply these defaults:
    - Linear Project Documents hold all Alejo setup docs, workflow docs, and planning artifacts.
    - Linear issues hold only vertical slices and actionable follow-ups.
-   - Readiness/execution use Linear workflow statuses: `Needs Triage`, `Needs Info`, `Ready for Agent`, `Night Shift Queued`, `In Night Shift`, `Done`, `Won't Fix`.
-   - Labels classify issues only: `vertical-slice`, `sad-follow-up`, `surface:*`, `secrets-required`.
+   - Readiness/execution use Linear workflow statuses: `Needs Triage`, `Needs Info`, `Ready for Human`, `Ready for Agent`, `Night Shift Queued`, `In Night Shift`, `Done`, `Won't Fix`.
+   - Labels classify issues only: `vertical-slice`, `hitl`, `sad-follow-up`, `surface:*`, `secrets-required`.
    - Use one root `CONTEXT.xml` Project Document unless the repo already has a `CONTEXT-MAP.xml` pattern.
    - Secret values belong in Doppler, never in repo files, Linear docs, or Linear issue bodies.
 
@@ -138,7 +138,7 @@ Use Alejo in this order for new software work:
    Use after any Linear Project Document, issue, secret-name, or workflow change. It keeps Linear Project Documents and issues aligned.
 
 9. `$alejo-run`
-   Use only when ready Linear issues should go to Symphony. It preflights issue contracts, moves passing issues into the Symphony execution lane, launches the documented workflow, and iterates without approval prompts.
+   Use only when ready Linear issues should go to Symphony. It preflights issue contracts, moves passing issues into the Symphony execution lane without approval prompts, and launches the documented workflow without separate confirmation.
 
 10. `$alejo-review`
    Use after implementation to compare the built codebase against Linear Project Documents and issues. Output: a prioritized gap list for a fully running system.

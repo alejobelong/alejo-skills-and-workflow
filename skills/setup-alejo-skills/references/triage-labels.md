@@ -9,6 +9,7 @@ Use this XML shape for the Linear Project Document `triage-labels.md`.
   <workflow_statuses>
     <status alejo_role="needs-triage" linear_status="Needs Triage" />
     <status alejo_role="needs-info" linear_status="Needs Info" />
+    <status alejo_role="ready-for-human" linear_status="Ready for Human" />
     <status alejo_role="ready-for-agent" linear_status="Ready for Agent" />
     <status alejo_role="symphony-execution" linear_status="Night Shift Queued" />
     <status alejo_role="in-symphony" linear_status="In Night Shift" />
@@ -17,6 +18,7 @@ Use this XML shape for the Linear Project Document `triage-labels.md`.
   </workflow_statuses>
   <issue_labels>
     <label>vertical-slice</label>
+    <label>hitl</label>
     <label>sad-follow-up</label>
     <label>surface:cli</label>
     <label>surface:api</label>
