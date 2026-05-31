@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo SAD v2"
+  short_description: "Create compact SAD.xml Project Documents"
+  default_prompt: "Use $alejo-sad-v2 to create or update a compact production-focused SAD.xml Linear Project Document from PRD.xml, prototype.xml, Q&A.xml, CONTEXT.xml, ADRs, and current codebase architecture."
