@@ -11,20 +11,21 @@ Create a short product-focused `PRD.xml` from what is already known. Do not inte
 
 Read only what is needed, in this order:
 
-1. `Q&A.xml`: highest weight. Carry forward resolved questions, answers, recommendations, product snapshot, decisions, and open questions.
-2. `CONTEXT.xml`: canonical domain language and relationships.
-3. Current conversation: latest user intent and corrections.
-4. Existing `PRD.xml`: preserve still-valid product decisions when updating.
-5. `prototype.xml`: UX evidence and visible interaction details.
-6. Code/repo evidence: current product behavior and constraints only.
-7. ADR XML: product-visible constraints only.
+1. `AGENTS.md`: general project context and source-of-truth map; read first for orientation only.
+2. `Q&A.xml`: highest weight. Carry forward resolved questions, answers, recommendations, product snapshot, decisions, and open questions.
+3. `CONTEXT.xml`: canonical domain language and relationships.
+4. Current conversation: latest user intent and corrections.
+5. Existing `PRD.xml`: preserve still-valid product decisions when updating.
+6. `prototype.xml`: UX evidence and visible interaction details.
+7. Code/repo evidence: current product behavior and constraints only.
+8. ADR XML: product-visible constraints only.
 
-Do not load `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, or `WORKFLOW.md` unless needed only to locate the Linear Project.
+Do not load `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, or `WORKFLOW.md` unless needed only to locate the Linear Project.
 
 ## Process
 
 1. Resolve the Linear Project from current context, existing Linear links, or Linear tooling.
-2. Read `Q&A.xml` first. If missing, continue from the conversation but mark confidence lower.
+2. Read `AGENTS.md` for project orientation, then read `Q&A.xml` for product substance. If Q&A is missing, continue from the conversation but mark confidence lower.
 3. Inspect only enough repo evidence to avoid false product claims.
 4. Synthesize the desired user experience: users, value proposition, journeys, scope, acceptance signals, risks, and open questions.
 5. Publish by creating or updating the Linear Project Document named `PRD.xml`.
