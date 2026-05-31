@@ -19,14 +19,23 @@ Interrogate the proposal until the product experience, end-user value propositio
 - Use XML for generated artifacts. Put user prose, quotes, snippets, and evidence in CDATA.
 - In Linear-configured repos, publish final `Q&A.xml`, `CONTEXT.xml`, and any ADR XML to Linear Project Documents. Do not create Linear issues.
 
-## Context To Read
+## Domain Awareness
 
-Read only what is needed:
+Read only what is needed. Know what each artifact is for:
 
-- Linear Project Documents: `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, `WORKFLOW.md`, `Q&A.xml`, `CONTEXT.xml`, `PRD.xml`, `prototype.xml`, `SAD.xml`/`SAT.xml`.
-- Repo docs: `CONTEXT-MAP.xml`, local/context `CONTEXT.xml`, `docs/adr/*.xml`.
-- Legacy mirrors only when useful: local `AGENTS.md`, `docs/agents/*`, `WORKFLOW.md`.
-- Source files that prove or contradict the proposal.
+- `AGENTS.md`: repo onboarding and Alejo source-of-truth map.
+- `issue-tracker.md`: Linear Project, issue contract, and Symphony handoff.
+- `triage-labels.md`: Linear status and label vocabulary.
+- `alejo-workflow.md`: how Alejo planning moves toward implementation.
+- `WORKFLOW.md`: Symphony execution contract for ready issues.
+- `Q&A.xml`: prior questions, recommendations, answers, and decisions; this skill updates it.
+- `CONTEXT.xml`: domain glossary and relationships; this skill updates settled terms.
+- `CONTEXT-MAP.xml`: map for repos with multiple domain contexts.
+- `PRD.xml`, `prototype.xml`, `SAD.xml`/`SAT.xml`: product intent, UX evidence, and architecture constraints to respect.
+- `docs/adr/*.xml`: durable architecture decisions; this skill creates one only when the decision deserves it.
+- Source files: ground truth for implemented behavior and contradictions.
+
+Legacy local `AGENTS.md`, `docs/agents/*`, or `WORKFLOW.md` are mirrors only; Linear Project Documents are canonical when configured.
 
 ## Loop
 
