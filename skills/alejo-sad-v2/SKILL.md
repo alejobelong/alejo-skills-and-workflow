@@ -26,7 +26,7 @@ Do not load local planning mirrors or workflow docs such as `issue-tracker.md`, 
 1. Resolve the writable Linear Project and its Project Documents.
 2. Read the source documents in order, then inspect only enough code to understand the actual architecture and constraints.
 3. Pick the 3 highest-priority quality attributes from the evidence. If they cannot be inferred, ask one multiple-choice question with a recommended answer.
-4. Design the architecture around production behavior, real providers, deployable services, durable data, and feature-based code organization.
+4. Before finalizing providers, ask concise open-ended provider questions with an AI recommendation for each unclear provider area; then design the architecture around production behavior, real providers, deployable services, durable data, and feature-based code organization.
 5. Publish by creating or updating the Linear Project Document named `SAD.xml`.
 
 If the Linear Project Document cannot be reached, report the blocker and stop.
