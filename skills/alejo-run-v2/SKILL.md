@@ -1,6 +1,6 @@
 ---
 name: alejo-run-v2
-description: Compact Alejo Run v2 workflow for autonomously executing ready Linear vertical-slice issues through the WORKFLOW.md Symphony contract, Codex Goal mode, Symfony-aware runtime gates, Doppler-safe secret recovery with alejo-secrets-v2, real-surface verification, and a clean alejo-review subagent gate. Use when ready Alejo issues should be run until production-grade without mocks, approvals, or human-in-the-loop pauses.
+description: Compact Alejo Run v2 workflow for autonomously executing ready Linear vertical-slice issues through the WORKFLOW.md Symphony contract, Codex Goal mode, Symphony runtime gates, Doppler-safe secret recovery with alejo-secrets-v2, real-surface verification, and a clean alejo-review subagent gate. Use when ready Alejo issues should be run until production-grade without mocks, approvals, or human-in-the-loop pauses.
 ---
 
 # Alejo Run v2
@@ -51,27 +51,26 @@ Do not use local planning mirrors as canonical sources.
    - if names are missing, use `alejo-secrets-v2`;
    - automatically add only app-owned generated values, exact current-env values, recoverable official-tool values, verified-created provider resources, or public config that can be written without exposing values;
    - stop before lane movement for human-required or unsafe secrets and report the `alejo-secrets-v2` setup steps.
-5. Run Symfony/runtime preflight from `WORKFLOW.md`:
-   - detect Symfony from `composer.json`, `bin/console`, `symfony.lock`, or repo instructions;
+5. Run Symphony/runtime preflight from `WORKFLOW.md`:
+   - resolve the repo-declared Symphony launch, resume, status, test, synthetic verification, artifact, and review gates;
    - use `doppler run -- <command>` when secrets or environment-backed config are required;
    - never print secret values, dump broad environments, or run unsafe debug output;
-   - install dependencies with the repo-declared Composer command when needed;
-   - run `php bin/console lint:container --resolve-env-vars` when available;
-   - run repo-declared PHPUnit, functional, API, CLI, MCP, or equivalent tests for the selected surface;
-   - run cache clear/warmup, migration status/migration, and deployment checks when the issue or changed code needs them;
-   - for UI/browser behavior, require Playwright against the running app even if Symfony functional tests pass;
-   - for Messenger, queues, scheduled work, async transports, or jobs, verify worker command, transport config, failure behavior, and restart/stop path such as `messenger:stop-workers` when applicable.
-6. Show a short preflight table: issue, surface, providers, secrets, dependencies, BDD budget, Symfony/runtime verdict, target lane, and blocker if any. Do not ask for approval.
+   - run repo-declared tests for the selected `api`, `ui`, `cli`, or `mcp` surface;
+   - run the documented Symphony launch or resume command when the preflight passes;
+   - verify Symphony status, artifacts, logs, handoff evidence, and synthetic tester verdicts from the documented artifact sink;
+   - for UI/browser behavior, require Playwright against the running app;
+   - for jobs, queues, workers, schedulers, or async flows, verify the repo-declared command, state transition, failure behavior, and observable output.
+6. Show a short preflight table: issue, surface, providers, secrets, dependencies, BDD budget, Symphony/runtime verdict, target lane, and blocker if any. Do not ask for approval.
 7. Move passing issues into the configured Symphony execution lane and run the documented launch/resume command if one exists.
 8. Drive the production loop until done or blocked:
    - generate `scenario.json` with 3 to 5 behaviours including persona, objective, prompts/actions, wait expectations, failure modes, and evidence needs;
    - implement against failing tests and real provider/runtime paths;
-   - run Symfony/runtime checks, surface tests, and synthetic verification from `WORKFLOW.md`;
+   - run Symphony/runtime checks, surface tests, and synthetic verification from `WORKFLOW.md`;
    - for UI/chat/managed-agent work, Playwright must use the real app as a real user and prove the answer/effect is not canned, mocked, stubbed, or disconnected;
    - feed failures into the next BDD repair iteration until the issue budget is exhausted;
    - after each cycle, spawn a fresh subagent whose only job is to run `alejo-review` against planning artifacts, selected issues, code, and verification results;
    - iterate on every relevant P0/P1/P2 review gap until the report is clean or a true blocker is reached.
-9. Complete only when real-surface verification, synthetic verification, Symfony/runtime gates, and the review subagent are clean. Otherwise leave the issue out of the done lane and report the exact blocker.
+9. Complete only when real-surface verification, synthetic verification, Symphony/runtime gates, and the review subagent are clean. Otherwise leave the issue out of the done lane and report the exact blocker.
 
 ## Blockers
 
@@ -82,7 +81,7 @@ Stop only for:
 - exhausted BDD budget;
 - unavailable required external systems or authenticated provider access;
 - missing `WORKFLOW.md`, lane mapping, runtime command, or Linear write access;
-- Symfony/runtime commands that are required but unavailable or unsafe to run;
+- Symphony/runtime commands that are required but unavailable or unsafe to run;
 - review gaps outside the selected issue scope.
 
 Report blocker details with issue id, failed surface, failed acceptance criterion, commands/evidence attempted, repair attempts, and next required action.

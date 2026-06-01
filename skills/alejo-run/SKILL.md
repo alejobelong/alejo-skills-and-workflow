@@ -90,24 +90,23 @@ Unsafe or not-easy secrets include provider API keys, OAuth client secrets, data
 
 After any safe automatic addition, run `doppler secrets --only-names` again. Stop if required secret names are still missing or if confirmed names changed without being propagated back to the issue.
 
-### 5. Symfony Runtime Preflight
+### 5. Symphony Runtime Preflight
 
-Detect Symfony from `composer.json`, `bin/console`, `symfony.lock`, or repo instructions. If Symfony is present, use the `WORKFLOW.md` `symfony_runtime` slots plus repo scripts to verify the runtime:
+Use the `WORKFLOW.md` `symphony_runtime` slots plus repo scripts to verify the execution runtime:
 
 - Use `doppler run -- <command>` when the selected issue needs secrets or environment-backed config.
 - Never run commands that print secret values or dump full environments.
-- Install dependencies with the repo-declared Composer command when vendor dependencies are missing.
-- Run `php bin/console lint:container --resolve-env-vars` when `bin/console` and the command are available.
-- Run repo-declared PHPUnit, functional, API, CLI, MCP, or equivalent Symfony tests for the selected surface.
-- Run cache warmup/clear and migration status/migration commands when `WORKFLOW.md`, the issue, or changed code requires them.
-- Require Playwright for UI or browser-reachable behavior, even if Symfony functional tests pass.
-- If the slice touches Messenger, queues, scheduled work, async transports, or jobs, verify the repo-declared worker command, transport config, failure behavior, and restart/stop path such as `messenger:stop-workers` when applicable.
+- Resolve the documented Symphony launch, resume, status, test, synthetic verification, artifact, and review gates.
+- Run repo-declared tests for the selected `api`, `ui`, `cli`, or `mcp` surface.
+- Verify Symphony status, artifacts, logs, handoff evidence, and synthetic tester verdicts from the documented artifact sink.
+- Require Playwright for UI or browser-reachable behavior.
+- If the slice touches jobs, queues, workers, schedulers, or async flows, verify the repo-declared command, state transition, failure behavior, and observable output.
 
-Stop if a required Symfony command is missing, unsafe to run, or impossible to verify from repo instructions and `WORKFLOW.md`.
+Stop if a required Symphony/runtime command is missing, unsafe to run, or impossible to verify from repo instructions and `WORKFLOW.md`.
 
 ### 6. Present Preflight Table
 
-Show a short preflight table with issue id/title, surface, preconditions, dependencies, providers, secrets refs, BDD budget, Symfony/runtime verdict when applicable, readiness state, secret verdict, preflight verdict, and target Symphony lane.
+Show a short preflight table with issue id/title, surface, preconditions, dependencies, providers, secrets refs, BDD budget, Symphony/runtime verdict when applicable, readiness state, secret verdict, preflight verdict, and target Symphony lane.
 
 Do not ask for human approval before changing Linear. Passing issues move forward automatically.
 

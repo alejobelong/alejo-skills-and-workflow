@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Run v2"
   short_description: "Run ready Alejo issues autonomously"
-  default_prompt: "Use $alejo-run-v2 to run ready Linear issues through WORKFLOW.md until they are production-grade, Symfony-verified, reviewed clean, and free of mocks or placeholders."
+  default_prompt: "Use $alejo-run-v2 to run ready Linear issues through WORKFLOW.md until they are production-grade, Symphony-verified, reviewed clean, and free of mocks or placeholders."

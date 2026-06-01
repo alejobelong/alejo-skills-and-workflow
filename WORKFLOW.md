@@ -38,20 +38,19 @@
     <rule>If alejo-secrets confirms, renames, adds, or removes any required secret after issues exist, run alejo-consistency-propagation or update the affected Linear issues before alejo-run.</rule>
     <rule>alejo-run must fail preflight when issue secret refs do not match the confirmed Doppler names needed by the slice.</rule>
   </secrets>
-  <symfony_runtime>
-    <detect>Detect Symfony from composer.json, bin/console, symfony.lock, or repo instructions.</detect>
-    <command name="install">Repo-declared Composer install command, or None.</command>
-    <command name="test">Repo-declared PHPUnit or functional test command, or None.</command>
-    <command name="lint_container">php bin/console lint:container --resolve-env-vars when available.</command>
-    <command name="cache_warmup">Repo-declared cache clear or warmup command, or None.</command>
-    <command name="migrations">Repo-declared safe Doctrine migration status or migration command, or None.</command>
+  <symphony_runtime>
+    <command name="launch">Repo-declared Symphony launch or resume command, or None.</command>
+    <command name="status">Repo-declared Symphony status/progress command, or None.</command>
+    <command name="test">Repo-declared test command for the selected surface, or None.</command>
+    <command name="synthetic_verification">Repo-declared synthetic tester command or pass-verdict source, or None.</command>
+    <command name="review">Fresh alejo-review subagent; inline review is not valid.</command>
     <browser_base_url>Repo-declared local browser URL for Playwright, or None.</browser_base_url>
-    <workers>Repo-declared Messenger transports, consume commands, stop/restart commands, or None.</workers>
+    <artifact_sink>Where Symphony writes scenario.json, recommendation.json, logs, handoff evidence, or pass verdicts.</artifact_sink>
     <rule>Run commands through Doppler when the issue needs secrets or environment-backed config; never print secret values.</rule>
-  </symfony_runtime>
+  </symphony_runtime>
   <verification_artifacts>
     <artifact name="scenario.json">BDD behaviours with persona, objective, prompts/actions, wait expectations, failure modes, and evidence needs.</artifact>
-    <artifact name="test_output">PHPUnit, functional, Playwright, CLI, API, MCP, or provider-backed test output for the real surface.</artifact>
+    <artifact name="test_output">Repo-declared test output, Playwright evidence, CLI/API/MCP output, or provider-backed evidence for the real surface.</artifact>
     <artifact name="recommendation.json">Synthetic tester pass/fail recommendation or equivalent pass verdict.</artifact>
     <artifact name="alejo_review_report">Fresh review subagent report with no relevant P0/P1/P2 gaps before completion.</artifact>
   </verification_artifacts>
