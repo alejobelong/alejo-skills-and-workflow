@@ -54,6 +54,15 @@ Start with the smallest happy path that proves the capability end to end. Fold r
 
 Split large work by user role, scenario, state, permission boundary, data scope, integration boundary, or happy path versus important edge case. Blockers should be prior observable behavior issues or unresolved human decisions, not vague technical phases.
 
+## Verification Contract
+
+Each issue body, or the generated BDD budget derived from it, must include:
+
+- Representative prompts, inputs, payloads, or user actions for the slice; chat and managed-agent work must include realistic prompts and expected answer properties.
+- Playwright verification for every UI or browser-reachable surface: route/URL, user actions, visible assertions, and any persistence, network, or provider-backed evidence.
+- Provider or managed-agent evidence that proves real integration, such as request IDs, trace IDs, webhook event IDs, provider sandbox records, stored records, or agent response evidence. Never include secret values.
+- Latency, timeout, retry, and max-wait expectations for real-surface verification, including slow-path UX when relevant.
+
 ## Pre-Publish Gate
 
 Before publishing, each issue must pass:
@@ -63,6 +72,7 @@ Before publishing, each issue must pass:
 - Source refs and domain terms match the Linear Project Documents.
 - Providers, Doppler secret refs, preconditions, and dependencies are explicit.
 - Acceptance criteria prove behavior through the declared `api`, `ui`, `cli`, or `mcp` surface.
+- Representative inputs/prompts, Playwright expectations, provider/managed-agent evidence, and latency/timeout expectations are defined.
 - Production constraints reject mocks, fakes, stubs, placeholders, skipped tests, disabled branches, and unwired UI.
 - Code organization points to one owning feature area plus any thin framework adapters.
 
@@ -101,6 +111,10 @@ Show the proposed issue set before publishing with title, blockers, source refs,
     <secrets_refs><![CDATA[{Doppler secret names verified by name-only check, or None.}]]></secrets_refs>
     <quality_attributes><![CDATA[{Slice-relevant SAD.xml/SAT.xml quality targets.}]]></quality_attributes>
     <bdd_budget>{default 3 outer repair iterations unless SAD.xml/SAT.xml says otherwise}</bdd_budget>
+    <representative_prompts><![CDATA[{Representative prompts, inputs, payloads, or user actions; required for chat/managed-agent slices, otherwise None.}]]></representative_prompts>
+    <playwright_verification><![CDATA[{Required route/URL, actions, visible assertions, persistence/network/provider evidence for UI or browser-reachable surfaces, otherwise None.}]]></playwright_verification>
+    <provider_managed_agent_evidence><![CDATA[{Request IDs, trace IDs, webhook event IDs, provider sandbox records, stored records, managed-agent response evidence, or None.}]]></provider_managed_agent_evidence>
+    <latency_timeout_expectations><![CDATA[{Expected latency, max timeout, retry/backoff, synthetic-test wait limits, and slow-path UX if relevant.}]]></latency_timeout_expectations>
     <readiness_label_status><![CDATA[Use ready-for-agent only when decisions are resolved and required Doppler secret names exist.]]></readiness_label_status>
   </run_contract>
   <production_constraints>
