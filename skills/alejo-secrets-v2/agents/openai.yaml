@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo Secrets v2"
+  short_description: "Set up Doppler secrets and provider resources"
+  default_prompt: "Use $alejo-secrets-v2 to inventory required secrets and provider resources, reuse or create resources after plan verification, recover safe values directly into Doppler, and give human setup steps only when values are truly human-required."
