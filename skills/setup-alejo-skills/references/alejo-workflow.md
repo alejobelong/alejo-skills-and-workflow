@@ -6,6 +6,7 @@ Use this XML shape for the Linear Project Document `alejo-workflow.md`.
 <?xml version="1.0" encoding="UTF-8"?>
 <alejo_workflow>
   <purpose>Connect the full Alejo planning stack to Symphony implementation.</purpose>
+  <scope>AGENTS.md owns repo onboarding and source locations. This document owns the Alejo lifecycle and artifact flow.</scope>
   <planning>
     <step order="1" skill="alejo-questions">Resolve domain language and publish Q&amp;A.xml plus CONTEXT.xml.</step>
     <step order="2" skill="alejo-prd">Publish PRD.xml to the Linear Project.</step>

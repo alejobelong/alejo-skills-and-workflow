@@ -1,17 +1,18 @@
-# Symphony Workflow Linear Project Document Shape
+# WORKFLOW.md Linear Project Document Shape
 
 Use this XML shape for the Linear Project Document `WORKFLOW.md`.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <symphony_workflow>
-  <purpose>Define how Symphony runs approved Linear issues with fresh Codex threads.</purpose>
+  <purpose>Define how Symphony runs ready Linear issues with fresh Codex threads.</purpose>
   <entry>
     <source>Linear vertical-slice issues and the Linear Project Document issue-tracker.md.</source>
     <ready_status>Ready for Agent</ready_status>
     <execution_lane>Night Shift Queued</execution_lane>
     <launcher>alejo-run</launcher>
     <coding_agent>Codex only</coding_agent>
+    <autonomy>alejo-run is autonomous and does not ask for approval before moving passing issues into the execution lane.</autonomy>
   </entry>
   <issue_contract format="XML">
     <field>user-facing behavior</field>
@@ -19,8 +20,13 @@ Use this XML shape for the Linear Project Document `WORKFLOW.md`.
     <field>acceptance criteria</field>
     <field>surface: api, ui, cli, or mcp</field>
     <field>preconditions and dependencies</field>
+    <field>providers and provider resource expectations</field>
     <field>Doppler secret names only, if needed</field>
     <field>quality attributes and BDD budget</field>
+    <field>representative prompts, inputs, actions, and personas for interactive work</field>
+    <field>latency, timeout, wait, and user-visible failure expectations</field>
+    <field>Playwright verification requirements for UI or browser-reachable behavior</field>
+    <field>provider or managed-agent evidence required to prove real integration</field>
     <field>slice-owned code organization</field>
   </issue_contract>
   <thread_flow>
@@ -29,6 +35,7 @@ Use this XML shape for the Linear Project Document `WORKFLOW.md`.
     <step order="3" role="implementer">Read issue, scenario.json, code, and failing test; write implementation only.</step>
     <step order="4" role="refactor">Read issue, scenario.json, code, and green tests; write cleanup only.</step>
     <step order="5" role="synthetic_tester">Read issue, scenario.json, and code; exercise the real surface and report pass/fail.</step>
+    <step order="6" role="review_subagent">Read planning artifacts, selected issues, code, and verification results; run alejo-review and report readiness gaps.</step>
   </thread_flow>
   <boundaries>
     <boundary>Linear owns issue state.</boundary>

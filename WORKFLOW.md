@@ -2,10 +2,12 @@
 <symphony_workflow>
   <purpose>Symphony runs autonomous implementation from Linear issue contracts. Linear owns execution state. Codex is the only coding agent.</purpose>
   <entry>
-    <source>Linear implementation issues configured in docs/agents/issue-tracker.md.</source>
-    <ready_state>mapped ready-for-agent on vertical-slice implementation issues only</ready_state>
-    <execution_lane>mapped symphony-execution</execution_lane>
-    <approval>alejo-run must preflight selected issues and receive explicit human approval before moving issues into the execution lane.</approval>
+    <source>Linear vertical-slice implementation issues configured by the Linear Project Document issue-tracker.md.</source>
+    <ready_state>Ready for Agent</ready_state>
+    <execution_lane>Night Shift Queued</execution_lane>
+    <launcher>alejo-run</launcher>
+    <coding_agent>Codex only</coding_agent>
+    <autonomy>alejo-run is autonomous and does not ask for approval before moving passing issues into the execution lane.</autonomy>
     <prd_boundary>PRDs live in Linear Projects, not runnable issues, and are never candidates for Symphony.</prd_boundary>
   </entry>
   <issue_contract format="XML">
@@ -16,12 +18,17 @@
     <field>Verification surface: api, ui, cli, or mcp.</field>
     <field>Preconditions: required state, data, config, user role, or None.</field>
     <field>Dependencies or blockers.</field>
+    <field>Providers and provider resource expectations.</field>
     <field>Required Doppler secret refs by name only, or None.</field>
     <field>Slice-relevant quality attributes.</field>
     <field>BDD iteration budget.</field>
+    <field>Representative prompts, inputs, actions, and personas for interactive work.</field>
+    <field>Latency, timeout, wait, and user-visible failure expectations.</field>
+    <field>Playwright verification requirements for UI or browser-reachable behavior.</field>
+    <field>Provider or managed-agent evidence required to prove real integration.</field>
     <field>Architectural constraints needed for implementation.</field>
     <field>Slice-owned code organization.</field>
-    <field>Readiness label/status proving the issue is approved and ready for autonomous execution.</field>
+    <field>Readiness label/status proving the issue is ready for autonomous execution.</field>
   </issue_contract>
   <secrets>
     <rule>Doppler is the only secret provider.</rule>
@@ -35,11 +42,12 @@
     <thread role="implementer">Reads issue, scenario.json, code, and failing test; writes implementation only.</thread>
     <thread role="refactor">Reads issue, scenario.json, code, and green tests; writes cleanup only.</thread>
     <thread role="synthetic_tester">Reads issue, scenario.json, and code; exercises the real surface and writes recommendation.json or a pass verdict.</thread>
+    <thread role="review_subagent">Reads planning artifacts, selected issues, code, and verification results; runs alejo-review and writes readiness gaps.</thread>
   </per_issue_threads>
   <boundaries>
     <boundary>Do not create or consume Alejo plan files.</boundary>
     <boundary>Do not choose agents or models per issue.</boundary>
     <boundary>Do not use non-Codex coding agents.</boundary>
-    <boundary>Do not read PRD/SAD/Q&amp;A/prototype XML documents during night shift to discover requirements; the issue is the canonical compact context packet.</boundary>
+    <boundary>Implementation threads do not read PRD/SAD/Q&amp;A/prototype XML documents to discover requirements; the issue is the canonical compact context packet. The review subagent may read planning artifacts for final alignment review.</boundary>
   </boundaries>
 </symphony_workflow>

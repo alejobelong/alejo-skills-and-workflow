@@ -92,9 +92,10 @@ Use these bundled templates as the source text for Linear Project Documents:
 - `references/issue-tracker-linear.md` -> `issue-tracker.md`
 - `references/triage-labels.md` -> `triage-labels.md`
 - `references/alejo-workflow.md` -> `alejo-workflow.md`
-- `references/symphony-workflow.md` -> `WORKFLOW.md`
+- `references/workflow-template.md` -> `WORKFLOW.md`
 
 `AGENTS.md` is the repo onboarding and source-of-truth map, but it lives in Linear. It must point every Alejo skill to Linear Project Documents, Linear issues, GitHub, and Doppler instead of local setup docs.
+`references/workflow-template.md` is only the bundled template for the Linear Project Document `WORKFLOW.md`; do not publish a separate `symphony-workflow.md` document.
 
 ## Finish
 
