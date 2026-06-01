@@ -22,10 +22,12 @@
     <field>Required Doppler secret refs by name only, or None.</field>
     <field>Slice-relevant quality attributes.</field>
     <field>BDD iteration budget.</field>
+    <field>Production constraints: no mocks, fake providers, stubbed SDK responses, placeholder code, skipped tests, disabled branches, TODO-only paths, or unwired UI.</field>
     <field>Representative prompts, inputs, actions, and personas for interactive work.</field>
     <field>Latency, timeout, wait, and user-visible failure expectations.</field>
     <field>Playwright verification requirements for UI or browser-reachable behavior.</field>
     <field>Provider or managed-agent evidence required to prove real integration.</field>
+    <field>Review evidence required before completion.</field>
     <field>Architectural constraints needed for implementation.</field>
     <field>Slice-owned code organization.</field>
     <field>Readiness label/status proving the issue is ready for autonomous execution.</field>
@@ -36,6 +38,23 @@
     <rule>If alejo-secrets confirms, renames, adds, or removes any required secret after issues exist, run alejo-consistency-propagation or update the affected Linear issues before alejo-run.</rule>
     <rule>alejo-run must fail preflight when issue secret refs do not match the confirmed Doppler names needed by the slice.</rule>
   </secrets>
+  <symfony_runtime>
+    <detect>Detect Symfony from composer.json, bin/console, symfony.lock, or repo instructions.</detect>
+    <command name="install">Repo-declared Composer install command, or None.</command>
+    <command name="test">Repo-declared PHPUnit or functional test command, or None.</command>
+    <command name="lint_container">php bin/console lint:container --resolve-env-vars when available.</command>
+    <command name="cache_warmup">Repo-declared cache clear or warmup command, or None.</command>
+    <command name="migrations">Repo-declared safe Doctrine migration status or migration command, or None.</command>
+    <browser_base_url>Repo-declared local browser URL for Playwright, or None.</browser_base_url>
+    <workers>Repo-declared Messenger transports, consume commands, stop/restart commands, or None.</workers>
+    <rule>Run commands through Doppler when the issue needs secrets or environment-backed config; never print secret values.</rule>
+  </symfony_runtime>
+  <verification_artifacts>
+    <artifact name="scenario.json">BDD behaviours with persona, objective, prompts/actions, wait expectations, failure modes, and evidence needs.</artifact>
+    <artifact name="test_output">PHPUnit, functional, Playwright, CLI, API, MCP, or provider-backed test output for the real surface.</artifact>
+    <artifact name="recommendation.json">Synthetic tester pass/fail recommendation or equivalent pass verdict.</artifact>
+    <artifact name="alejo_review_report">Fresh review subagent report with no relevant P0/P1/P2 gaps before completion.</artifact>
+  </verification_artifacts>
   <per_issue_threads>
     <thread role="bdd_generator">Reads issue only; writes scenario.json.</thread>
     <thread role="test_writer">Reads issue, scenario.json, and code; writes failing test only.</thread>

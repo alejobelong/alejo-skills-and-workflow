@@ -5,9 +5,13 @@ description: Relentless Symphony launcher for Alejo Linear implementation issues
 
 # Alejo Run
 
-Run approved Linear implementation issues through Symphony until they are genuinely production-grade. Linear owns issue state. Symphony owns orchestration from the Linear Project Document `WORKFLOW.md`. Codex is the only coding agent.
+Run ready Linear implementation issues through Symphony until they are genuinely production-grade. Linear owns issue state. The Linear Project Document `WORKFLOW.md` is the Symphony contract. Codex is the only coding agent.
 
 Alejo Run is autonomous: do not ask for approval, permission, confirmation, or clarifying questions. When the existing preflight and workflow gates pass, proceed; when they do not, stop and report the blocker.
+
+## Codex Goal Mode
+
+When Codex Goal mode is enabled, treat the active goal as incomplete until every selected issue is production-grade, verified through the real surface, reviewed clean by a fresh `alejo-review` subagent, and moved or reported correctly in Linear. Do not mark the goal complete for lane movement, code changes, green unit tests alone, or partial handoff.
 
 ## Goal
 
@@ -30,7 +34,7 @@ If verification fails, keep the repair loop going within the issue's BDD budget.
 
 ### 1. Read Operating Context
 
-Read Linear Project Documents `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, and `WORKFLOW.md`.
+Read Linear Project Documents `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, and `WORKFLOW.md`. Treat `WORKFLOW.md` as the canonical Symphony thread, lane, runtime, and verification contract.
 
 Stop and report the blocker if Linear workspace/team/project, execution lane mapping, issue tracker docs, or the Linear Project Document `WORKFLOW.md` are missing.
 
@@ -51,7 +55,7 @@ For each candidate issue, verify:
 - Interactive, UI, chat, toolbar, assistant, or managed-agent issues define representative user personas, user objectives, actual prompts/inputs/actions, expected provider/backend evidence, wait or SLA expectations, and user-visible failure modes.
 - Chat or managed-agent issues require Playwright verification against the running app and cannot rely only on trivial greetings, SDK config fetches, direct adapter probes, mocked responses, canned samples, local echoes, or prompts that avoid the promised provider capability.
 - Preconditions are explicit and satisfiable, or clearly `None`.
-- Dependencies are done or included in the same approved run.
+- Dependencies are done or included in the same selected run.
 - Linear Project Document `WORKFLOW.md` defines the Symphony execution flow and lane mapping is known.
 
 ### 4. Recover Missing Secrets Safely
@@ -86,19 +90,34 @@ Unsafe or not-easy secrets include provider API keys, OAuth client secrets, data
 
 After any safe automatic addition, run `doppler secrets --only-names` again. Stop if required secret names are still missing or if confirmed names changed without being propagated back to the issue.
 
-### 5. Present Preflight Table
+### 5. Symfony Runtime Preflight
 
-Show a short preflight table with issue id/title, surface, preconditions, dependencies, providers, secrets refs, BDD budget, readiness state, secret verdict, preflight verdict, and target Symphony lane.
+Detect Symfony from `composer.json`, `bin/console`, `symfony.lock`, or repo instructions. If Symfony is present, use the `WORKFLOW.md` `symfony_runtime` slots plus repo scripts to verify the runtime:
+
+- Use `doppler run -- <command>` when the selected issue needs secrets or environment-backed config.
+- Never run commands that print secret values or dump full environments.
+- Install dependencies with the repo-declared Composer command when vendor dependencies are missing.
+- Run `php bin/console lint:container --resolve-env-vars` when `bin/console` and the command are available.
+- Run repo-declared PHPUnit, functional, API, CLI, MCP, or equivalent Symfony tests for the selected surface.
+- Run cache warmup/clear and migration status/migration commands when `WORKFLOW.md`, the issue, or changed code requires them.
+- Require Playwright for UI or browser-reachable behavior, even if Symfony functional tests pass.
+- If the slice touches Messenger, queues, scheduled work, async transports, or jobs, verify the repo-declared worker command, transport config, failure behavior, and restart/stop path such as `messenger:stop-workers` when applicable.
+
+Stop if a required Symfony command is missing, unsafe to run, or impossible to verify from repo instructions and `WORKFLOW.md`.
+
+### 6. Present Preflight Table
+
+Show a short preflight table with issue id/title, surface, preconditions, dependencies, providers, secrets refs, BDD budget, Symfony/runtime verdict when applicable, readiness state, secret verdict, preflight verdict, and target Symphony lane.
 
 Do not ask for human approval before changing Linear. Passing issues move forward automatically.
 
-### 6. Hand Off To Symphony
+### 7. Hand Off To Symphony
 
 Move or label the selected passing Linear issues into the configured Symphony execution lane.
 
 Do not create `plan.md`, choose agents/models, schedule slices, or launch non-Codex providers. If the repo documents an explicit Symphony launch command, run it without asking for separate confirmation.
 
-### 7. Drive The Production Loop
+### 8. Drive The Production Loop
 
 When the repo documents how to run Symphony, keep working until the selected issues are done or truly blocked:
 
@@ -115,24 +134,24 @@ When the repo documents how to run Symphony, keep working until the selected iss
 - Keep the issue in the execution lane while repairs are still available.
 - Move or report an issue as complete only after real-surface verification passes.
 - Move or report the selected run as done only after both synthetic verification and Alejo Review pass cleanly.
-- Stop only for missing unsafe secrets, missing non-derivable decisions, exhausted BDD budget, unavailable required external systems, repo/workflow configuration gaps, or review gaps that are outside the approved issue scope.
+- Stop only for missing unsafe secrets, missing non-derivable decisions, exhausted BDD budget, unavailable required external systems, repo/workflow configuration gaps, or review gaps that are outside the selected issue scope.
 - Report blockers with the issue id, failed surface, exact failing acceptance criterion, attempted repairs, and next required action.
 
 ## Thread Contract
 
-Symphony should hydrate fresh Codex threads with artifacts, not transcript history:
+Use the Linear Project Document `WORKFLOW.md` as the canonical thread contract. Do not restate, override, or invent Symphony roles outside that contract.
 
-- BDD generator reads issue only; writes `scenario.json` with 3 to 5 behaviours, each including user persona, user objective, actual prompts/inputs/actions, wait expectation, failure mode, and verification evidence.
-- Test writer reads issue + `scenario.json` + code; writes failing test only.
-- Implementer reads issue + `scenario.json` + code + failing test; writes implementation only.
-- Refactor reads issue + `scenario.json` + code + green tests; writes cleanup only.
-- Synthetic tester reads issue + `scenario.json` + code; exercises the real surface as the defined persona pursuing the defined objective; for UI or browser-reachable surfaces, uses Playwright against the running app and records URL, actions, prompts, wait behavior, assertions, and relevant evidence; writes `recommendation.json` or pass verdict.
-- Review subagent reads planning artifacts + selected issues + code + verification results; runs `alejo-review`; writes the final readiness report only.
+Alejo Run adds only these execution gates:
+
+- BDD scenarios must include 3 to 5 behaviours with persona, objective, prompts/actions, wait expectation, failure mode, and verification evidence.
+- Synthetic verification must exercise the real surface and produce a pass verdict or `recommendation.json`.
+- The final review must run in a fresh subagent using `alejo-review`; inline review is not valid.
 
 ## Output Rules
 
 - Do not write a plan artifact.
 - Do not choose models, agents, branches, concurrency, or slice order.
+- Do not override the thread flow, runtime slots, or artifact contract in `WORKFLOW.md`.
 - Do not ask for approvals, permissions, confirmations, or clarifying questions.
 - Do not expose secret values.
 - Do not advance issues with missing unsafe secrets.
