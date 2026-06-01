@@ -28,13 +28,40 @@ Do not use local planning mirrors as canonical sources.
 1. Resolve the Doppler target from repo setup or known `DOPPLER_PROJECT` and `DOPPLER_CONFIG`. If unclear, stop and ask for the target.
 2. Inventory every required secret, public config value, credential, and backing provider resource. Normalize names as uppercase Doppler env vars and dedupe by provider, environment, owner, scope, and rotation boundary.
 3. Check Doppler by name only: `command -v doppler`, `doppler --version`, and `doppler secrets --only-names`. Never read or print secret values.
-4. Inspect authenticated provider accounts before asking the human. Safe discovery may list non-secret metadata such as resource names, IDs, regions, plans, domains, enabled products, and project names.
-5. Reuse existing provider resources when they fit the project without weakening isolation, permissions, ownership, environment boundaries, or billing expectations.
-6. For missing or ambiguous resources, present a short reuse/create/human plan with a recommendation. Ask the user to verify the plan before creating resources, rotating credentials, enabling products, changing billing, broadening permissions, or choosing among ambiguous accounts.
-7. After verification, create provider resources with official tooling when appropriate, then pipe generated or recoverable values directly into Doppler without printing or saving them.
-8. Generate app-owned values locally only when the app owns the secret, such as session, signing, CSRF, encryption, webhook development, or test-only random values.
-9. For genuinely human-required values, give short setup steps that put the value directly from the user's clipboard into Doppler; do not ask the user to reveal the value.
-10. Finish with name-only verification and report present, recovered, created, pending verification, and human-required names.
+4. Research the provider's current integration model before asking for values. Use official docs, dashboards, CLIs, MCP connectors, APIs, or web search when the right resource type, credential, scope, permission, callback URL, webhook event, or setup path is not obvious.
+5. Inspect authenticated provider accounts before asking the human. Safe discovery may list non-secret metadata such as resource names, IDs, regions, plans, domains, enabled products, and project names.
+6. Reuse existing provider resources when they fit the project without weakening isolation, permissions, ownership, environment boundaries, or billing expectations.
+7. For missing or ambiguous resources, present a short reuse/create/human plan with a recommendation. Ask the user to verify the plan before creating resources, rotating credentials, enabling products, changing billing, broadening permissions, or choosing among ambiguous accounts.
+8. After verification, create provider resources with official tooling when appropriate, then pipe generated or recoverable values directly into Doppler without printing or saving them.
+9. Generate app-owned values locally only when the app owns the secret, such as session, signing, CSRF, encryption, webhook development, or test-only random values.
+10. For genuinely human-required values, give short setup steps that put the value directly from the user's clipboard into Doppler; do not ask the user to reveal the value.
+11. Finish with name-only verification and report present, recovered, created, pending verification, and human-required names.
+
+## Provider Discovery
+
+Before asking the human for credentials, understand the provider path. For each provider:
+
+- Identify the integration pattern: API key, OAuth app, bot/app install, webhook, managed agent, database, storage bucket, queue, model endpoint, deploy target, or observability sink.
+- Research official current setup when unclear. Prefer official docs and dashboards; use search only to find the current official source.
+- Decide what resource is needed and why: existing resource, new resource, or human-created resource.
+- Determine exact non-secret config, secret values, scopes, permissions, redirect/callback URLs, webhook events, regions, models, plans, environments, and billing constraints.
+- Inspect authenticated accounts for reusable resources before asking the human.
+- Ask the human for decisions, not raw secrets: which account/project/workspace/server, reuse versus create, environment, plan, scope, permission level, or safety trade-off.
+
+For providers such as Discord, first determine whether the slice needs a Discord application, bot token, OAuth2 app, server/guild install, webhook, interaction endpoint, redirect URI, bot permissions, privileged intents, public IDs/config, or secret credentials. Then recommend the safest path and ask only for the missing decision or human-required value.
+
+Use this plan shape when a resource is missing or ambiguous:
+
+```md
+Provider: {provider}
+Capability: {feature or issue}
+Recommended path: {reuse existing | create new | human creates}
+Why: {one-sentence trade-off}
+Found: {safe non-secret resource metadata, or none}
+Needs human decision: {account/project/server/environment/scope/resource choice}
+Doppler names: {SECRET_NAMES and public config names}
+Human-required values: {names only, or none}
+```
 
 ## Classification
 
@@ -117,6 +144,8 @@ doppler secrets --only-names
 - Do not read Doppler secret values; use name-only checks.
 - Do not use `doppler secrets set SECRET=value` for real secrets.
 - Do not invent provider scopes, permissions, credential types, regions, or product plans.
+- Do not ask for a raw credential before identifying the provider resource, integration path, required scopes/config, and Doppler name.
+- Do not rely on memory for provider key locations or setup paths; verify current official docs or dashboards when unclear.
 - Use official provider docs or dashboards when setup steps are not obvious.
 - List every issue, slice, or feature that consumes a reused secret under `Used by`.
 - Stop when the required value is unsafe to recover automatically, the provider account is ambiguous, or the Doppler target is unclear.
