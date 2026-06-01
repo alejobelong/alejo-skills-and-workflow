@@ -11,7 +11,7 @@ Do not create local canonical files or local mirrors. Repo code is evidence; Lin
 
 ## Sources
 
-Read only what is needed for the affected chain:
+Read only what is needed for the affected chain, but read every selected document line by line before analysis:
 
 1. Current request, changed artifact, and `AGENTS.md` source-of-truth map.
 2. `Q&A.xml`: resolved questions, recommendations, answers, product snapshot, decisions, and open questions.
@@ -42,9 +42,10 @@ Do not use local planning mirrors as canonical sources.
 ## Process
 
 1. Resolve the Linear Project, relevant Project Documents, Linear team/issues, and the changed source. If the writable Linear destination cannot be resolved, stop and report the blocker.
-2. Read the smallest affected chain. Example: a provider change usually touches SAD, issues, Doppler names, and run readiness; a product decision usually touches Q&A, CONTEXT, PRD, SAD, and issues.
-3. Extract claims: domain terms, product behavior, scope, UX states, architecture decisions, quality attributes, providers, deployment, security, operations, ADR constraints, Doppler names, issue coverage, verification contract, dependencies, readiness, and code evidence.
-4. Classify each difference before editing:
+2. Select the smallest affected chain. Example: a provider change usually touches SAD, issues, Doppler names, and run readiness; a product decision usually touches Q&A, CONTEXT, PRD, SAD, and issues.
+3. Read every selected document line by line, in document order, before extracting claims or looking for inconsistencies. Do not rely on snippets, headings, search hits, summaries, memory, or prior runs as a substitute for this reading pass.
+4. Extract claims: domain terms, product behavior, scope, UX states, architecture decisions, quality attributes, providers, deployment, security, operations, ADR constraints, Doppler names, issue coverage, verification contract, dependencies, readiness, and code evidence.
+5. Classify each difference before editing:
    - `missing-downstream`: accepted upstream claim is absent where it belongs.
    - `stale-downstream`: downstream artifact still says an older version.
    - `contradiction`: two sources cannot both be true.
@@ -54,10 +55,10 @@ Do not use local planning mirrors as canonical sources.
    - `secret-provider-drift`: provider resources or Doppler names differ across SAD/issues/Doppler.
    - `code-doc-drift`: repo behavior contradicts or exceeds the planning stack.
    - `ignore`: no propagation is needed.
-5. Ask one decision at a time with a recommendation and clear alternatives. For purely mechanical propagation explicitly requested by the user, apply it directly and summarize it.
-6. Apply approved changes narrowly. Use the relevant v2 skill when a substantial artifact needs regeneration: `alejo-prd-v2`, `alejo-sad-v2`, `alejo-issues-v2`, or `alejo-secrets-v2`.
-7. Validate touched XML, preserve CDATA for prose/evidence, never expose secret values, and keep local mirrors untouched.
-8. Finish with applied changes, deferred differences, unresolved blockers, and suggested next skill if more work remains.
+6. Ask one decision at a time with a recommendation and clear alternatives. For purely mechanical propagation explicitly requested by the user, apply it directly and summarize it.
+7. Apply approved changes narrowly. Use the relevant v2 skill when a substantial artifact needs regeneration: `alejo-prd-v2`, `alejo-sad-v2`, `alejo-issues-v2`, or `alejo-secrets-v2`.
+8. Validate touched XML, preserve CDATA for prose/evidence, never expose secret values, and keep local mirrors untouched.
+9. Finish with applied changes, deferred differences, unresolved blockers, and suggested next skill if more work remains.
 
 ## Decision Shape
 
