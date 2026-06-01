@@ -20,6 +20,7 @@ Done means:
 - Provider integrations use real production code paths, official sandbox/test accounts, or configured local production services.
 - Storage, routes, UI, CLI, MCP, jobs, and provider adapters are wired end to end.
 - Synthetic verification exercises the real surface and returns a pass verdict.
+- UI or browser-reachable behavior is verified through Playwright in a real browser by performing the end-user workflow against the running app.
 - A fresh review subagent running `alejo-review` reports the selected issue scope as ready, with no P0/P1/P2 gaps tied to the implemented behavior.
 - No mocks, fake providers, stubbed SDK responses, placeholder code, skipped tests, disabled branches, `NotImplemented`, TODO-only paths, unwired UI, or half-working behavior remain.
 
@@ -47,6 +48,8 @@ For each candidate issue, verify:
 - Issue body readiness agrees with Linear state.
 - It is not `needs-info`, `needs-triage`, `ready-for-human`, `hitl`, blocked, or contradictory.
 - Body is a compact XML slice contract with title, behavior, necessary context, acceptance criteria, surface, preconditions, dependencies, providers, secrets refs, quality attributes, BDD budget, architectural constraints, readiness status, production constraints, and code organization.
+- Interactive, UI, chat, toolbar, assistant, or managed-agent issues define representative user personas, user objectives, actual prompts/inputs/actions, expected provider/backend evidence, wait or SLA expectations, and user-visible failure modes.
+- Chat or managed-agent issues require Playwright verification against the running app and cannot rely only on trivial greetings, SDK config fetches, direct adapter probes, mocked responses, canned samples, local echoes, or prompts that avoid the promised provider capability.
 - Preconditions are explicit and satisfiable, or clearly `None`.
 - Dependencies are done or included in the same approved run.
 - Linear Project Document `WORKFLOW.md` defines the Symphony execution flow and lane mapping is known.
@@ -102,6 +105,9 @@ When the repo documents how to run Symphony, keep working until the selected iss
 - Start or resume the documented Symphony run.
 - Watch issue progress, test output, implementation results, and synthetic tester verdicts.
 - Feed failed verification back into the next BDD repair iteration.
+- For every UI or browser-reachable surface, require Playwright to open the running app in a browser, navigate to the relevant page, use the same controls an end user would use, and assert the visible result plus any observable persistence, network, or provider-backed effect needed by the acceptance criteria.
+- For chat or managed-agent functionality, Playwright verification must locate the chat UI, adopt the scenario's user persona, begin a real conversation toward the user's objective, allow natural follow-up where needed, wait for the actual backend/managed-agent response within the intended product window, and verify the response content and supporting evidence prove it is not a canned, mocked, stubbed, or disconnected answer.
+- If the product claims current-events, web lookup, search, browsing, external knowledge, or tool-backed answering, require at least one representative prompt that needs that capability. If unsupported, the verified behavior must be a clear unsupported-capability response rather than a hang, generic timeout, or unrelated fallback.
 - At the end of each cycle, spawn a fresh subagent whose only job is to run `alejo-review` against the repo, planning artifacts, and selected Linear issues.
 - Do not run the review inline in the same agent that drove the implementation cycle. If subagents are unavailable, stop and report that the review gate cannot run.
 - Read the Alejo Review report as the final production gate for that cycle.
@@ -116,11 +122,11 @@ When the repo documents how to run Symphony, keep working until the selected iss
 
 Symphony should hydrate fresh Codex threads with artifacts, not transcript history:
 
-- BDD generator reads issue only; writes `scenario.json`.
+- BDD generator reads issue only; writes `scenario.json` with 3 to 5 behaviours, each including user persona, user objective, actual prompts/inputs/actions, wait expectation, failure mode, and verification evidence.
 - Test writer reads issue + `scenario.json` + code; writes failing test only.
 - Implementer reads issue + `scenario.json` + code + failing test; writes implementation only.
 - Refactor reads issue + `scenario.json` + code + green tests; writes cleanup only.
-- Synthetic tester reads issue + `scenario.json` + code; exercises the real surface; writes `recommendation.json` or pass verdict.
+- Synthetic tester reads issue + `scenario.json` + code; exercises the real surface as the defined persona pursuing the defined objective; for UI or browser-reachable surfaces, uses Playwright against the running app and records URL, actions, prompts, wait behavior, assertions, and relevant evidence; writes `recommendation.json` or pass verdict.
 - Review subagent reads planning artifacts + selected issues + code + verification results; runs `alejo-review`; writes the final readiness report only.
 
 ## Output Rules
@@ -131,6 +137,7 @@ Symphony should hydrate fresh Codex threads with artifacts, not transcript histo
 - Do not expose secret values.
 - Do not advance issues with missing unsafe secrets.
 - Do not mark issues complete because code was written; mark them complete only after production-grade real-surface verification and Alejo Review both pass.
+- Do not accept UI/browser behavior as verified without a Playwright browser run that performs the real end-user flow against the running app.
 - Do not run Alejo Review inline; always run it in its own fresh subagent.
 - Do not ignore Alejo Review findings; iterate on relevant P0/P1/P2 gaps until the report is clean or a real blocker is reached.
 - Do not accept mocks, fake providers, stubbed SDK responses, placeholder code, skipped tests, disabled branches, `NotImplemented`, TODO-only paths, unwired UI, or half-working behavior.

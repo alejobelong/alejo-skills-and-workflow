@@ -1,13 +1,13 @@
 ---
 name: alejo-review
-description: Run a contrarian production-readiness review of a built codebase against an Alejo Linear Project's PRD.xml, SAD.xml/SAT.xml, Q&A.xml decisions, CONTEXT.xml, prototype.xml, ADRs, and implementation issues. Use when the user wants an implementation audit, gap analysis, readiness review, or a strict list of missing work before calling the system complete.
+description: Run a contrarian production-readiness review of a built codebase or Ready for Human Symphony handoff against an Alejo Linear Project's PRD.xml, SAD.xml/SAT.xml, Q&A.xml decisions, CONTEXT.xml, prototype.xml, ADRs, and implementation issues. Use when the user wants an implementation audit, gap analysis, readiness review, review of Ready for Human Linear issues, or confirmed movement of passing handoffs to Done.
 ---
 
 # Alejo Review
 
 Audit whether the built repo truly matches the Alejo planning stack. Be contrarian: assume the system is not ready until real code, real verification, and real product behavior prove otherwise. Do not reward plausible code, closed Linear issues, happy-path demos, or intent without evidence.
 
-The bar is high: the implementation must align with the PRD, SAD/SAT, prototype evidence, Q&A decisions, CONTEXT.xml language, ADRs, and issue contracts. Do not fix code or create issues unless the user asks.
+The bar is high: the implementation must align with the PRD, SAD/SAT, prototype evidence, Q&A decisions, CONTEXT.xml language, ADRs, and issue contracts. Do not fix code or create issues unless the user asks. When reviewing `Ready for Human` issues, treat the state as a claim that an agent handoff is ready; verify the claim before recommending `Done`.
 
 ## Process
 
@@ -18,6 +18,28 @@ The bar is high: the implementation must align with the PRD, SAD/SAT, prototype 
 5. Run reasonable verification when available: install/build/lint/test, seed or migration checks, CLI/API smoke tests, and browser checks for UI flows. Report commands and failures; do not hide broken setup.
 6. Actively look for shortcuts: mocks, fake providers, stubbed SDK responses, skipped tests, TODO-only paths, unwired UI, architecture drift, prototype drift, Q&A decision drift, and behavior that works only in the easiest demo path.
 7. Produce the review report. If the user asks to turn gaps into work, hand the approved gaps to `alejo-issues` as behavior-first vertical slices.
+
+## Ready For Human Review Flow
+
+Use this flow when the user asks to review `Ready for Human` issues, finish handoffs, approve Symphony output, or move reviewed work to `Done`.
+
+1. Fetch the relevant Linear issues. Prefer explicit user refs; otherwise inspect the current Alejo Project's `Ready for Human` issues.
+2. For each issue, read the active `## Codex Workpad`, attached branch/PR/deploy links, run artifacts, BDD behaviours, validation evidence, and latest Linear comments.
+3. Verify the handoff packet:
+   - 3 to 5 Given/When/Then behaviours exist and map to acceptance criteria.
+   - Real-surface validation passed: Playwright/browser evidence for UI, real MCP calls for MCP, HTTP/contract calls for API, command/job evidence for CLI or workers.
+   - Doppler/provider validation names required secret keys without exposing values.
+   - No-mock audit covers touched product paths and found no fake providers, stubbed SDK responses, placeholders, skipped tests, or knowingly unwired code.
+   - Branch, commit, PR, deploy, or direct-main evidence matches the issue's expected handoff path.
+   - Merge/deploy requirements are complete when the issue contract requires them before `Done`.
+4. Classify each issue:
+   - `pass`: no P0/P1/P2 gaps, required validation passes, and merge/deploy requirements are satisfied or not required.
+   - `rework`: implementation is runnable but behaviour, tests, no-mock audit, review comments, merge, or deploy evidence is incomplete.
+   - `needs-info`: blocked by missing requirements, secret names, provider access, test data, account setup, or a human product decision.
+5. Present a confirmation table before changing Linear unless the user's current request already explicitly authorizes the exact action. Include issue ID/title, review result, evidence summary, target state, and why it is or is not eligible for `Done`.
+6. Move an issue from `Ready for Human` to `Done` only after explicit user confirmation for that specific issue or for "all passing Ready for Human issues". Before moving it, re-fetch the issue and confirm it is still `Ready for Human`.
+7. Never move `Ready for Agent`, `Night Shift Queued`, or `In Night Shift` directly to `Done`. Those states must first complete the Symphony handoff and review gate.
+8. For failed reviews, do not mark `Done`. Recommend `Ready for Agent` for rework-ready issues, `Needs Info` for external blockers, or leave `Ready for Human` with the failed review evidence if the user wants to inspect first.
 
 ## Report Shape
 
@@ -43,6 +65,9 @@ Lead with findings, not a narrative summary.
 ## Coverage Matrix
 | Source claim | Code evidence | Status | Needed |
 
+## Ready For Human Decisions
+| Issue | Review result | Evidence | Recommended state | Confirmation |
+
 ## Verification
 - `{command}`: {pass/fail/not run and why}
 
@@ -64,6 +89,8 @@ Severity:
 - Prefer concrete missing behavior over vague advice.
 - Respect `CONTEXT.xml` terminology, Q&A decisions, ADRs, SAD/SAT constraints, and prototype evidence.
 - Treat closed/done Linear issues as claims to verify, not proof of implementation.
+- Treat `Ready for Human` Linear issues as handoff packets to audit, not proof of completion.
+- Move `Ready for Human` issues to `Done` only when the review passes and the user explicitly confirms the move in the current request or follow-up.
 - Treat "not found yet" as `not evidenced`; do not soften it into ready.
 - Do not create horizontal backlog items. Missing work should become vertical slices when converted to issues.
 - If artifacts contradict each other, report the contradiction before judging the code.
