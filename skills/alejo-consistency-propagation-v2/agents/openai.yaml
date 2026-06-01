@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo Consistency v2"
+  short_description: "Propagate approved Alejo v2 artifact changes"
+  default_prompt: "Use $alejo-consistency-propagation-v2 to compare the Alejo v2 Linear Project Documents, ADRs, vertical-slice issues, Doppler secret names, provider resources, review gaps, and repo evidence, then classify differences and propagate only approved changes."
