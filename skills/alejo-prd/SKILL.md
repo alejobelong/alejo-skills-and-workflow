@@ -15,9 +15,9 @@ The Linear workspace/team/project conventions should have been provided in Linea
 
 2. Explore the repo only enough to understand current product behavior, domain language, and user-facing constraints. Use the project's domain glossary vocabulary throughout the PRD, carry forward the resolved Alejo Questions Q&A summary, and respect product-relevant ADR constraints.
 
-3. Synthesize the desired user experience: actors, journeys, outcomes, scope boundaries, success signals, risks, and open product questions.
+3. Synthesize the desired user experience: actors, journeys, functional requirements, outcomes, scope boundaries, success signals, risks, and open product questions.
 
-Do not define modules, architecture, implementation strategy, file paths, APIs, schemas, tests, or code organization. Those belong in SAD and Alejo Issues.
+Do not define modules, architecture, implementation strategy, file paths, APIs, schemas, tests, or code organization. Functional requirements describe user-visible capabilities and product behavior only. Technical details belong in SAD and Alejo Issues.
 
 4. Write the PRD using the XML template below, then create or update a Linear Project for this product effort and publish the PRD to the Linear Project document named `PRD.xml`. Prefer Project Documents/Resources; use the project overview/detailed description only if Project Documents are unavailable in the active tooling. Do not create a PRD issue. Do not apply `ready-for-agent` to PRDs.
 
@@ -55,6 +55,10 @@ For every PRD section that contains a list, keep the list short but complete:
       <sentence><![CDATA[As a {actor}, I want {feature}, so that {benefit}.]]></sentence>
     </story>
   </user_stories>
+  <functional_requirements>
+    <requirement priority="primary" order="1"><![CDATA[{User-visible capability or product behavior the system must provide.}]]></requirement>
+    <requirement priority="additional" order="{N}"><![CDATA[{Additional user-visible capability or product behavior.}]]></requirement>
+  </functional_requirements>
   <experience_notes>
     <note priority="primary" order="1"><![CDATA[{Key moment, user-visible state, tone, permission, role, or product constraint.}]]></note>
     <note priority="additional" order="{N}"><![CDATA[{Additional experience detail.}]]></note>
