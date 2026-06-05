@@ -50,20 +50,17 @@ alejo:
   source_state: Ready for Agent
   execution_lane: Night Shift Queued
   running_lane: In Night Shift
-  blocked_handoff_state: Ready for Human
-  complete_state: Done
+  handoff_state: Ready for Human
+  human_done_state: Done
   secrets_provider: Doppler
-  review_skill: alejo-review
-  review_mode: fresh_subagent
   artifacts:
-    scenario: scenario.json
-    recommendation: recommendation.json
-    review: alejo_review_report
+    tdd_handoff: tdd_handoff.md
+    verification: verification_evidence.md
 ---
 
-# Alejo Symphony Workflow
+# Alejo Symphony TDD Workflow
 
-You are Codex running under Symphony for one Linear vertical-slice implementation issue. Symphony schedules the issue and provides the workspace; Codex owns the implementation, verification, Linear updates, and final handoff through the available tools.
+You are Codex running under Symphony for one Linear vertical-slice implementation issue. Symphony schedules the issue and provides the isolated workspace; this `WORKFLOW.md` body is the per-issue prompt. The Linear issue XML is the implementation contract.
 
 ## Issue
 
@@ -81,49 +78,60 @@ You are Codex running under Symphony for one Linear vertical-slice implementatio
 
 {{ issue.description }}
 
-## Goal
+## Mission
 
-Finish the selected issue as production-grade real behavior. Do not stop at code changes, green unit tests, lane movement, or partial handoff.
+Implement the selected issue with a compact RED-GREEN-REFACTOR loop, using real production paths and real tests. A successful Symphony run ends by moving the issue to `Ready for Human`. Do not move issues to `Done`; only a human does that after the Alejo Run v2 BDD and review gate.
 
-Done means:
+## Contract
 
-- the issue's XML run contract is self-contained and satisfied;
-- the real `api`, `ui`, `cli`, or `mcp` surface works end to end;
-- required provider integrations use real production paths, official sandbox/test accounts, or configured local production services;
-- required Doppler secret names are present without exposing values;
-- `scenario.json`, real test evidence, synthetic verification, and review evidence exist;
-- a fresh subagent running `alejo-review` reports no relevant P0/P1/P2 gaps;
-- no mocks, fake providers, stubbed SDK responses, placeholder code, skipped tests, disabled branches, `NotImplemented`, TODO-only paths, unwired UI, or half-working behavior remain.
-
-## Source Boundaries
-
-- Treat the Linear issue description as the compact implementation contract.
-- Use repo code, tests, configs, run commands, provider adapters, migrations, routes, jobs, CI, and logs as implementation evidence.
-- Use Linear Project Documents only when needed for final review alignment or when the issue explicitly points to them.
+- Treat the Linear issue XML as the compact implementation contract.
+- Use repo code, tests, configs, run commands, provider adapters, migrations, routes, jobs, CI, and logs as evidence.
+- Use Linear Project Documents only when the issue explicitly points to them or the contract is missing a required context link.
 - Do not use local Alejo planning mirrors as canonical sources.
 - Do not create `plan.md` or other local planning artifacts.
+- Do not broaden scope; if you discover valuable out-of-scope work, comment it as a follow-up suggestion only.
 
-## Execution
+## Preflight
 
-1. If the issue is still in `Night Shift Queued`, update Linear to `In Night Shift` before implementation work begins.
-2. Preflight the issue contract. It must define user-facing behavior, acceptance criteria, verification surface, preconditions, dependencies, providers, Doppler secret names or `None`, quality attributes, BDD budget, production constraints, representative prompts/actions for interactive work, latency/timeout expectations, Playwright expectations for browser behavior, provider evidence, review evidence, and slice-owned code organization.
-3. If required secret names are missing, use Doppler name-only checks. Never print, log, commit, paste, or summarize secret values. If safe automatic recovery is possible, recover through Alejo Secrets rules; otherwise stop and update Linear with the exact human setup step.
-4. Write `scenario.json` with 3 to 5 BDD behaviors including persona, objective, prompts/actions, wait expectations, failure modes, and evidence needs.
-5. Add or update failing tests for the real surface before or alongside implementation.
-6. Implement the smallest production-ready vertical slice that satisfies the issue.
-7. Run the repo-declared tests for the selected surface. Use `doppler run -- <command>` when secrets or environment-backed config are required.
-8. For UI or browser-reachable behavior, run Playwright against the real running app and perform the end-user workflow.
-9. For provider, chat, managed-agent, job, queue, scheduler, CLI, API, or MCP behavior, capture provider-backed or runtime-backed evidence that proves the integration is real and not canned.
-10. Write `recommendation.json` or equivalent synthetic tester verdict with pass/fail, evidence, and remaining gaps.
-11. Spawn a fresh subagent whose only job is to run `alejo-review` against the issue, planning artifacts, code, and verification evidence. Inline review is not valid.
-12. Iterate on every relevant P0/P1/P2 review finding until the report is clean, the BDD budget is exhausted, or a true blocker appears.
+1. If the issue is still in `Night Shift Queued`, move it to `In Night Shift`.
+2. Verify the XML contract defines behavior, acceptance criteria, surface, preconditions, dependencies, providers, Doppler secret names or `None`, quality attributes, production constraints, representative prompts/actions when relevant, latency/timeout expectations, provider evidence, and slice-owned code organization.
+3. Confirm dependencies are done or included in this run. If not, move the issue to `Ready for Human` with the blocker.
+4. Check Doppler with name-only commands. Never print, log, paste, write, or comment secret values.
+5. If required unsafe or human-owned secrets are missing, move the issue to `Ready for Human` with the exact missing secret names and setup action.
+6. Identify the repo-declared test commands for the selected `api`, `ui`, `cli`, or `mcp` surface. If the repo has a relevant baseline command, run it before edits.
+7. If the relevant baseline is failing for unrelated reasons, stop and record the baseline blocker instead of building on a broken signal.
 
-## Linear Updates
+## TDD Loop
 
-- Keep comments concise and evidence-based.
-- Move or leave blocked issues in `Ready for Human` with the blocker, failed acceptance criterion, attempted commands, attempted repairs, and next required action.
-- Move issues to `Done` only after real-surface verification, synthetic verification, and the fresh `alejo-review` subagent are all clean.
-- If the issue state changes out of Symphony active states while you are running, stop after recording the current evidence.
+Repeat one acceptance criterion at a time:
+
+1. RED: add the smallest failing test that proves a real missing externally observable behavior. The failure must not be a syntax error, bad setup, trivial config check, mocked response, canned sample, or test that only asserts implementation details.
+2. GREEN: implement the smallest production change that makes the failing test pass through the real surface.
+3. REFACTOR: clean only touched code after the focused test and relevant suite are green.
+4. Record the criterion, RED command/output summary, GREEN command/output summary, files changed, and remaining risk in `tdd_handoff.md` or the documented artifact sink.
+5. Continue until every acceptance criterion is covered or a true blocker appears.
+
+## Verification
+
+- Run the repo-declared relevant tests before handoff. Use `doppler run -- <command>` when secrets or environment-backed config are required.
+- For UI or browser-reachable behavior, run Playwright against the real running app and perform the end-user workflow.
+- For chat or managed-agent behavior, use representative prompts/actions that require the promised provider capability and prove the response is not canned, mocked, stubbed, or disconnected.
+- For provider, job, queue, scheduler, CLI, API, or MCP behavior, capture runtime-backed evidence that the integration is real.
+- Do not accept mocks, fake providers, stubbed SDK responses, placeholder code, skipped tests, disabled branches, `NotImplemented`, TODO-only paths, unwired UI, or half-working behavior.
+
+## Handoff
+
+When the issue is implemented and verified:
+
+1. Write or update `tdd_handoff.md` or the documented artifact sink with tests run, evidence, files changed, provider/runtime proof, and residual risks.
+2. Add or update a concise Linear handoff comment with the same evidence summary.
+3. Move the issue to `Ready for Human`.
+
+When blocked:
+
+1. Stop rather than guessing, mocking, or weakening tests.
+2. Comment the issue id, failed acceptance criterion, failed command or evidence check, attempted repairs, and next required action.
+3. Move or leave the issue in `Ready for Human`.
 
 ## Rules
 
@@ -131,7 +139,7 @@ Done means:
 - Do not choose non-Codex coding agents.
 - Do not expose secret values in chat, files, commands, logs, Linear, summaries, or commits.
 - Do not advance issues with missing unsafe secrets.
-- Do not accept UI/browser behavior without Playwright real-browser verification.
-- Do not ignore relevant P0/P1/P2 review findings.
-- Do not mark work complete because Symphony launched, code changed, tests passed in isolation, or an issue moved lanes.
+- Do not move issues to `Done`.
+- Do not run `alejo-review`; Alejo Run v2 owns BDD and review after this Symphony handoff.
+- Do not mark work ready because Symphony launched, code changed, tests passed in isolation, or an issue moved lanes.
 ```
