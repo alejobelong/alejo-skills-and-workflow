@@ -26,7 +26,7 @@ Use this XML shape for the Linear Project Document `triage-labels.md`.
     <label>surface:mcp</label>
     <label>secrets-required</label>
   </issue_labels>
-  <rule>Setup docs, workflow docs, and planning artifacts live in Linear Project Documents. Labels are only for issues.</rule>
+  <rule>Alejo setup docs and planning artifacts live in Linear Project Documents. Repo WORKFLOW.md is mirrored to Linear. Labels are only for issues.</rule>
   <no_local_copies>Do not maintain repo-local docs/agents/triage-labels.md copies.</no_local_copies>
 </linear_statuses_and_labels>
 ```

@@ -10,6 +10,7 @@ Thumbs.db
 # Dependency and generated caches
 node_modules/
 .cache/
+.symphony/
 .turbo/
 dist/
 build/

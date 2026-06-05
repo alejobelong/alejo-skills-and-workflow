@@ -46,7 +46,7 @@ Use this XML shape for the Linear Project Document `issue-tracker.md`.
     <status_map alejo_role="in-symphony" linear_status="In Night Shift" />
     <status_map alejo_role="done" linear_status="Done" />
   </symphony_handoff>
-  <source_of_truth>Linear Project Documents own setup, workflow, and planning docs. Linear issue state owns implementation readiness and Symphony handoff.</source_of_truth>
-  <no_local_copies>Do not maintain repo-local AGENTS.md, docs/agents/*, or WORKFLOW.md copies.</no_local_copies>
+  <source_of_truth>Linear Project Documents own Alejo setup and planning docs. Repo WORKFLOW.md owns the Symphony runtime contract and is mirrored to Linear. Linear issue state owns implementation readiness and Symphony handoff.</source_of_truth>
+  <no_local_copies>Do not maintain repo-local AGENTS.md or docs/agents/* generated setup copies.</no_local_copies>
 </linear_setup>
 ```

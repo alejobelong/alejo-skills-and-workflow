@@ -5,7 +5,7 @@ description: Use when a repo needs Alejo skill setup, when `/setup-alejo-skills`
 
 # Setup Alejo Skills
 
-Configure a repo for the Alejo skill suite. Set up Git first, then Linear, then publish the setup and workflow documents into Linear Project Documents. Do not maintain local copies of Alejo setup docs.
+Configure a repo for the Alejo skill suite. Set up Git first, then Linear, then publish Alejo setup documents into Linear Project Documents. Keep the official Symphony `WORKFLOW.md` in the repo and mirror the same content to Linear so Alejo skills can find it without drift.
 
 ## When To Use
 
@@ -17,7 +17,7 @@ Run this once at the start of a repo, or anytime Alejo skills cannot find Git, a
    - `git status --short --branch`
    - `git remote -v` and `.git/config`
    - `gh auth status` when GitHub setup is needed
-   - existing `AGENTS.md`, `CLAUDE.md`, `WORKFLOW.md`, and `docs/agents/*` only to migrate old local setup docs into Linear
+   - existing `AGENTS.md`, `CLAUDE.md`, `WORKFLOW.md`, and `docs/agents/*` to migrate old setup docs and preserve the repo-owned Symphony workflow
    - `CONTEXT.xml`, `CONTEXT-MAP.xml`, and `docs/adr/`
    - Linear connector/MCP, installed Linear CLI, or Linear API/SDK access
    - existing Linear URLs or safe Linear tooling output
@@ -58,7 +58,7 @@ I suggest `<project-name>`. Should I create this Linear Project?
    - On confirmation, create the Linear Project from Codex. Prefer a Linear connector/MCP. Otherwise use an installed Linear CLI if it supports project creation. Otherwise use Linear's API/SDK.
    - If Codex has no Linear write access, stop and say Linear access must be connected before setup can finish. Do not fall back to local placeholder files.
 
-4. Publish Linear Project Documents.
+4. Publish setup documents and the Symphony workflow.
    - Required setup documents:
      - `AGENTS.md`
      - `issue-tracker.md`
@@ -71,13 +71,16 @@ I suggest `<project-name>`. Should I create this Linear Project?
      - `PRD.xml`
      - `prototype.xml`
      - `SAD.xml` or `SAT.xml`
-   - Use the templates in `references/` and insert resolved repo-specific values: GitHub remote, Linear Project name and URL, Linear team, access method, and Project Document URLs when available.
-   - Create or update the documents in Linear Project Documents only. Do not write `AGENTS.md`, `docs/agents/*`, or `WORKFLOW.md` into the repo as local copies.
-   - If old local generated setup docs already exist, migrate any useful content into the Linear Project Documents, then remove the local generated copies. If a local file may contain human-authored content unrelated to Alejo setup, ask before deleting it.
+   - Use the templates in `references/` and insert resolved repo-specific values: GitHub remote, Linear Project name and URL, Linear Project slug, Linear team, access method, and Project Document URLs when available.
+   - Create or update `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, and `alejo-workflow.md` in Linear Project Documents only.
+   - Create or update repo `WORKFLOW.md` from `references/workflow-template.md`; then create or update the Linear Project Document `WORKFLOW.md` with the exact same content as a mirror.
+   - Do not keep repo-local `AGENTS.md` or `docs/agents/*` generated setup copies.
+   - If old local generated setup docs already exist, migrate any useful content into Linear Project Documents, then remove generated setup copies other than the official repo `WORKFLOW.md`. If a local file may contain human-authored content unrelated to Alejo setup, ask before deleting it.
    - A resolved Linear Project is required. Do not write Linear project placeholders.
 
 5. Apply these defaults:
-   - Linear Project Documents hold all Alejo setup docs, workflow docs, and planning artifacts.
+   - Linear Project Documents hold Alejo setup docs and planning artifacts.
+   - Repo `WORKFLOW.md` is the official Symphony runtime contract; the Linear Project Document `WORKFLOW.md` is a mirror for Alejo skill discovery.
    - Linear issues hold only vertical slices and actionable follow-ups.
    - Readiness/execution use Linear workflow statuses: `Needs Triage`, `Needs Info`, `Ready for Human`, `Ready for Agent`, `Night Shift Queued`, `In Night Shift`, `Done`, `Won't Fix`.
    - Labels classify issues only: `vertical-slice`, `hitl`, `sad-follow-up`, `surface:*`, `secrets-required`.
@@ -95,7 +98,7 @@ Use these bundled templates as the source text for Linear Project Documents:
 - `references/workflow-template.md` -> `WORKFLOW.md`
 
 `AGENTS.md` is the repo onboarding and source-of-truth map, but it lives in Linear. It must point every Alejo skill to Linear Project Documents, Linear issues, GitHub, and Doppler instead of local setup docs.
-`references/workflow-template.md` is only the bundled template for the Linear Project Document `WORKFLOW.md`; do not publish a separate `symphony-workflow.md` document.
+`references/workflow-template.md` is the bundled template for the repo-owned `WORKFLOW.md` and its matching Linear Project Document mirror; do not publish a separate `symphony-workflow.md` document.
 
 ## Finish
 
@@ -115,7 +118,7 @@ End with this onboarding:
 Use Alejo in this order for new software work:
 
 1. `$setup-alejo-skills`
-   Run once per repo. It connects Git, creates or connects the Linear Project, and publishes AGENTS.md, issue-tracker.md, triage-labels.md, alejo-workflow.md, and WORKFLOW.md as Linear Project Documents.
+   Run once per repo. It connects Git, creates or connects the Linear Project, publishes AGENTS.md, issue-tracker.md, triage-labels.md, and alejo-workflow.md as Linear Project Documents, and writes repo WORKFLOW.md plus the matching Linear mirror.
 
 2. `$alejo-questions`
    Use when the idea, domain language, scope, or decisions need sharpening. Output: Q&A.xml and CONTEXT.xml in the Linear Project.

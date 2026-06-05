@@ -5,7 +5,7 @@ description: Compact Alejo Run v2 workflow for autonomously executing ready Line
 
 # Alejo Run v2
 
-Autonomously run ready Linear implementation issues until they are production-grade. `WORKFLOW.md` is the Symphony contract. Linear owns issue state. Doppler owns secret values. Codex is the only coding agent.
+Autonomously run ready Linear implementation issues until they are production-grade. Repo `WORKFLOW.md` is the official Symphony contract; the Linear Project Document `WORKFLOW.md` is only its mirror for Alejo discovery. Linear owns issue state. Doppler owns secret values. Codex is the only coding agent.
 
 Do not ask for approval, permission, confirmation, or clarifying questions. Proceed when the gates pass; stop only for true blockers.
 
@@ -28,7 +28,7 @@ Use canonical Linear and repo evidence:
 1. `AGENTS.md`: source-of-truth map.
 2. `issue-tracker.md` and `triage-labels.md`: Linear project, states, labels, and lane mapping.
 3. `alejo-workflow.md`: Alejo planning-to-implementation lifecycle.
-4. `WORKFLOW.md`: Symphony thread flow, issue contract, runtime slots, verification artifacts, and boundaries.
+4. Repo `WORKFLOW.md` plus its Linear mirror: Symphony YAML front matter, per-issue prompt template, Alejo execution rules, verification artifacts, and boundaries.
 5. Selected Linear vertical-slice issues and comments.
 6. Current repo: code, tests, env/config, providers, migrations, routes, workers, deployment, CI, and documented run commands.
 7. Doppler name-only checks and `alejo-secrets-v2` results.
@@ -37,7 +37,7 @@ Do not use local planning mirrors as canonical sources.
 
 ## Process
 
-1. Resolve the Linear Project, team, issue states/labels, selected issues, and `WORKFLOW.md`. Stop if any required destination, lane, or contract is missing.
+1. Resolve the Linear Project, team, issue states/labels, selected issues, repo `WORKFLOW.md`, and its Linear mirror when available. Stop if any required destination, lane, or contract is missing or if the repo file and Linear mirror conflict.
 2. Select issues from explicit refs, or from the mapped `Ready for Agent` queue when the user asks to run ready work. Exclude planning documents, PRD/SAD/prototype/Q&A/CONTEXT work, and non-vertical-slice issues.
 3. Preflight each issue against `WORKFLOW.md`:
    - readiness state/label is `Ready for Agent`;
@@ -52,7 +52,10 @@ Do not use local planning mirrors as canonical sources.
    - automatically add only app-owned generated values, exact current-env values, recoverable official-tool values, verified-created provider resources, or public config that can be written without exposing values;
    - stop before lane movement for human-required or unsafe secrets and report the `alejo-secrets-v2` setup steps.
 5. Run Symphony/runtime preflight from `WORKFLOW.md`:
-   - resolve the repo-declared Symphony launch, resume, status, test, synthetic verification, artifact, and review gates;
+   - parse the official Symphony YAML front matter and prompt body;
+   - verify `tracker.kind`, `tracker.api_key`, `tracker.project_slug`, `tracker.active_states`, `tracker.terminal_states`, `workspace.root`, `agent`, and `codex.command`;
+   - confirm active states include the configured Symphony execution lane and running lane;
+   - resolve repo-declared tests, synthetic verification, artifacts, and review evidence from the prompt body, issue contract, and repo instructions;
    - use `doppler run -- <command>` when secrets or environment-backed config are required;
    - never print secret values, dump broad environments, or run unsafe debug output;
    - run repo-declared tests for the selected `api`, `ui`, `cli`, or `mcp` surface;
@@ -80,7 +83,7 @@ Stop only for:
 - missing non-derivable product, architecture, provider, or environment decisions;
 - exhausted BDD budget;
 - unavailable required external systems or authenticated provider access;
-- missing `WORKFLOW.md`, lane mapping, runtime command, or Linear write access;
+- missing or conflicting repo/Linear `WORKFLOW.md`, lane mapping, runtime command, or Linear write access;
 - Symphony/runtime commands that are required but unavailable or unsafe to run;
 - review gaps outside the selected issue scope.
 
@@ -90,7 +93,7 @@ Report blocker details with issue id, failed surface, failed acceptance criterio
 
 - Do not create `plan.md` or local planning artifacts.
 - Do not choose models, agents, branches, concurrency, or slice order unless `WORKFLOW.md` explicitly delegates that choice.
-- Do not override `WORKFLOW.md` thread flow, runtime slots, verification artifacts, or boundaries.
+- Do not override `WORKFLOW.md` front matter, prompt body, verification artifacts, or boundaries.
 - Do not ask for approvals, permissions, confirmations, or clarifying questions.
 - Do not expose secret values in chat, files, commands, logs, Linear, summaries, or commits.
 - Do not advance issues with missing unsafe secrets.

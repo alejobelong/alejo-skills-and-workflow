@@ -7,7 +7,7 @@ Alejo owns the day-shift planning flow: questions, PRDs, prototypes, SADs, issue
 ## Contents
 
 - `skills/`: Alejo-related Codex skills copied from `~/.codex/skills`.
-- `WORKFLOW.md`: XML Symphony workflow guide for autonomous execution from Linear issue contracts.
+- `WORKFLOW.md`: official Symphony Markdown/YAML workflow for autonomous execution from Linear issue contracts.
 
 ## How The Workflow Fits Together
 

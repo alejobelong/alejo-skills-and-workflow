@@ -5,7 +5,7 @@ description: Relentless Symphony launcher for Alejo Linear implementation issues
 
 # Alejo Run
 
-Run ready Linear implementation issues through Symphony until they are genuinely production-grade. Linear owns issue state. The Linear Project Document `WORKFLOW.md` is the Symphony contract. Codex is the only coding agent.
+Run ready Linear implementation issues through Symphony until they are genuinely production-grade. Linear owns issue state. Repo `WORKFLOW.md` is the official Symphony contract; the Linear Project Document `WORKFLOW.md` is only its mirror for Alejo discovery. Codex is the only coding agent.
 
 Alejo Run is autonomous: do not ask for approval, permission, confirmation, or clarifying questions. When the existing preflight and workflow gates pass, proceed; when they do not, stop and report the blocker.
 
@@ -34,9 +34,9 @@ If verification fails, keep the repair loop going within the issue's BDD budget.
 
 ### 1. Read Operating Context
 
-Read Linear Project Documents `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, and `WORKFLOW.md`. Treat `WORKFLOW.md` as the canonical Symphony thread, lane, runtime, and verification contract.
+Read Linear Project Documents `AGENTS.md`, `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, repo `WORKFLOW.md`, and the Linear `WORKFLOW.md` mirror when available. Treat repo `WORKFLOW.md` as the canonical Symphony YAML front matter, prompt template, lane, runtime, and verification contract.
 
-Stop and report the blocker if Linear workspace/team/project, execution lane mapping, issue tracker docs, or the Linear Project Document `WORKFLOW.md` are missing.
+Stop and report the blocker if Linear workspace/team/project, execution lane mapping, issue tracker docs, repo `WORKFLOW.md`, or the Linear mirror is missing or conflicting when configured.
 
 ### 2. Select Issues
 
@@ -56,7 +56,7 @@ For each candidate issue, verify:
 - Chat or managed-agent issues require Playwright verification against the running app and cannot rely only on trivial greetings, SDK config fetches, direct adapter probes, mocked responses, canned samples, local echoes, or prompts that avoid the promised provider capability.
 - Preconditions are explicit and satisfiable, or clearly `None`.
 - Dependencies are done or included in the same selected run.
-- Linear Project Document `WORKFLOW.md` defines the Symphony execution flow and lane mapping is known.
+- Repo `WORKFLOW.md` defines the Symphony execution flow and lane mapping, and the Linear mirror does not conflict.
 
 ### 4. Recover Missing Secrets Safely
 
@@ -92,11 +92,13 @@ After any safe automatic addition, run `doppler secrets --only-names` again. Sto
 
 ### 5. Symphony Runtime Preflight
 
-Use the `WORKFLOW.md` `symphony_runtime` slots plus repo scripts to verify the execution runtime:
+Use the official Symphony `WORKFLOW.md` front matter, prompt body, and repo scripts to verify the execution runtime:
 
 - Use `doppler run -- <command>` when the selected issue needs secrets or environment-backed config.
 - Never run commands that print secret values or dump full environments.
-- Resolve the documented Symphony launch, resume, status, test, synthetic verification, artifact, and review gates.
+- Verify `tracker.kind`, `tracker.api_key`, `tracker.project_slug`, `tracker.active_states`, `tracker.terminal_states`, `workspace.root`, `agent`, and `codex.command`.
+- Confirm active states include the configured Symphony execution lane and running lane.
+- Resolve the documented test, synthetic verification, artifact, and review gates from the prompt body, issue contract, and repo instructions.
 - Run repo-declared tests for the selected `api`, `ui`, `cli`, or `mcp` surface.
 - Verify Symphony status, artifacts, logs, handoff evidence, and synthetic tester verdicts from the documented artifact sink.
 - Require Playwright for UI or browser-reachable behavior.
@@ -138,7 +140,7 @@ When the repo documents how to run Symphony, keep working until the selected iss
 
 ## Thread Contract
 
-Use the Linear Project Document `WORKFLOW.md` as the canonical thread contract. Do not restate, override, or invent Symphony roles outside that contract.
+Use repo `WORKFLOW.md` as the canonical Symphony contract. Do not restate, override, or invent execution roles outside that contract.
 
 Alejo Run adds only these execution gates:
 
@@ -150,7 +152,7 @@ Alejo Run adds only these execution gates:
 
 - Do not write a plan artifact.
 - Do not choose models, agents, branches, concurrency, or slice order.
-- Do not override the thread flow, runtime slots, or artifact contract in `WORKFLOW.md`.
+- Do not override the front matter, prompt body, or artifact contract in `WORKFLOW.md`.
 - Do not ask for approvals, permissions, confirmations, or clarifying questions.
 - Do not expose secret values.
 - Do not advance issues with missing unsafe secrets.
