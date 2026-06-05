@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Run v2"
-  short_description: "Run ready Alejo issues autonomously"
-  default_prompt: "Use $alejo-run-v2 to run ready Linear issues through WORKFLOW.md until they are production-grade, Symphony-verified, reviewed clean, and free of mocks or placeholders."
+  short_description: "Run Alejo issues to Ready for Human"
+  default_prompt: "Use $alejo-run-v2 to drive ready Linear issues through WORKFLOW.md, verify TDD handoff evidence, run BDD real-surface checks, run alejo-review in a fresh subagent, repair gaps, and leave clean issues in Ready for Human."

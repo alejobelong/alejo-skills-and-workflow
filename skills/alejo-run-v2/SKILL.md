@@ -1,25 +1,27 @@
 ---
 name: alejo-run-v2
-description: Compact Alejo Run v2 workflow for autonomously executing ready Linear vertical-slice issues through the WORKFLOW.md Symphony contract, Codex Goal mode, Symphony runtime gates, Doppler-safe secret recovery with alejo-secrets-v2, real-surface verification, and a clean alejo-review subagent gate. Use when ready Alejo issues should be run until production-grade without mocks, approvals, or human-in-the-loop pauses.
+description: Compact Alejo Run v2 workflow for autonomously supervising ready Linear vertical-slice issues through the repo WORKFLOW.md Symphony contract, Codex Goal mode, Doppler-safe secret recovery with alejo-secrets-v2, TDD handoff evidence, BDD real-surface verification, and a clean alejo-review subagent gate. Use when ready Alejo issues should be driven until production-grade and left in Ready for Human without mocks, approvals, Done transitions, or human-in-the-loop pauses.
 ---
 
 # Alejo Run v2
 
-Autonomously run ready Linear implementation issues until they are production-grade. Repo `WORKFLOW.md` is the official Symphony contract; the Linear Project Document `WORKFLOW.md` is only its mirror for Alejo discovery. Linear owns issue state. Doppler owns secret values. Codex is the only coding agent.
+Autonomously drive ready Linear implementation issues through Symphony and Alejo verification. Symphony is OpenAI's issue runner; repo `WORKFLOW.md` is its contract. Alejo Run v2 does not rewrite `WORKFLOW.md`: it uses the contract, launches or resumes the run, verifies the handoff, repairs failures, and leaves clean work in `Ready for Human`.
 
-Do not ask for approval, permission, confirmation, or clarifying questions. Proceed when the gates pass; stop only for true blockers.
+Only a human moves issues to `Done`. Do not ask for approval, permission, confirmation, or clarifying questions. Proceed when the gates pass; stop only for true blockers.
 
 ## Goal Mode
 
 When Codex Goal mode is enabled, the goal is incomplete until every selected issue is:
 
-- implemented through its real `api`, `ui`, `cli`, or `mcp` surface;
-- verified by real tests and synthetic real-surface checks;
+- queued and run through repo `WORKFLOW.md`;
+- covered by a self-contained XML issue contract and safe Doppler secret refs;
+- supported by TDD evidence when `WORKFLOW.md` or repo practice requires test-first implementation;
+- verified by BDD real-surface checks through its `api`, `ui`, `cli`, or `mcp` surface;
 - free of mocks, fake providers, stubbed SDK responses, placeholders, skipped tests, disabled branches, `NotImplemented`, TODO-only paths, and unwired UI;
 - reviewed clean by a fresh `alejo-review` subagent with no relevant P0/P1/P2 gaps;
-- moved or reported correctly in Linear.
+- left in `Ready for Human` with concise evidence, or reported with an exact blocker.
 
-Do not mark the goal complete for lane movement, code changes, green unit tests alone, or partial handoff.
+Do not mark the goal complete for lane movement, code changes, green unit tests alone, partial handoff, or a transition to `Done`. Never move an issue to `Done`.
 
 ## Sources
 
@@ -28,7 +30,7 @@ Use canonical Linear and repo evidence:
 1. `AGENTS.md`: source-of-truth map.
 2. `issue-tracker.md` and `triage-labels.md`: Linear project, states, labels, and lane mapping.
 3. `alejo-workflow.md`: Alejo planning-to-implementation lifecycle.
-4. Repo `WORKFLOW.md` plus its Linear mirror: Symphony YAML front matter, per-issue prompt template, Alejo execution rules, verification artifacts, and boundaries.
+4. Repo `WORKFLOW.md` plus its Linear mirror: Symphony YAML front matter, per-issue prompt template, execution states, verification artifacts, and boundaries.
 5. Selected Linear vertical-slice issues and comments.
 6. Current repo: code, tests, env/config, providers, migrations, routes, workers, deployment, CI, and documented run commands.
 7. Doppler name-only checks and `alejo-secrets-v2` results.
@@ -52,28 +54,30 @@ Do not use local planning mirrors as canonical sources.
    - automatically add only app-owned generated values, exact current-env values, recoverable official-tool values, verified-created provider resources, or public config that can be written without exposing values;
    - stop before lane movement for human-required or unsafe secrets and report the `alejo-secrets-v2` setup steps.
 5. Run Symphony/runtime preflight from `WORKFLOW.md`:
-   - parse the official Symphony YAML front matter and prompt body;
+   - parse the Symphony YAML front matter and prompt body;
    - verify `tracker.kind`, `tracker.api_key`, `tracker.project_slug`, `tracker.active_states`, `tracker.terminal_states`, `workspace.root`, `agent`, and `codex.command`;
-   - confirm active states include the configured Symphony execution lane and running lane;
-   - resolve repo-declared tests, synthetic verification, artifacts, and review evidence from the prompt body, issue contract, and repo instructions;
+   - confirm active states include the configured execution and running lanes;
+   - confirm terminal or handoff states include `Ready for Human`;
+   - stop if the contract requires Alejo Run v2 to move issues to `Done`;
+   - resolve repo-declared tests, TDD handoff evidence, verification artifacts, and runtime evidence from the prompt body, issue contract, and repo instructions;
    - use `doppler run -- <command>` when secrets or environment-backed config are required;
    - never print secret values, dump broad environments, or run unsafe debug output;
-   - run repo-declared tests for the selected `api`, `ui`, `cli`, or `mcp` surface;
-   - run the documented Symphony launch or resume command when the preflight passes;
-   - verify Symphony status, artifacts, logs, handoff evidence, and synthetic tester verdicts from the documented artifact sink;
-   - for UI/browser behavior, require Playwright against the running app;
-   - for jobs, queues, workers, schedulers, or async flows, verify the repo-declared command, state transition, failure behavior, and observable output.
-6. Show a short preflight table: issue, surface, providers, secrets, dependencies, BDD budget, Symphony/runtime verdict, target lane, and blocker if any. Do not ask for approval.
-7. Move passing issues into the configured Symphony execution lane and run the documented launch/resume command if one exists.
-8. Drive the production loop until done or blocked:
-   - generate `scenario.json` with 3 to 5 behaviours including persona, objective, prompts/actions, wait expectations, failure modes, and evidence needs;
-   - implement against failing tests and real provider/runtime paths;
-   - run Symphony/runtime checks, surface tests, and synthetic verification from `WORKFLOW.md`;
-   - for UI/chat/managed-agent work, Playwright must use the real app as a real user and prove the answer/effect is not canned, mocked, stubbed, or disconnected;
-   - feed failures into the next BDD repair iteration until the issue budget is exhausted;
-   - after each cycle, spawn a fresh subagent whose only job is to run `alejo-review` against planning artifacts, selected issues, code, and verification results;
-   - iterate on every relevant P0/P1/P2 review gap until the report is clean or a true blocker is reached.
-9. Complete only when real-surface verification, synthetic verification, Symphony/runtime gates, and the review subagent are clean. Otherwise leave the issue out of the done lane and report the exact blocker.
+   - run the documented Symphony launch or resume command when preflight passes.
+6. Show a short preflight table: issue, surface, providers, secrets, dependencies, BDD budget, Symphony verdict, target lane, and blocker if any. Do not ask for approval.
+7. Move passing issues into the configured Symphony execution lane and run the documented launch/resume command.
+8. Watch each Symphony run until it reaches `Ready for Human`, reports a blocker, or exits unexpectedly:
+   - verify that TDD evidence exists when required: baseline or starting state, RED failure for real missing behavior, GREEN pass, refactor decision, tests run, files changed, and provider/runtime evidence where relevant;
+   - reject evidence that only proves configuration, trivial greetings, direct adapter probes, SDK setup, canned samples, local echoes, or mocked behavior;
+   - if the run is blocked, leave or move the issue to `Ready for Human` with the exact failed acceptance criterion, attempted commands, and next required action.
+9. Run the Alejo BDD gate after the Symphony handoff:
+   - derive 3 to 5 behaviours from the issue contract, including persona, objective, prompts/actions, wait expectations, failure modes, and evidence needs;
+   - run repo-declared tests and real-surface checks for the selected `api`, `ui`, `cli`, or `mcp` surface;
+   - for UI/browser behavior, use Playwright against the running app as a real user;
+   - for chat or managed-agent work, verify a representative conversation or action that proves the backend/provider result is not canned, mocked, stubbed, or disconnected;
+   - for provider, job, queue, scheduler, CLI, API, or MCP behavior, capture runtime-backed evidence of the real integration.
+10. After each BDD cycle, spawn a fresh subagent whose only job is to run `alejo-review` against planning artifacts, selected issues, code, and verification evidence. Inline review is invalid.
+11. Repair every relevant BDD failure and P0/P1/P2 review gap by continuing or requeueing the issue through the workflow until the BDD budget is exhausted or the report is clean.
+12. Finish by leaving the issue in `Ready for Human` with a concise comment covering tests, BDD evidence, review result, files/PR/branch, residual risk, and the note that the human may move it to `Done`.
 
 ## Blockers
 
@@ -85,6 +89,7 @@ Stop only for:
 - unavailable required external systems or authenticated provider access;
 - missing or conflicting repo/Linear `WORKFLOW.md`, lane mapping, runtime command, or Linear write access;
 - Symphony/runtime commands that are required but unavailable or unsafe to run;
+- required TDD, BDD, provider, Playwright, or review evidence that cannot be produced after the repair budget;
 - review gaps outside the selected issue scope.
 
 Report blocker details with issue id, failed surface, failed acceptance criterion, commands/evidence attempted, repair attempts, and next required action.
@@ -97,7 +102,8 @@ Report blocker details with issue id, failed surface, failed acceptance criterio
 - Do not ask for approvals, permissions, confirmations, or clarifying questions.
 - Do not expose secret values in chat, files, commands, logs, Linear, summaries, or commits.
 - Do not advance issues with missing unsafe secrets.
-- Do not mark work complete because code was written, tests are green, or issues moved lanes.
+- Do not move issues to `Done`; clean work stops at `Ready for Human`.
+- Do not call work ready because code was written, tests are green, or issues moved lanes.
 - Do not accept UI/browser behavior without Playwright real-browser verification.
 - Do not run `alejo-review` inline; always use a fresh subagent.
 - Do not ignore relevant P0/P1/P2 review findings.
