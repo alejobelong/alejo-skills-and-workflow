@@ -5,7 +5,7 @@ description: Compact Alejo Questions v2 session for sharpening a product idea, p
 
 # Alejo Questions v2
 
-Interrogate the proposal until the product experience, end-user value proposition, domain language, and important decisions are clear enough for PRD/SAD/issues. Keep it compact, evidence-first, and one question at a time.
+Interrogate relentlessly about every aspect of the proposal by walking down each branch of the design tree. Resolve dependencies between decisions one by one until the product experience, end-user value proposition, domain language, and important decisions are clear enough for PRD/SAD/issues. Keep it compact, evidence-first, and one question at a time.
 
 ## Rules
 
@@ -15,9 +15,9 @@ Interrogate the proposal until the product experience, end-user value propositio
 - Number questions sequentially from 1; use the same number in the prompt, notes, and final XML.
 - Every question is multiple choice, includes a recommended option first, and ends with `Other / correction`.
 - Product clarity comes first. Ask whether to continue into technical decisions only after the experience and value proposition are clear.
-- Keep a running Q&A record from the first question.
+- Keep `Q&A.xml` and `CONTEXT.xml` as live running artifacts from the first answered question.
 - Use XML for generated artifacts. Put user prose, quotes, snippets, and evidence in CDATA.
-- In Linear-configured repos, publish final `Q&A.xml`, `CONTEXT.xml`, and any ADR XML to Linear Project Documents. Do not create Linear issues.
+- In Linear-configured repos, publish `Q&A.xml` and any changed `CONTEXT.xml` incrementally after each answer before asking the next question. Publish any ADR XML when created. Do not create Linear issues.
 
 ## Domain Awareness
 
@@ -44,7 +44,7 @@ Legacy local `AGENTS.md`, `docs/agents/*`, or `WORKFLOW.md` are mirrors only; Li
 3. If evidence can answer it, inspect first and cite the evidence.
 4. Ask one numbered multiple-choice question.
 5. Record the answer, recommendation, evidence, resolution, and docs changed.
-6. Update `CONTEXT.xml` when a domain term or relationship is settled. In Linear-configured repos, publish it only in the final batch.
+6. Immediately update the live `Q&A.xml`. If the answer settles a domain term, relationship, actor, capability name, state, invariant, or boundary, update `CONTEXT.xml` before asking the next question. In Linear-configured repos, publish both changed Project Documents immediately.
 7. Create an ADR only when the decision is costly to reverse, surprising without context, and has real alternatives.
 8. Continue until the product snapshot is clear or the user stops. Then offer a technical-decision branch.
 
@@ -69,7 +69,7 @@ Use concrete scenarios when needed. Challenge vague or conflicting terms immedia
 
 ## Final XML
 
-At session close, write or publish one XML log. If the session stops early, mark open items clearly.
+At session close, make one final pass over the live XML logs. If the session stops early, mark open items clearly.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -110,5 +110,6 @@ At session close, write or publish one XML log. If the session stops early, mark
 - Do not ask unnumbered questions during the session.
 - Do not batch multiple decisions into one question.
 - Do not turn `CONTEXT.xml` into a spec; it is only glossary and relationships.
+- Do not wait until session close to publish settled `CONTEXT.xml` changes in Linear-configured repos.
 - Do not create ADRs for obvious, reversible, or no-tradeoff choices.
 - Do not publish planning output as Linear issues.
