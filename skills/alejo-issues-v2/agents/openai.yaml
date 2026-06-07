@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Issues v2"
-  short_description: "Create compact production-ready slice issues"
-  default_prompt: "Use $alejo-issues-v2 to turn Linear Project Documents, review gaps, or existing issue refs into compact self-contained production-ready vertical-slice Linear issues with provider definitions, Doppler secret refs, XML run contracts, and feature-owned code organization."
+  short_description: "Create production-ready feature issues"
+  default_prompt: "Use $alejo-issues-v2 to turn Linear Project Documents, review gaps, or existing issue refs into compact self-contained production-ready feature Linear issues with provider definitions, Doppler secret refs, XML run contracts, and SAD-defined feature-folder code organization."
