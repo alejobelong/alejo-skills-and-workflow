@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alejo Setup v2"
+  short_description: "Configure Alejo v2 repo setup"
+  default_prompt: "Use $setup-alejo-skills-v2 to configure GitHub, resolve or create the Linear Project, publish Alejo v2 setup docs to Linear, write repo WORKFLOW.md, and mirror it to Linear."
