@@ -1,6 +1,6 @@
 ---
 name: alejo-questions-v2
-description: Compact Alejo Questions v2 session for sharpening a product idea, plan, UX, architecture, or implementation approach through evidence-first, numbered multiple-choice questions. Use when the user wants a leaner Alejo Questions workflow that drives toward a clear end-user experience, value proposition, domain language, decisions, and XML Linear Project Documents without changing the original alejo-questions skill.
+description: Compact Alejo Questions v2 session for sharpening a product idea, plan, UX, architecture, or implementation approach through evidence-first automated Q&A plus numbered human-led multiple-choice questions. Use when the user wants a leaner Alejo Questions workflow that drives toward a clear end-user experience, value proposition, domain language, decisions, and XML Linear Project Documents without changing the original alejo-questions skill.
 ---
 
 # Alejo Questions v2
@@ -12,8 +12,10 @@ Interrogate relentlessly about every aspect of the proposal by walking down each
 - If no proposal exists, ask for it before starting.
 - Explore code, docs, and Linear Project Documents before asking anything the repo can answer.
 - Ask exactly one visible question at a time.
-- Number questions sequentially from 1; use the same number in the prompt, notes, and final XML.
-- Every question is multiple choice, includes a recommended option first, and ends with `Other / correction`.
+- Number visible human-led questions sequentially from 1; use the same number in the prompt, notes, and final XML.
+- Number automated Q&A entries separately as `A1`, `A2`, etc.; automated entries do not consume visible question numbers.
+- Every visible human-led question is multiple choice, includes a recommended option first, and ends with `Other / correction`.
+- If a useful question is already clearly answered by the initial prompt, conversation, code, docs, or Linear Project Documents, do not ask it. Record it as automated Q&A with the selected answer and evidence.
 - Product clarity comes first. Ask whether to continue into technical decisions only after the experience and value proposition are clear.
 - Keep `Q&A.xml` and `CONTEXT.xml` as live running artifacts from the first answered question.
 - Use XML for generated artifacts. Put user prose, quotes, snippets, and evidence in CDATA.
@@ -41,9 +43,9 @@ Legacy local `AGENTS.md`, `docs/agents/*`, or `WORKFLOW.md` are mirrors only; Li
 
 1. Summarize the proposal in one or two sentences.
 2. Identify the next highest-risk ambiguity: user, job-to-be-done, promise, scope, term, state, permission, edge case, dependency, constraint, contradiction, or technical decision.
-3. If evidence can answer it, inspect first and cite the evidence.
-4. Ask one numbered multiple-choice question.
-5. Record the answer, recommendation, evidence, resolution, and docs changed.
+3. If the initial prompt, conversation, code, docs, or Linear Project Documents clearly answer it, select the answer autonomously, record an automated Q&A entry, and skip the visible question.
+4. If it is not clearly answered, ask one numbered human-led multiple-choice question.
+5. Record the answer, recommendation, evidence, resolution, whether it was `automated` or `human-led`, and docs changed.
 6. Immediately update the live `Q&A.xml`. If the answer settles a domain term, relationship, actor, capability name, state, invariant, or boundary, update `CONTEXT.xml` before asking the next question. In Linear-configured repos, publish both changed Project Documents immediately.
 7. Create an ADR only when the decision is costly to reverse, surprising without context, and has real alternatives.
 8. Continue until the product snapshot is clear or the user stops. Then offer a technical-decision branch.
@@ -67,6 +69,20 @@ C. Other / correction
 
 Use concrete scenarios when needed. Challenge vague or conflicting terms immediately: pick a canonical term, split overloaded terms, or ask which definition wins.
 
+## Automated Q&A
+
+Use automated Q&A for decisions or clarifications that are worth preserving but should not interrupt the human because the answer is already clear.
+
+```xml
+<automated_qa id="A{N}">
+  <question><![CDATA[{question the AI considered}]]></question>
+  <selected_answer><![CDATA[{answer selected from the prompt/evidence}]]></selected_answer>
+  <evidence><![CDATA[{initial prompt, conversation, code/docs, or Linear Project Document evidence}]]></evidence>
+  <resolution><![CDATA[{settled point and downstream impact}]]></resolution>
+  <docs_changed><![CDATA[{Q&A.xml, CONTEXT.xml, ADR XML, or None}]]></docs_changed>
+</automated_qa>
+```
+
 ## Final XML
 
 At session close, make one final pass over the live XML logs. If the session stops early, mark open items clearly.
@@ -80,7 +96,16 @@ At session close, make one final pass over the live XML logs. If the session sto
     <experience><![CDATA[{what the user experiences}]]></experience>
     <scope><![CDATA[{in/out boundaries}]]></scope>
   </product_snapshot>
-  <questions>
+  <automated_q_and_a>
+    <automated_qa id="A{N}">
+      <question><![CDATA[{question the AI considered but did not ask}]]></question>
+      <selected_answer><![CDATA[{answer already clear from the initial prompt or evidence}]]></selected_answer>
+      <evidence><![CDATA[{source evidence}]]></evidence>
+      <resolution><![CDATA[{settled point or open contradiction}]]></resolution>
+      <docs_changed><![CDATA[{Q&A.xml, CONTEXT.xml, ADR XML, or None}]]></docs_changed>
+    </automated_qa>
+  </automated_q_and_a>
+  <human_led_q_and_a>
     <qa number="{N}">
       <question><![CDATA[{visible question}]]></question>
       <recommendation><![CDATA[{recommended option}]]></recommendation>
@@ -88,7 +113,7 @@ At session close, make one final pass over the live XML logs. If the session sto
       <evidence><![CDATA[{code/docs checked, or None}]]></evidence>
       <resolution><![CDATA[{settled point or open contradiction}]]></resolution>
     </qa>
-  </questions>
+  </human_led_q_and_a>
   <resolved_language>
     <term canonical="{Term}"><![CDATA[{definition or relationship}]]></term>
   </resolved_language>
@@ -108,6 +133,7 @@ At session close, make one final pass over the live XML logs. If the session sto
 
 - Do not include hidden reasoning.
 - Do not ask unnumbered questions during the session.
+- Do not ask a human-led question when the answer is already clear from the initial prompt, conversation, code, docs, or Linear Project Documents; record automated Q&A instead.
 - Do not batch multiple decisions into one question.
 - Do not turn `CONTEXT.xml` into a spec; it is only glossary and relationships.
 - Do not wait until session close to publish settled `CONTEXT.xml` changes in Linear-configured repos.

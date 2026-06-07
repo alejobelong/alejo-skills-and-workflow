@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Questions v2"
   short_description: "Compact evidence-first product questioning"
-  default_prompt: "Use $alejo-questions-v2 to sharpen this proposal with one numbered multiple-choice question at a time, checking code/docs first, clarifying the end-user experience and value proposition before optional technical decisions, and updating Q&A.xml plus CONTEXT.xml as answers land."
+  default_prompt: "Use $alejo-questions-v2 to sharpen this proposal with automated Q&A for answers already clear from context, one numbered human-led multiple-choice question at a time for unresolved decisions, and live Q&A.xml plus CONTEXT.xml updates."
