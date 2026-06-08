@@ -39,6 +39,7 @@ If a writable Linear Project Document cannot be reached, report the blocker and 
 - Use `CONTEXT.xml` terms.
 - Treat Q&A answers as stronger than old PRDs, guesses, or code-adjacent assumptions.
 - User stories are exhaustive, not selectively short: every Q&A answer that implies user-facing value must be represented as a user story, merged into a broader story with traceability, or marked as not a user story with a reason.
+- Include one user-facing sequence diagram that shows the primary journey from trigger to outcome; keep technical architecture diagrams for SAD.xml.
 - Keep non-story lists short: 3 primary items first, then additional items only when useful.
 - Use XML structure and CDATA for prose, evidence, quotes, and user text.
 
@@ -54,6 +55,16 @@ If a writable Linear Project Document cannot be reached, report the blocker and 
   </source_summary>
   <problem_statement><![CDATA[{User-facing problem.}]]></problem_statement>
   <desired_experience><![CDATA[{End-user experience and value proposition.}]]></desired_experience>
+  <user_sequence>
+    <summary><![CDATA[{Primary user journey from trigger to outcome.}]]></summary>
+    <diagram language="mermaid"><![CDATA[
+sequenceDiagram
+  actor User
+  participant Product
+  User->>Product: Starts primary journey
+  Product-->>User: Shows next meaningful state
+]]></diagram>
+  </user_sequence>
   <users>
     <user priority="primary" order="1"><![CDATA[{User/actor and context.}]]></user>
   </users>
