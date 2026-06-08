@@ -1,6 +1,6 @@
 ---
 name: alejo-prd-v2
-description: Compact Alejo PRD v2 workflow that turns the latest Alejo Q&A.xml, product context, and minimal repo evidence into a product-focused PRD.xml Linear Project Document. Use when the user wants a leaner Q&A-first PRD skill that publishes PRD.xml to Linear Project Documents.
+description: Compact Alejo PRD v2 workflow that turns the latest Alejo Q&A.xml, product context, and minimal repo evidence into a product-focused PRD.xml Linear Project Document with exhaustive Q&A-derived user stories. Use when the user wants a leaner Q&A-first PRD skill that publishes PRD.xml to Linear Project Documents.
 ---
 
 # Alejo PRD v2
@@ -27,8 +27,9 @@ Do not load `issue-tracker.md`, `triage-labels.md`, `alejo-workflow.md`, or `WOR
 1. Resolve the Linear Project from current context, existing Linear links, or Linear tooling.
 2. Read `AGENTS.md` for project orientation, then read `Q&A.xml` for product substance. If Q&A is missing, continue from the conversation but mark confidence lower.
 3. Inspect only enough repo evidence to avoid false product claims.
-4. Synthesize the desired user experience: users, value proposition, journeys, scope, acceptance signals, risks, and open questions.
-5. Publish by creating or updating the Linear Project Document named `PRD.xml`.
+4. Extract every Q&A entry that implies a user, job, goal, capability, journey, permission, state, edge case, or outcome. Convert every story-worthy entry into a user story or explicitly trace why it was merged or not a user story.
+5. Synthesize the desired user experience: users, value proposition, journeys, exhaustive user stories, scope, acceptance signals, risks, and open questions.
+6. Publish by creating or updating the Linear Project Document named `PRD.xml`.
 
 If a writable Linear Project Document cannot be reached, report the blocker and stop. Do not create a PRD issue, project overview substitute, or local canonical file.
 
@@ -37,7 +38,8 @@ If a writable Linear Project Document cannot be reached, report the blocker and 
 - Stay product-facing: no modules, APIs, schemas, tests, file paths, or implementation plans.
 - Use `CONTEXT.xml` terms.
 - Treat Q&A answers as stronger than old PRDs, guesses, or code-adjacent assumptions.
-- Keep lists short: 3 primary items first, then additional items only when useful.
+- User stories are exhaustive, not selectively short: every Q&A answer that implies user-facing value must be represented as a user story, merged into a broader story with traceability, or marked as not a user story with a reason.
+- Keep non-story lists short: 3 primary items first, then additional items only when useful.
 - Use XML structure and CDATA for prose, evidence, quotes, and user text.
 
 ## PRD XML
@@ -56,13 +58,19 @@ If a writable Linear Project Document cannot be reached, report the blocker and 
     <user priority="primary" order="1"><![CDATA[{User/actor and context.}]]></user>
   </users>
   <user_stories>
-    <story priority="primary" order="1">
+    <story priority="primary" order="1" source_qa_refs="{Q1,A2,Q5}">
       <actor><![CDATA[{actor}]]></actor>
       <want><![CDATA[{capability}]]></want>
       <benefit><![CDATA[{benefit}]]></benefit>
       <sentence><![CDATA[As a {actor}, I want {capability}, so that {benefit}.]]></sentence>
     </story>
   </user_stories>
+  <qa_story_trace>
+    <qa_ref id="{Q&A item id}" disposition="{story|merged|not_story}">
+      <story_orders><![CDATA[{story order numbers, or None}]]></story_orders>
+      <reason><![CDATA[{Why this Q&A item became a story, was merged, or is not user-story material.}]]></reason>
+    </qa_ref>
+  </qa_story_trace>
   <experience_notes>
     <note priority="primary" order="1"><![CDATA[{Key user-visible behavior, state, tone, permission, or constraint.}]]></note>
   </experience_notes>
