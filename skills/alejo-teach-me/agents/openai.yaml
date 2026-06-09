@@ -1,4 +1,4 @@
 interface:
   display_name: "Alejo Teach Me"
-  short_description: "Teach technical topics by depth"
-  default_prompt: "Use $alejo-teach-me to teach me a technology, AI, software, or technical topic at a depth from 1 to 10, with a short overview, examples, and an optional deeper layer."
+  short_description: "Teach topics by complexity"
+  default_prompt: "Use $alejo-teach-me to teach me a technology, AI, software, or technical topic with optional syntax like complexity 7 length long; default is complexity 5 and short."
